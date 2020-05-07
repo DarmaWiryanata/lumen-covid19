@@ -61,8 +61,9 @@
                         <span>Projects</span>
                     </a>
                     <ul class="submenu">
-                        <li><a href="../projects/projects-index.html"><i class="dripicons-dot"></i>Tingkat Pengetahuan mengenai COVID-19</a></li>
-                        <li><a href="../projects/projects-index.html"><i class="dripicons-dot"></i>Elodia</a></li>
+                        @foreach ($navBarKasus as $item)
+                            <li><a href="{{ $item->id }}"><i class="dripicons-dot"></i>{{ $item->nama }}</a></li>
+                        @endforeach
                     </ul>
                 </li><!--end submenu-->
                 <li class="has-submenu">

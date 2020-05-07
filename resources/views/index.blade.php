@@ -90,8 +90,8 @@
           <div class="col-lg-10">                                                        
               <div class="card">
                   <div class="card-body">
-                      <h4 class="header-title mt-0">Kuesioner</h4>
-                      <p class="text-muted mb-3">Daftar Kuesioner yang telah dibuat</p>
+                      <h4 class="header-title mt-0">Kasus</h4>
+                      <p class="text-muted mb-3">Daftar kasus</p>
                       <table id="footable-3" class="table mb-0" data-paging="true" data-filtering="true" data-sorting="true">
                           <thead>
                               <tr>
@@ -101,16 +101,13 @@
                               </tr>
                           </thead>
                           <tbody>
-                              <tr data-expanded="true">
-                                  <td>1</td>
-                                  <td>Tingkat Pengetahuan mengenai COVID-19</td>
-                                  <td>29 April 1999</td>
-                              </tr>
-                              <tr>
-                                  <td>2</td>
-                                  <td>Elodia</td>
-                                  <td>30 Maret 1982</td>
-                              </tr>
+                            @foreach ($kasus as $item)
+                                <tr>
+                                    <td>{{ $item->id }}</td>
+                                    <td>{{ $item->nama }}</td>
+                                    <td>{{ $item->created_at }}</td>
+                                </tr>
+                            @endforeach
                           </tbody>
                       </table><!--end table-->
 
@@ -146,8 +143,8 @@
               <div class="card">
                   <div class="card-body">
                       <h4 class="header-title mt-0">Total</h4>  
-                      <h1 class="text-center">15</h1>
-                      <h5 class="text-center mb-1 text-muted text-truncate">Kuesioner</h5>
+                      <h1 class="text-center">{{ $kasus->count() }}</h1>
+                      <h5 class="text-center mb-1 text-muted text-truncate">Kasus</h5>
                       <!-- <button class="btn btn-success float-right" data-toggle="modal" data-animation="bounce" data-target="#editor-modal"><i class="mdi mdi-plus"></i> Kuesioner</button> -->
                   </div><!--end card-body-->
               </div><!--end card-->

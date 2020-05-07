@@ -14,8 +14,19 @@ use Illuminate\Support\Str;
 |
 */
 
+// Generate key
 $router->get('/key', function() {
     return Str::random(32);
 });
 
-$router->get('/', 'HomeController@index');
+$router->group(['prefix' => 'admin'], function () use ($router) {
+
+    $router->get('/', [
+        'as' => 'admin.index', 'uses' => 'HomeController@index'
+    ]);
+
+    $router->get('/{id}', [
+        'as' => 'admin.show', 'uses' => 'HomeController@show'
+    ]);
+    
+});

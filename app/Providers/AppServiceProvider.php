@@ -2,7 +2,10 @@
 
 namespace App\Providers;
 
+use Illuminate\Support\Facades\View;
 use Illuminate\Support\ServiceProvider;
+
+use App\Kasus;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -14,5 +17,17 @@ class AppServiceProvider extends ServiceProvider
     public function register()
     {
         //
+    }
+
+    /**
+     * Bootstrap any application services.
+     *
+     * @return void
+     */
+    public function boot()
+    {
+        $navBarKasus = Kasus::select('id', 'nama')->get();
+
+        View::share('navBarKasus', $navBarKasus);
     }
 }
