@@ -20,7 +20,7 @@
           $editorTitle = $('#editor-title'),
           ft = FooTable.init('#footable-3', {
               editing: {
-                  enabled: true,
+                  enabled: false,
                   addRow: function(){
                       $modal.removeData('row');
                       $editor[0].reset();
@@ -95,9 +95,10 @@
                       <table id="footable-3" class="table mb-0" data-paging="true" data-filtering="true" data-sorting="true">
                           <thead>
                               <tr>
-                                  <th data-name="id" data-breakpoints="xs" data-type="number">ID</th>
-                                  <th data-name="nama">Nama</th>
-                                  <th data-name="mulai" data-breakpoints="xs sm" data-type="date" data-format-string="DD-MM-YYYY">Tanggal Mulai</th>
+                                  <th data-breakpoints="xs">ID</th>
+                                  <th>Nama</th>
+                                  <th data-breakpoints="xs sm">Tanggal Mulai</th>
+                                  <th>Aksi</th>
                               </tr>
                           </thead>
                           <tbody>
@@ -106,13 +107,43 @@
                                     <td>{{ $item->id }}</td>
                                     <td>{{ $item->nama }}</td>
                                     <td>{{ $item->created_at }}</td>
+                                    <td>
+                                        <button class="btn btn-primary"data-toggle="modal" data-animation="bounce" data-target="#modal-edit" data-value="{{ $item->id }}"><i class="mdi mdi-pencil-box-outline"></i></button>
+                                        <a href="#" class="btn btn-danger ml-2"><i class="mdi mdi-delete"></i></a>
+                                    </td>
                                 </tr>
                             @endforeach
                           </tbody>
                       </table><!--end table-->
 
-                      <!--Editor-->
-                      <div class="modal fade" id="editor-modal" tabindex="-1" role="dialog" aria-labelledby="editor-title">
+                      <!--Modal Edit-->
+                      <div class="modal fade" id="modal-edit" tabindex="-1" role="dialog" aria-labelledby="editor-title">
+                      
+                          <div class="modal-dialog" role="document">
+                              <form class="modal-content form-horizontal" id="editor">
+                                  <div class="modal-header">
+                                      <h5 class="modal-title" id="editor-title">Ubah Kuesioner</h5>
+                                      <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>                                                            
+                                  </div>
+                                  <div class="modal-body">
+                                      
+                                      <div class="form-group required row">
+                                          <label for="nama" class="col-sm-3 control-label">Judul Kuesioner</label>
+                                          <div class="col-sm-9">
+                                              <input type="text" class="form-control" id="nama" name="nama" placeholder="Masukkan Judul" required>
+                                          </div>
+                                      </div>
+                                  </div>
+                                  <div class="modal-footer">
+                                      <button type="submit" class="btn btn-primary">Simpan</button>
+                                      <button type="button" class="btn btn-danger" data-dismiss="modal">Batal</button>
+                                  </div>
+                              </form>
+                          </div>
+                      </div><!--end modal-->
+
+                      <!--Modal Tambah-->
+                      <div class="modal fade" id="modal-tambah" tabindex="-1" role="dialog" aria-labelledby="editor-title">
                       
                           <div class="modal-dialog" role="document">
                               <form class="modal-content form-horizontal" id="editor">
@@ -145,7 +176,7 @@
                       <h4 class="header-title mt-0">Total</h4>  
                       <h1 class="text-center">{{ $kasus->count() }}</h1>
                       <h5 class="text-center mb-1 text-muted text-truncate">Kasus</h5>
-                      <!-- <button class="btn btn-success float-right" data-toggle="modal" data-animation="bounce" data-target="#editor-modal"><i class="mdi mdi-plus"></i> Kuesioner</button> -->
+                      <button class="btn btn-success float-right mt-3" data-toggle="modal" data-animation="bounce" data-target="#modal-tambah"><i class="mdi mdi-plus"></i> Kuesioner</button>
                   </div><!--end card-body-->
               </div><!--end card-->
           </div><!--end col-->

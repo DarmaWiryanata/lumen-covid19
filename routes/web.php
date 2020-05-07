@@ -34,3 +34,6 @@ $router->group(['prefix' => 'admin'], function () use ($router) {
 $router->get('/tes', function() {
     return view('show');
 });
+$router->get('/tes2', function() {
+    return view('kuesioner');
+});

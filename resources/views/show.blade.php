@@ -16,11 +16,12 @@
           
           /*Editing FooTable*/
           var $modal = $('#editor-modal'),
+        //   var $modal2 = $('#editor-modal2'),
           $editor = $('#editor'),
           $editorTitle = $('#editor-title'),
           ft = FooTable.init('#footable-3', {
               editing: {
-                  enabled: true,
+                  enabled: false,
                   addRow: function(){
                       $modal.removeData('row');
                       $editor[0].reset();
@@ -37,7 +38,7 @@
       
                       $modal.data('row', row);
                       $editorTitle.text('Ubah Pertanyaan #' + values.id);
-                      $modal.modal('show');
+                      $modal2.modal('show');
                   },
                   deleteRow: function(row){
                       if (confirm('Yakin hapus Pertanyaan?')){
@@ -48,23 +49,23 @@
           }),
           uid = 10;
       
-          $editor.on('submit', function(e){
-              if (this.checkValidity && !this.checkValidity()) return;
-              e.preventDefault();
-              var row = $modal.data('row'),
-                  values = {
-                      id: $editor.find('#id').val(),
-                      nama: $editor.find('#nama').val(),
-                  };
+        //   $editor.on('submit', function(e){
+        //       if (this.checkValidity && !this.checkValidity()) return;
+        //       e.preventDefault();
+        //       var row = $modal.data('row'),
+        //           values = {
+        //               id: $editor.find('#id').val(),
+        //               nama: $editor.find('#nama').val(),
+        //           };
           
-              if (row instanceof FooTable.Row){
-                  row.val(values);
-              } else {
-                  values.id = uid++;
-                  ft.rows.add(values);
-              };
-              $modal.modal('hide');
-          });
+        //       if (row instanceof FooTable.Row){
+        //           row.val(values);
+        //       } else {
+        //           values.id = uid++;
+        //           ft.rows.add(values);
+        //       };
+        //       $modal.modal('hide');
+        //   });
       });
   </script> 
 @endsection
@@ -99,11 +100,12 @@
                       <table id="footable-3" class="table mb-0" data-paging="true" data-filtering="true" data-sorting="true">
                           <thead>
                               <tr>
-                                  <th data-name="id" data-breakpoints="xs" data-type="number">ID</th>
-                                  <th data-name="kategori" data-breakpoints="xs" data-type="text">Kategori</th>
-                                  <th data-name="nama" data-type="text">Nama</th>
-                                  <th data-name="pilihan" data-breakpoints="xs sm md" data-type="text">Jenis Pilihan</th>
-                                  <th data-name="jawaban" data-breakpoints="xs sm md" data-type="text">Jawaban</th>
+                                  <th data-breakpoints="xs">ID</th>
+                                  <th data-breakpoints="xs">Kategori</th>
+                                  <th data-type="text">Nama</th>
+                                  <th data-breakpoints="xs sm md">Jenis Pilihan</th>
+                                  <th data-breakpoints="xs sm md">Jawaban</th>
+                                  <th data-type="text">Aksi</th>
                               </tr>
                           </thead>
                           <tbody>
@@ -113,6 +115,10 @@
                                     <td>Siapa nama anda??</td>
                                     <td>Pilihan Ganda</td>
                                     <td>Salah</td>
+                                    <td>
+                                        <button class="btn btn-primary"data-toggle="modal" data-animation="bounce" data-target="#modal-edit" data-value="1"><i class="mdi mdi-pencil-box-outline"></i></button>
+                                        <a href="#" class="btn btn-danger ml-2"><i class="mdi mdi-delete"></i></a>
+                                    </td>
                                 </tr>
                                 <tr>
                                     <td>2</td>
@@ -120,63 +126,124 @@
                                     <td>Siapa nama anda??</a></td>
                                     <td>Skala</a></td>
                                     <td>-</a></td>
+                                    <td>
+                                        <button class="btn btn-primary"data-toggle="modal" data-animation="bounce" data-target="#modal-edit" data-value="2"><i class="mdi mdi-pencil-box-outline"></i></button>
+                                        <a href="#" class="btn btn-danger ml-2"><i class="mdi mdi-delete"></i></a>
+                                    </td>
                                 </tr>
                           </tbody>
                       </table><!--end table-->
 
-                      <!--Editor-->
+                      {{-- tabel Tambah --}}
                       <div class="modal fade" id="editor-modal" tabindex="-1" role="dialog" aria-labelledby="editor-title">
                       
                           <div class="modal-dialog" role="document">
                               <form class="modal-content form-horizontal" id="editor">
-                                  <div class="modal-header">
-                                      <h5 class="modal-title" id="editor-title">Tambah Pertanyaan</h5>
-                                      <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>                                                            
-                                  </div>
-                                  <div class="modal-body">
-                                      
-                                      <div class="form-group required row">
-                                          <label for="nama" class="col-sm-3 control-label">Pertanyaan</label>
-                                          <div class="col-sm-9">
-                                              <input type="text" class="form-control" id="nama" name="nama" placeholder="Masukkan Judul" required>
-                                          </div>
-                                      </div>
-                                      <div class="form-group required row">
-                                          <label for="kategori" class="col-sm-3 control-label">Kategori</label>
-                                          <div class="col-sm-9">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="editor-title">Tambah Pertanyaan</h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>                                                            
+                                </div>
+                                <div class="modal-body">
+                                    
+                                    <div class="form-group required row">
+                                        <label for="nama" class="col-sm-3 control-label">Pertanyaan</label>
+                                        <div class="col-sm-9">
+                                            <input type="text" class="form-control" id="nama" name="nama" placeholder="Masukkan Judul" required>
+                                        </div>
+                                    </div>
+                                    <div class="form-group required row">
+                                        <label for="kategori" class="col-sm-3 control-label">Kategori</label>
+                                        <div class="col-sm-9">
                                             <select class="form-control" id="kategori" name="kategori">
-                                              <option value="" hidden>Pilih Kategori</option>
-                                              <option value="Kuis">Kuis</option>
-                                              <option value="Survey">Survey</option>
+                                            <option value="" hidden>Pilih Kategori</option>
+                                            <option value="Kuis">Kuis</option>
+                                            <option value="Survey">Survey</option>
                                             </select>
-                                          </div>
-                                      </div>
-                                      <div class="form-group required row">
-                                          <label for="pilihan" class="col-sm-3 control-label">Pilihan</label>
-                                          <div class="col-sm-9">
+                                        </div>
+                                    </div>
+                                    <div class="form-group required row">
+                                        <label for="pilihan" class="col-sm-3 control-label">Pilihan</label>
+                                        <div class="col-sm-9">
                                             <select class="form-control" id="pilihan" name="pilihan" required>
-                                              <option value="" hidden>Pilih Pilihan Jawaban</option>
-                                              <option value="Pilihan Ganda">Pilihan Ganda</option>
-                                              <option value="Skala">Skala</option>
+                                            <option value="" hidden>Pilih Pilihan Jawaban</option>
+                                            <option value="Pilihan Ganda">Pilihan Ganda</option>
+                                            <option value="Skala">Skala</option>
                                             </select>
-                                          </div>
-                                      </div>
-                                      <div class="form-group required row">
-                                          <label for="jawaban" class="col-sm-3 control-label">Jawaban</label>
-                                          <div class="col-sm-9">
+                                        </div>
+                                    </div>
+                                    <div class="form-group required row">
+                                        <label for="jawaban" class="col-sm-3 control-label">Jawaban</label>
+                                        <div class="col-sm-9">
                                             <select class="form-control" id="jawaban" name="jawaban">
-                                              <option value="">-</option>
-                                              <option value="Benar">Benar</option>
-                                              <option value="Salah">Salah</option>
+                                            <option value="">-</option>
+                                            <option value="Benar">Benar</option>
+                                            <option value="Salah">Salah</option>
                                             </select>
-                                          </div>
-                                      </div>
+                                        </div>
+                                    </div>
 
-                                  </div>
-                                  <div class="modal-footer">
-                                      <button type="submit" class="btn btn-primary">Simpan</button>
-                                      <button type="button" class="btn btn-danger" data-dismiss="modal">Batal</button>
-                                  </div>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="submit" class="btn btn-primary">Simpan</button>
+                                    <button type="button" class="btn btn-danger" data-dismiss="modal">Batal</button>
+                                </div>
+                              </form>
+                          </div>
+                      </div><!--end modal-->
+
+                      {{-- Tabel Edit --}}
+                      <div class="modal fade" id="modal-edit" tabindex="-1" role="dialog" aria-labelledby="editor-title">
+                      
+                          <div class="modal-dialog" role="document">
+                              <form class="modal-content form-horizontal" id="editor">
+                                <div class="modal-header">
+                                    <h5 class="modal-title">Ubah Pertanyaan</h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>                                                            
+                                </div>
+                                <div class="modal-body">
+                                    
+                                    <div class="form-group required row">
+                                        <label for="nama" class="col-sm-3 control-label">Pertanyaan</label>
+                                        <div class="col-sm-9">
+                                            <input type="text" class="form-control" id="nama" name="nama" placeholder="Masukkan Judul" required>
+                                        </div>
+                                    </div>
+                                    <div class="form-group required row">
+                                        <label for="kategori" class="col-sm-3 control-label">Kategori</label>
+                                        <div class="col-sm-9">
+                                            <select class="form-control" id="kategori" name="kategori">
+                                            <option value="" hidden>Pilih Kategori</option>
+                                            <option value="Kuis">Kuis</option>
+                                            <option value="Survey">Survey</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="form-group required row">
+                                        <label for="pilihan" class="col-sm-3 control-label">Pilihan</label>
+                                        <div class="col-sm-9">
+                                            <select class="form-control" id="pilihan" name="pilihan" required>
+                                            <option value="" hidden>Pilih Pilihan Jawaban</option>
+                                            <option value="Pilihan Ganda">Pilihan Ganda</option>
+                                            <option value="Skala">Skala</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="form-group required row">
+                                        <label for="jawaban" class="col-sm-3 control-label">Jawaban</label>
+                                        <div class="col-sm-9">
+                                            <select class="form-control" id="jawaban" name="jawaban">
+                                            <option value="">-</option>
+                                            <option value="Benar">Benar</option>
+                                            <option value="Salah">Salah</option>
+                                            </select>
+                                        </div>
+                                    </div>
+
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="submit" class="btn btn-primary">Simpan</button>
+                                    <button type="button" class="btn btn-danger" data-dismiss="modal">Batal</button>
+                                </div>
                               </form>
                           </div>
                       </div><!--end modal-->
@@ -189,7 +256,7 @@
                       <h4 class="header-title mt-0">Total</h4>  
                       <h1 class="text-center">2</h1>
                       <h5 class="text-center mb-1 text-muted text-truncate">Pertanyaan</h5>
-                      <!-- <button class="btn btn-success float-right" data-toggle="modal" data-animation="bounce" data-target="#editor-modal"><i class="mdi mdi-plus"></i> Kuesioner</button> -->
+                      <button class="btn btn-success float-right mt-3" data-toggle="modal" data-animation="bounce" data-target="#modal-tambah"><i class="mdi mdi-plus"></i> Pertanyaan</button>
                   </div><!--end card-body-->
               </div><!--end card-->
           </div><!--end col-->
