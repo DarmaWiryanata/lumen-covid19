@@ -6,10 +6,10 @@
       <div class="topbar-left">
           <a href="../projects/projects-index.html" class="logo">
               <span>
-                  <img src="../assets/images/logo-sm.png" alt="logo-small" class="logo-sm">
+                  <img src="{{ url('assets/images/logo-sm.png') }}" alt="logo-small" class="logo-sm">
               </span>
               <span>
-                  <img src="../assets/images/logo-dark.png" alt="logo-large" class="logo-lg">
+                  <img src="{{ url('assets/images/logo-dark.png') }}" alt="logo-large" class="logo-lg">
               </span>
           </a>
       </div><!--topbar-left-->
@@ -36,7 +36,7 @@
               <!-- Navigation Menu-->
               <ul class="navigation-menu">
                 <li class="has-submenu">
-                    <a href="#">
+                    <a href="{{ route('admin.index') }}">
                         <svg class="nav-svg" version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
                         viewBox="0 0 512 512" style="enable-background:new 0 0 512 512;" xml:space="preserve">
                             <g>

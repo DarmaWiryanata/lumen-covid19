@@ -1,7 +1,7 @@
 @extends('master')
 
 @section('title')
-  Dashboard
+  Corona
 @endsection
 
 @section('css')
@@ -24,20 +24,23 @@
                   addRow: function(){
                       $modal.removeData('row');
                       $editor[0].reset();
-                      $editorTitle.text('Tambah Kuesioner');
+                      $editorTitle.text('Tambah Pertanyaan');
                       $modal.modal('show');
                   },
                   editRow: function(row){
                       var values = row.val();
                       $editor.find('#id').val(values.id);
                       $editor.find('#nama').val(values.nama);
+                      $editor.find('#kategori').val(values.kategori);
+                      $editor.find('#pilihan').val(values.pilihan);
+                      $editor.find('#jawaban').val(values.jawaban);
       
                       $modal.data('row', row);
-                      $editorTitle.text('Ubah Kuesioner #' + values.id);
+                      $editorTitle.text('Ubah Pertanyaan #' + values.id);
                       $modal.modal('show');
                   },
                   deleteRow: function(row){
-                      if (confirm('Yakin hapus Kuesioner?')){
+                      if (confirm('Yakin hapus Pertanyaan?')){
                           row.delete();
                       }
                   }
@@ -77,10 +80,11 @@
               <div class="page-title-box">
                   <div class="float-right">
                       <ol class="breadcrumb">
-                          <li class="breadcrumb-item active">Dashboard</li>
+                        <li class="breadcrumb-item"><a href="{{ route('admin.index') }}">Dashboard</a></li>
+                        <li class="breadcrumb-item active">"Nama Kuesioner"</li>
                       </ol><!--end breadcrumb-->
                   </div><!--end /div-->
-                  <h4 class="page-title">Dashboard</h4>
+                  <h4 class="page-title">"Nama Kuesioner"</h4>
               </div><!--end page-title-box-->
           </div><!--end col-->
       </div><!--end row-->
@@ -90,24 +94,33 @@
           <div class="col-lg-10">                                                        
               <div class="card">
                   <div class="card-body">
-                      <h4 class="header-title mt-0">Kasus</h4>
-                      <p class="text-muted mb-3">Daftar kasus</p>
+                      <h4 class="header-title mt-0">Pertanyaan</h4>
+                      <p class="text-muted mb-3">Daftar Pertanyaan</p>
                       <table id="footable-3" class="table mb-0" data-paging="true" data-filtering="true" data-sorting="true">
                           <thead>
                               <tr>
                                   <th data-name="id" data-breakpoints="xs" data-type="number">ID</th>
-                                  <th data-name="nama">Nama</th>
-                                  <th data-name="mulai" data-breakpoints="xs sm" data-type="date" data-format-string="DD-MM-YYYY">Tanggal Mulai</th>
+                                  <th data-name="kategori" data-breakpoints="xs" data-type="text">Kategori</th>
+                                  <th data-name="nama" data-type="text">Nama</th>
+                                  <th data-name="pilihan" data-breakpoints="xs sm md" data-type="text">Jenis Pilihan</th>
+                                  <th data-name="jawaban" data-breakpoints="xs sm md" data-type="text">Jawaban</th>
                               </tr>
                           </thead>
                           <tbody>
-                            @foreach ($kasus as $item)
                                 <tr>
-                                    <td>{{ $item->id }}</td>
-                                    <td>{{ $item->nama }}</td>
-                                    <td>{{ $item->created_at }}</td>
+                                    <td>1</td>
+                                    <td>Kuis</td>
+                                    <td>Siapa nama anda??</td>
+                                    <td>Pilihan Ganda</td>
+                                    <td>Salah</td>
                                 </tr>
-                            @endforeach
+                                <tr>
+                                    <td>2</td>
+                                    <td>Survey</td>
+                                    <td>Siapa nama anda??</a></td>
+                                    <td>Skala</a></td>
+                                    <td>-</a></td>
+                                </tr>
                           </tbody>
                       </table><!--end table-->
 
@@ -117,17 +130,48 @@
                           <div class="modal-dialog" role="document">
                               <form class="modal-content form-horizontal" id="editor">
                                   <div class="modal-header">
-                                      <h5 class="modal-title" id="editor-title">Tambah Kuesioner</h5>
+                                      <h5 class="modal-title" id="editor-title">Tambah Pertanyaan</h5>
                                       <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>                                                            
                                   </div>
                                   <div class="modal-body">
                                       
                                       <div class="form-group required row">
-                                          <label for="nama" class="col-sm-3 control-label">Judul Kuesioner</label>
+                                          <label for="nama" class="col-sm-3 control-label">Pertanyaan</label>
                                           <div class="col-sm-9">
                                               <input type="text" class="form-control" id="nama" name="nama" placeholder="Masukkan Judul" required>
                                           </div>
                                       </div>
+                                      <div class="form-group required row">
+                                          <label for="kategori" class="col-sm-3 control-label">Kategori</label>
+                                          <div class="col-sm-9">
+                                            <select class="form-control" id="kategori" name="kategori">
+                                              <option value="" hidden>Pilih Kategori</option>
+                                              <option value="Kuis">Kuis</option>
+                                              <option value="Survey">Survey</option>
+                                            </select>
+                                          </div>
+                                      </div>
+                                      <div class="form-group required row">
+                                          <label for="pilihan" class="col-sm-3 control-label">Pilihan</label>
+                                          <div class="col-sm-9">
+                                            <select class="form-control" id="pilihan" name="pilihan" required>
+                                              <option value="" hidden>Pilih Pilihan Jawaban</option>
+                                              <option value="Pilihan Ganda">Pilihan Ganda</option>
+                                              <option value="Skala">Skala</option>
+                                            </select>
+                                          </div>
+                                      </div>
+                                      <div class="form-group required row">
+                                          <label for="jawaban" class="col-sm-3 control-label">Jawaban</label>
+                                          <div class="col-sm-9">
+                                            <select class="form-control" id="jawaban" name="jawaban">
+                                              <option value="">-</option>
+                                              <option value="Benar">Benar</option>
+                                              <option value="Salah">Salah</option>
+                                            </select>
+                                          </div>
+                                      </div>
+
                                   </div>
                                   <div class="modal-footer">
                                       <button type="submit" class="btn btn-primary">Simpan</button>
@@ -143,8 +187,8 @@
               <div class="card">
                   <div class="card-body">
                       <h4 class="header-title mt-0">Total</h4>  
-                      <h1 class="text-center">{{ $kasus->count() }}</h1>
-                      <h5 class="text-center mb-1 text-muted text-truncate">Kasus</h5>
+                      <h1 class="text-center">2</h1>
+                      <h5 class="text-center mb-1 text-muted text-truncate">Pertanyaan</h5>
                       <!-- <button class="btn btn-success float-right" data-toggle="modal" data-animation="bounce" data-target="#editor-modal"><i class="mdi mdi-plus"></i> Kuesioner</button> -->
                   </div><!--end card-body-->
               </div><!--end card-->

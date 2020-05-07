@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 
+use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\Facades\View;
 use Illuminate\Support\ServiceProvider;
 
@@ -26,8 +27,10 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        $navBarKasus = Kasus::select('id', 'nama')->get();
-
-        View::share('navBarKasus', $navBarKasus);
+        if (Schema::hasTable('kasus')) {
+            $navBarKasus = Kasus::select('id', 'nama')->get();
+    
+            View::share('navBarKasus', $navBarKasus);
+        }
     }
 }

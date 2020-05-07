@@ -18,8 +18,9 @@ class HomeController extends Controller
 
     function show($id)
     {
-        $kasus = Kasus::findOrFail($id);
+        // $kasus = Kasus::findOrFail($id);
+        $kasus = Kasus::all();
 
-        return view('index');
+        return view('index', compact('kasus'));
     }
 }
