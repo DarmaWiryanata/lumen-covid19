@@ -8,5 +8,5 @@ class Kuesioner extends Model
 {
     protected $table = "kuesioner";
 
-    protected $fillable = ['pertanyaan', 'jawaban', 'kategori', 'status'];
+    protected $fillable = ['kasus_id', 'pertanyaan', 'jawaban', 'kategori', 'status'];
 }

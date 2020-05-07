@@ -16,6 +16,7 @@ class CreateKasusesTable extends Migration
         Schema::create('kasus', function (Blueprint $table) {
             $table->id();
             $table->string('nama', 100);
+            $table->string('slug');
             $table->boolean('status');
             $table->timestamps();
         });
