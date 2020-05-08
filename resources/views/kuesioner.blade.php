@@ -5,9 +5,7 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    {{-- <meta name="description" content="Satisfaction Survey form Wizard by Ansonika.">
-    <meta name="author" content="Ansonika"> --}}
-    <title>Satisfyc | Satisfaction Survey form Wizard</title>
+    <title>"Nama Kuesioner"</title>
 
     <!-- Favicons-->
     <link rel="shortcut icon" href="img/favicon.ico" type="{{ url('kuesioner/image/x-icon') }}">
@@ -43,9 +41,10 @@
 	    <div class="container-fluid">
 	        <div class="row">
 	            <div class="col-5">
-	                <a href="index.html"><img src="img/logo.svg" alt="" width="50" height="55"></a>
-	            </div>
-	            <div class="col-7">
+	                <a href="#"><img src="{{ url('kuesioner/img/logo.svg') }}" alt="" width="50" height="55"></a>
+							</div>
+							{{-- Fitur sebar kuesioner di media sosial --}}
+	            {{-- <div class="col-7">
 	                <div id="social">
 	                    <ul>
 	                        <li><a href="#0"><i class="social_facebook"></i></a></li>
@@ -54,7 +53,7 @@
 	                        <li><a href="#0"><i class="social_linkedin"></i></a></li>
 	                    </ul>
 	                </div>
-	            </div>
+	            </div> --}}
 	        </div>
 	        <!-- /row -->
 	    </div>
@@ -68,9 +67,9 @@
 	            <div class="row justify-content-between">
 	                <div class="col-xl-6 col-lg-6 d-flex align-items-center">
 	                    <div class="main_title_1">
-	                        <h3><img src="img/main_icon_1.svg" width="80" height="80" alt=""> Survey</h3>
-	                        <p>An mei sadipscing dissentiet, eos ea partem viderer facilisi. Brute nostrud democritum in vis, nam ei erat zril mediocrem. No postea diceret vix.</p>
-	                        <p><em>- The Satisfyc Team</em></p>
+	                        <h3><img src="{{ url('kuesioner/img/main_icon_1.svg') }}" width="80" height="80" alt=""> Survey</h3>
+	                        <p>"Nama Kuesioner"</p>
+	                        {{-- <p><em>- The Satisfyc Team</em></p> --}}
 	                    </div>
 	                </div>
 	                <!-- /col -->
@@ -90,48 +89,44 @@
 	                                    <div class="review_block_smiles">
 	                                    	<ul class="clearfix">
 	                                    		<li>
-	                                    			 <div class="container_smile">
-	                                                    <input type="radio" id="very_bad_1" name="question_1" class="required" value="Very bad<" onchange="getVals(this, 'question_1');">
-	                                                    <label class="radio smile_1" for="very_bad_1"><span>Very bad</span></label>
-	                                                </div>
-	                                    		</li>
-	                                    		<li>
-	                                    		 <div class="container_smile">
-	                                                    <input type="radio" id="bad_1" name="question_1" class="required" value="Bad" onchange="getVals(this, 'question_1');">
-	                                                    <label class="radio smile_2" for="bad_1"><span>Bad</span></label>
-	                                                </div>
-	                                    		</li>
-	                                    		<li>
-	                                                <div class="container_smile">
-	                                                    <input type="radio" id="average_1" name="question_1" class="required" value="Average" onchange="getVals(this, 'question_1');">
-	                                                    <label class="radio smile_3" for="average_1"><span>Average</span></label>
-	                                                </div>
-	                                            </li>
-	                                            <li>
-	                                                <div class="container_smile">
-	                                                    <input type="radio" id="good_1" name="question_1" class="required" value="Good" onchange="getVals(this, 'question_1');">
-	                                                    <label class="radio smile_4" for="good_1"><span>Good</span></label>
-	                                                </div>
-	                                            </li>
-	                                            <li>
-	                                                <div class="container_smile">
-	                                                    <input type="radio" id="very_good_1" name="question_1" class="required" value="Very Good" onchange="getVals(this, 'question_1');">
-	                                                    <label class="radio smile_5" for="very_good_1"><span>Very Good</span></label>
-	                                                </div>
-	                                            </li>
+                                                    <div class="container_numbers">
+                                                        <input type="radio" id="very_bad_1" name="#" class="required" value="1">
+                                                        <label class="radio very_bad" for="very_bad_1">1</label>
+                                                    </div>
+                                                </li>
+                                                <li>
+                                                    <div class="container_numbers">
+                                                        <input type="radio" id="bad_1" name="#" class="required" value="2">
+                                                        <label class="radio bad" for="bad_1">2</label>
+                                                    </div>
+                                                </li>
+                                                <li>
+                                                    <div class="container_numbers">
+                                                        <input type="radio" id="average_1" name="#" class="required" value="3">
+                                                        <label class="radio average" for="average_1">3</label>
+                                                    </div>
+                                                </li>
+                                                <li>
+                                                    <div class="container_numbers">
+                                                        <input type="radio" id="good_1" name="#" class="required" value="4">
+                                                        <label class="radio good" for="good_1">4</label>
+                                                    </div>
+                                                </li>
+                                                <li>
+                                                    <div class="container_numbers">
+                                                        <input type="radio" id="very_good_1" name="#" class="required" value="5">
+                                                        <label class="radio very_good" for="very_good_1">5</label>
+                                                    </div>
+                                                </li>
 	                                    	</ul>
 	                                    	<div class="row justify-content-between add_bottom_25">
 	                                    		<div class="col-4">
-	                                    			<em>Very Bad</em>
+	                                    			<em>Sangat Tidak Pernah</em>
 	                                    		</div>
 	                                    		<div class="col-4 text-right">
-	                                    			<em>Excellent</em>
+	                                    			<em>Sangat Sering</em>
 	                                    		</div>
 	                                    	</div>
-	                                    </div>
-	                                    <div class="form-group">
-	                                        <label for="additional_message_label">Your Review</label>
-	                                        <textarea name="additional_message" id="additional_message_label" class="form-control" style="height:180px;" onkeyup="getVals(this, 'additional_message');"></textarea>
 	                                    </div>
 	                                </div>
 	                                <!-- /step 1-->
@@ -142,30 +137,23 @@
 	                                        <ul>
 	                                            <li>
 	                                                <div class="checkbox_radio_container">
-	                                                    <input type="radio" id="no" name="question_2" class="required" value="No" onchange="getVals(this, 'question_2');">
+	                                                    <input type="radio" id="no" name="#" class="required" value="0">
 	                                                    <label class="radio" for="no"></label>
 	                                                    <label for="no" class="wrapper">No</label>
 	                                                </div>
 	                                            </li>
 	                                            <li>
 	                                                <div class="checkbox_radio_container">
-	                                                    <input type="radio" id="maybe" name="question_2" class="required" value="Maybe" onchange="getVals(this, 'question_2');">
+	                                                    <input type="radio" id="maybe" name="#" class="required" value="Maybe" onchange="getVals(this, 'question_2');">
 	                                                    <label class="radio" for="maybe"></label>
 	                                                    <label for="maybe" class="wrapper">Maybe</label>
 	                                                </div>
 	                                            </li>
 	                                            <li>
 	                                                <div class="checkbox_radio_container">
-	                                                    <input type="radio" id="probably" name="question_2" class="required" value="Probably" onchange="getVals(this, 'question_2');">
+	                                                    <input type="radio" id="probably" name="#" class="required" value="Probably" onchange="getVals(this, 'question_2');">
 	                                                    <label class="radio" for="probably"></label>
 	                                                    <label for="probably" class="wrapper">Probably</label>
-	                                                </div>
-	                                            </li>
-	                                            <li>
-	                                                <div class="checkbox_radio_container">
-	                                                    <input type="radio" id="sure" name="question_2" class="required" value="Sure" onchange="getVals(this, 'question_2');">
-	                                                    <label class="radio" for="sure"></label>
-	                                                    <label for="sure" class="wrapper">100% Sure</label>
 	                                                </div>
 	                                            </li>
 	                                        </ul>
@@ -323,14 +311,14 @@
 	                <div class="col-md-3">
 	                    ©2020 Satisfyc
 	                </div>
-	                <div class="col-md-9">
+	                {{-- <div class="col-md-9">
 	                    <ul class="clearfix">
 	                        <li><a href="#0" class="animated_link">Purchase this template</a></li>
 	                        <li><a href="index.html" class="animated_link">Demo 1</a></li>
 	                        <li><a href="index-2.html" class="animated_link">Demo 2</a></li>
 	                        <li><a href="index-3.html" class="animated_link">Demo 3</a></li>
 	                    </ul>
-	                </div>
+	                </div> --}}
 	            </div>
 	            <!-- /row -->
 	        </div>
