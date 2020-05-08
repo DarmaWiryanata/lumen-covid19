@@ -11,42 +11,57 @@
 @section('js')
   <script src="{{ url('assets/plugins/footable/js/footable.js') }}"></script>
   <script>
+      jQuery(function($){
+            // $('#footable-3').footable();
+            $( "#footable-3 tbody tr td button" ).on( "click", function() {
+              var id = $(this).attr('data-value');
+              $.get( "/kuesione/edit/" + id, function( data ) {
+                console.log(JSON.parse(data));
+                var d = JSON.parse(data);
+                $('#id').val(d[0].id);
+                $('.cek-pertanyaan').val(d[0].pertanyaan);
+                $('.cek-kategori option[value="'+d[0].kategori+'"]').attr('selected', 'selected');
+                $('.cek-jawaban option[value="'+d[0].jawaban+'"]').attr('selected', 'selected');
+              });
+              console.log($(this).attr('data-value'));
+            });
+        });
       $(function () {
-          "use strict";
           
           /*Editing FooTable*/
           var $modal = $('#editor-modal'),
         //   var $modal2 = $('#editor-modal2'),
           $editor = $('#editor'),
           $editorTitle = $('#editor-title'),
-          ft = FooTable.init('#footable-3', {
-              editing: {
-                  enabled: false,
-                  addRow: function(){
-                      $modal.removeData('row');
-                      $editor[0].reset();
-                      $editorTitle.text('Tambah Pertanyaan');
-                      $modal.modal('show');
-                  },
-                  editRow: function(row){
-                      var values = row.val();
-                      $editor.find('#id').val(values.id);
-                      $editor.find('#nama').val(values.nama);
-                      $editor.find('#kategori').val(values.kategori);
-                      $editor.find('#pilihan').val(values.pilihan);
-                      $editor.find('#jawaban').val(values.jawaban);
+        //   $('#footable-3').footable();
+        //   fooTable.init('#footable-3', {
+            //   editing: {
+            //       enabled: false,
+                //   addRow: function(){
+                //       $modal.removeData('row');
+                //       $editor[0].reset();
+                //       $editorTitle.text('Tambah Pertanyaan');
+                //       $modal.modal('show');
+                //   },
+                //   editRow: function(row){
+                //       var values = row.val();
+                //       $editor.find('#id').val(values.id);
+                //       $editor.find('#nama').val(values.nama);
+                //       $editor.find('#kategori').val(values.kategori);
+                //       $editor.find('#pilihan').val(values.pilihan);
+                //       $editor.find('#jawaban').val(values.jawaban);
       
-                      $modal.data('row', row);
-                      $editorTitle.text('Ubah Pertanyaan #' + values.id);
-                      $modal2.modal('show');
-                  },
-                  deleteRow: function(row){
-                      if (confirm('Yakin hapus Pertanyaan?')){
-                          row.delete();
-                      }
-                  }
-              }
-          }),
+                //       $modal.data('row', row);
+                //       $editorTitle.text('Ubah Pertanyaan #' + values.id);
+                //       $modal2.modal('show');
+                //   },
+                //   deleteRow: function(row){
+                //       if (confirm('Yakin hapus Pertanyaan?')){
+                //           row.delete();
+                //       }
+                //   }
+            //   }
+        //   }),
           uid = 10;
       
         //   $editor.on('submit', function(e){
@@ -66,20 +81,14 @@
         //       };
         //       $modal.modal('hide');
         //   });
-
-        $( "#footable-3 tbody tr td button" ).on( "click", function() {
-          var id = $(this).attr('data-value');
-          $.get( "#" + id, function( data ) {
-            console.log(JSON.parse(data));
-            var d = JSON.parse(data);
-            $('#id').val(#);
-            $('#nama').text(#);
-            $("div.kategori select").val(#);
-            $("div.pilihan select").val(#);
-            $("div.jawaban select").val(#);
-        });
+        
       });
-  </script> 
+  </script>
+  <script type="text/javascript">
+    $(document).ready( function () {
+      
+    });
+  </script>
 @endsection
 
 @section('content')
@@ -93,11 +102,11 @@
               <div class="page-title-box">
                   <div class="float-right">
                       <ol class="breadcrumb">
-                        <li class="breadcrumb-item"><a href="{{ route('admin.index') }}">Dashboard</a></li>
-                        <li class="breadcrumb-item active">"Nama Kuesioner"</li>
+                        <li class="breadcrumb-item"><a href="{{ route('kasus.index') }}">Kasus</a></li>
+                        <li class="breadcrumb-item active">{{ $kasus->nama }}</li>
                       </ol><!--end breadcrumb-->
                   </div><!--end /div-->
-                  <h4 class="page-title">"Nama Kuesioner"</h4>
+                  <h4 class="page-title">{{ $kasus->nama }}</h4>
               </div><!--end page-title-box-->
           </div><!--end col-->
       </div><!--end row-->
@@ -109,45 +118,34 @@
                   <div class="card-body">
                       <h4 class="header-title mt-0">Pertanyaan</h4>
                       <p class="text-muted mb-3">Daftar Pertanyaan</p>
-                      <table id="footable-3" class="table mb-0" data-paging="true" data-filtering="true" data-sorting="true">
+                      <table id="footable-3" class="table mb-0 cek-tabel" data-paging="true" data-filtering="true" data-sorting="true">
                           <thead>
                               <tr>
                                   <th data-breakpoints="xs">ID</th>
+                                  <th>Pertanyaan</th>
                                   <th data-breakpoints="xs">Kategori</th>
-                                  <th data-type="text">Nama</th>
-                                  <th data-breakpoints="xs sm md">Jenis Pilihan</th>
                                   <th data-breakpoints="xs sm md">Jawaban</th>
-                                  <th data-type="text">Aksi</th>
+                                  <th data-breakpoints="xs">Aksi</th>
                               </tr>
                           </thead>
-                          <tbody>
+                          <tbody id="user-list">
+                            @foreach ($kuesioner as $item)
                                 <tr>
-                                    <td>1</td>
-                                    <td>Kuis</td>
-                                    <td>Siapa nama anda??</td>
-                                    <td>Pilihan Ganda</td>
-                                    <td>Salah</td>
+                                    <td>{{ $loop->iteration }}</td>
+                                    <td>{{ $item->pertanyaan }}</td>
+                                    <td>{{ $item->kategori }}</td>
+                                    <td>{{ $item->jawaban }}</td>
                                     <td>
-                                        <button class="btn btn-primary"data-toggle="modal" data-animation="bounce" data-target="#modal-edit" data-value="1"><i class="mdi mdi-pencil-box-outline"></i></button>
+                                        <button class="btn btn-primary ml-2" data-toggle="modal" data-target="#modal-edit" data-value="{{ $item->id }}"><i class="mdi mdi-pencil-box-outline"></i></button>
                                         <a href="#" class="btn btn-danger ml-2"><i class="mdi mdi-delete"></i></a>
                                     </td>
                                 </tr>
-                                <tr>
-                                    <td>2</td>
-                                    <td>Survey</td>
-                                    <td>Siapa nama anda??</a></td>
-                                    <td>Skala</a></td>
-                                    <td>-</a></td>
-                                    <td>
-                                        <button class="btn btn-primary"data-toggle="modal" data-animation="bounce" data-target="#modal-edit" data-value="2"><i class="mdi mdi-pencil-box-outline"></i></button>
-                                        <a href="#" class="btn btn-danger ml-2"><i class="mdi mdi-delete"></i></a>
-                                    </td>
-                                </tr>
+                            @endforeach
                           </tbody>
                       </table><!--end table-->
 
                       {{-- tabel Tambah --}}
-                      <div class="modal fade" id="editor-modal" tabindex="-1" role="dialog" aria-labelledby="editor-title">
+                      <div class="modal fade" id="modal-tambah" tabindex="-1" role="dialog" aria-labelledby="editor-title">
                       
                           <div class="modal-dialog" role="document">
                               <form class="modal-content form-horizontal" id="editor">
@@ -158,9 +156,9 @@
                                 <div class="modal-body">
                                     
                                     <div class="form-group required row">
-                                        <label for="nama" class="col-sm-3 control-label">Pertanyaan</label>
+                                        <label for="pertanyaan" class="col-sm-3 control-label">Pertanyaan</label>
                                         <div class="col-sm-9">
-                                            <input type="text" class="form-control" id="nama" name="nama" placeholder="Masukkan Judul" required>
+                                            <input type="text" class="form-control" id="pertanyaan" name="pertanyaan" placeholder="Masukkan Judul" required>
                                         </div>
                                     </div>
                                     <div class="form-group required row">
@@ -170,16 +168,6 @@
                                             <option value="" hidden>Pilih Kategori</option>
                                             <option value="Kuis">Kuis</option>
                                             <option value="Survey">Survey</option>
-                                            </select>
-                                        </div>
-                                    </div>
-                                    <div class="form-group required row">
-                                        <label for="pilihan" class="col-sm-3 control-label">Pilihan</label>
-                                        <div class="col-sm-9">
-                                            <select class="form-control" id="pilihan" name="pilihan" required>
-                                            <option value="" hidden>Pilih Pilihan Jawaban</option>
-                                            <option value="Pilihan Ganda">Pilihan Ganda</option>
-                                            <option value="Skala">Skala</option>
                                             </select>
                                         </div>
                                     </div>
@@ -204,10 +192,10 @@
                       </div><!--end modal-->
 
                       {{-- Tabel Edit --}}
-                      <div class="modal fade" id="modal-edit" tabindex="-1" role="dialog" aria-labelledby="editor-title">
+                      <div class="modal fade" id="modal-edit">
                       
-                          <div class="modal-dialog" role="document">
-                              <form class="modal-content form-horizontal" id="editor">
+                          <div class="modal-dialog">
+                              <form class="modal-content form-horizontal">
                                 <div class="modal-header">
                                     <h5 class="modal-title">Ubah Pertanyaan</h5>
                                     <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>                                                            
@@ -215,37 +203,27 @@
                                 <div class="modal-body">
                                     
                                     <input type="text" class="form-control" id="id" name="id" value="" required>
-                                    <div class="form-group required row">
-                                        <label for="nama" class="col-sm-3 control-label">Pertanyaan</label>
+                                    <div class="form-group row">
+                                        <label for="pertanyaan" class="col-sm-3 control-label">Pertanyaan</label>
                                         <div class="col-sm-9">
-                                            <input type="text" class="form-control" id="nama" name="nama" placeholder="Masukkan Judul" value="" required>
+                                            <input type="text" class="form-control cek-pertanyaan" name="pertanyaan" placeholder="Masukkan Judul" value="" required>
                                         </div>
                                     </div>
-                                    <div class="form-group required row">
+                                    <div class="form-group row">
                                         <label for="kategori" class="col-sm-3 control-label">Kategori</label>
-                                        <div id="kategori" class="col-sm-9">
+                                        <div class="col-sm-9 cek-kategori">
                                             <select class="form-control" name="kategori">
                                                 <option value="" hidden>Pilih Kategori</option>
-                                                <option value="0">Kuis</option>
-                                                <option value="1">Survey</option>
+                                                <option value="1">Kuis</option>
+                                                <option value="2">Survey</option>
                                             </select>
                                         </div>
                                     </div>
-                                    <div class="form-group required row">
-                                        <label for="pilihan" class="col-sm-3 control-label">Pilihan</label>
-                                        <div id="pilihan" class="col-sm-9">
-                                            <select class="form-control" name="pilihan" required>
-                                            <option value="" hidden>Pilih Pilihan Jawaban</option>
-                                            <option value="0">Pilihan Ganda</option>
-                                            <option value="1">Skala</option>
-                                            </select>
-                                        </div>
-                                    </div>
-                                    <div class="form-group required row">
+                                    <div class="form-group row">
                                         <label for="jawaban" class="col-sm-3 control-label">Jawaban</label>
-                                        <div id="jawaban" class="col-sm-9">
+                                        <div class="col-sm-9 cek-jawaban">
                                             <select class="form-control" name="jawaban">
-                                            <option value="">-</option>
+                                            <option value=null>-</option>
                                             <option value="1">Benar</option>
                                             <option value="2">Salah</option>
                                             </select>
@@ -267,7 +245,7 @@
               <div class="card">
                   <div class="card-body">
                       <h4 class="header-title mt-0">Total</h4>  
-                      <h1 class="text-center">2</h1>
+                      <h1 class="text-center">{{$kuesioner->count()}}</h1>
                       <h5 class="text-center mb-1 text-muted text-truncate">Pertanyaan</h5>
                       <button class="btn btn-success float-right mt-3" data-toggle="modal" data-animation="bounce" data-target="#modal-tambah"><i class="mdi mdi-plus"></i> Pertanyaan</button>
                   </div><!--end card-body-->

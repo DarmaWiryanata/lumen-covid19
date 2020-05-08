@@ -36,7 +36,7 @@
               <!-- Navigation Menu-->
               <ul class="navigation-menu">
                 <li class="has-submenu">
-                    <a href="{{ route('admin.index') }}">
+                    <a href="{{ route('kasus.index') }}">
                         <svg class="nav-svg" version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
                         viewBox="0 0 512 512" style="enable-background:new 0 0 512 512;" xml:space="preserve">
                             <g>
@@ -62,7 +62,7 @@
                     </a>
                     <ul class="submenu">
                         @foreach ($navBarKasus as $item)
-                            <li><a href="{{ $item->id }}"><i class="dripicons-dot"></i>{{ $item->nama }}</a></li>
+                            <li><a href="{{ route('kuesioner.index', ['id' => $item->id]) }}"><i class="dripicons-dot"></i>{{ $item->nama }}</a></li>
                         @endforeach
                     </ul>
                 </li><!--end submenu-->

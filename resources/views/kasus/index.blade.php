@@ -86,7 +86,7 @@
               <div class="page-title-box">
                   <div class="float-right">
                       <ol class="breadcrumb">
-                          <li class="breadcrumb-item active">Dashboard</li>
+                          <li class="breadcrumb-item active">Kasus</li>
                       </ol><!--end breadcrumb-->
                   </div><!--end /div-->
                   <h4 class="page-title">Dashboard</h4>

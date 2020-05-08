@@ -19,21 +19,17 @@ $router->get('/key', function() {
     return Str::random(32);
 });
 
-$router->group(['prefix' => 'admin'], function () use ($router) {
+$router->get('/', ['as' => 'index', 'uses' => 'HomeController@index']);
 
-    $router->get('/', [
-        'as' => 'admin.index', 'uses' => 'HomeController@index'
-    ]);
+$router->group(['prefix' => 'kasus'], function () use ($router) {
+    $router->get('/', ['as' => 'kasus.index', 'uses' => 'KasusController@index']);
+});
 
-    $router->get('/{id}', [
-        'as' => 'admin.show', 'uses' => 'HomeController@show'
-    ]);
-    
+$router->group(['prefix' => 'kuesione'], function () use ($router) {
+    $router->get('/{id}', ['as' => 'kuesioner.index', 'uses' => 'KuesionerController@index']);
+    $router->get('/edit/{id}', ['as' => 'kuesioner.edit', 'uses' => 'KuesionerController@edit']);
 });
 
 $router->get('/tes', function() {
     return view('show');
-});
-$router->get('/tes2', function() {
-    return view('kuesioner');
 });

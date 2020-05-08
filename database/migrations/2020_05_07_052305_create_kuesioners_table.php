@@ -17,7 +17,7 @@ class CreateKuesionersTable extends Migration
             $table->id();
             $table->integer('kasus_id');
             $table->text('pertanyaan');
-            $table->text('jawaban')->nullable();
+            $table->boolean('jawaban')->nullable();
             $table->boolean('kategori');
             $table->boolean('status');
             $table->timestamps();
