@@ -20,6 +20,7 @@ $router->get('/key', function() {
 });
 
 $router->get('/', ['as' => 'index', 'uses' => 'HomeController@index']);
+$router->post('/', ['as' => 'store', 'uses' => 'HomeController@store']);
 
 $router->group(['prefix' => 'kasus'], function () use ($router) {
     $router->get('/', ['as' => 'kasus.index', 'uses' => 'KasusController@index']);

@@ -88,28 +88,28 @@
 										@if ($item->kategori == 1)
 											<div class="step">
 												<h3 class="main_question mb-4"><strong>Kuis - {{ $loop->iteration }} dari 30</strong>{{ $item->pertanyaan }}</h3>
-												<input type="text" id="kategori-{{ $loop->iteration }}" name="respons[{{ $loop->iteration }}][kategori]" value="1" hidden>
-												<input type="text" id="pertanyaan-{{ $loop->iteration }}" name="respons[{{ $loop->iteration }}][kuesioner_id]" value="{{ $item->id }}" hidden>
+												<input type="text" id="kategori-{{ $loop->iteration }}" name="kategori[]" value="1" hidden>
+												<input type="text" id="kategori-{{ $loop->iteration }}" name="kategori[]" value="1" hidden>
 												<div class="review_block">
 													<ul>
 														<li>
 															<div class="checkbox_radio_container">
-																<input type="radio" id="jawaban1-{{ $loop->iteration }}" name="respons[{{ $loop->iteration }}][jawaban]" class="required" value="1" autofocus>
-																<label class="radio" for="jawaban1-{{ $loop->iteration }}"></label>
+																<input type="radio" id="jawaban-{{ $loop->iteration }}a" name="jawaban[]" class="required" value="1" onchange="getVals(this, 'jawaban[]');" autofocus>
+																<label class="radio" for="jawaban-{{ $loop->iteration }}a"></label>
 																<label for="jawaban-{{ $loop->iteration }}a" class="wrapper">Benar</label>
 															</div>
 														</li>
 														<li>
 															<div class="checkbox_radio_container">
-																<input type="radio" id="jawaban2-{{ $loop->iteration }}" name="respons[{{ $loop->iteration }}][jawaban]" class="required" value="2">
-																<label class="radio" for="jawaban2-{{ $loop->iteration }}"></label>
+																<input type="radio" id="jawaban-{{ $loop->iteration }}b" name="jawaban[]" class="required" value="2" onchange="getVals(this, 'jawaban[]');">
+																<label class="radio" for="jawaban-{{ $loop->iteration }}b"></label>
 																<label for="jawaban-{{ $loop->iteration }}b" class="wrapper">Salah</label>
 															</div>
 														</li>
 														<li>
 															<div class="checkbox_radio_container">
-																<input type="radio" id="jawaban3-{{ $loop->iteration }}" name="respons[{{ $loop->iteration }}][jawaban]" class="required" value="3">
-																<label class="radio" for="jawaban3-{{ $loop->iteration }}"></label>
+																<input type="radio" id="jawaban-{{ $loop->iteration }}c" name="jawaban[]" class="required" value="3" onchange="getVals(this, 'jawaban[]');">
+																<label class="radio" for="jawaban-{{ $loop->iteration }}c"></label>
 																<label for="jawaban-{{ $loop->iteration }}c" class="wrapper">Tidak tahu</label>
 															</div>
 														</li>
@@ -120,38 +120,37 @@
 										@elseif ($item->kategori == 2)
 											<div class="step">
 												<h3 class="main_question mb-4"><strong>Survey - {{ $loop->iteration }} dari 30</strong>{{ $item->pertanyaan }}</h3>
-												<input type="text" id="kategori-{{ $loop->iteration }}" name="respons[{{ $loop->iteration }}][kategori]" value="2" hidden>
-												<input type="text" id="pertanyaan-{{ $loop->iteration }}" name="respons[{{ $loop->iteration }}][kuesioner_id]" value="{{ $item->id }}" hidden>
+												<input type="text" id="kategori-{{ $loop->iteration }}" name="kategori[]" value="2" hidden>
 												<div class="review_block_smiles">
 													<ul class="clearfix">
 														<li>
 															<div class="container_numbers">
-																<input type="radio" id="jawaban1-{{ $loop->iteration }}" name="respons[{{ $loop->iteration }}][jawaban]" class="required" value="1" autofocus>
-																<label class="radio very_bad" for="jawaban1-{{ $loop->iteration }}">1</label>
+																<input type="radio" id="jawaban-{{ $loop->iteration }}a" name="jawaban[]" class="required" value="1" autofocus>
+																<label class="radio very_bad" for="jawaban-{{ $loop->iteration }}a">1</label>
 															</div>
 														</li>
 														<li>
 															<div class="container_numbers">
-																<input type="radio" id="jawaban2-{{ $loop->iteration }}" name="respons[{{ $loop->iteration }}][jawaban]" class="required" value="2">
-																<label class="radio bad" for="jawaban2-{{ $loop->iteration }}">2</label>
+																<input type="radio" id="jawaban-{{ $loop->iteration }}b" name="jawaban[]" class="required" value="2">
+																<label class="radio bad" for="jawaban-{{ $loop->iteration }}b">2</label>
 															</div>
 														</li>
 														<li>
 															<div class="container_numbers">
-																<input type="radio" id="jawaban3-{{ $loop->iteration }}" name="respons[{{ $loop->iteration }}][jawaban]" class="required" value="3">
-																<label class="radio average" for="jawaban3-{{ $loop->iteration }}">3</label>
+																<input type="radio" id="jawaban-{{ $loop->iteration }}c" name="jawaban[]" class="required" value="3">
+																<label class="radio average" for="jawaban-{{ $loop->iteration }}c">3</label>
 															</div>
 														</li>
 														<li>
 															<div class="container_numbers">
-																<input type="radio" id="jawaban4-{{ $loop->iteration }}" name="respons[{{ $loop->iteration }}][jawaban]" class="required" value="4">
-																<label class="radio good" for="jawaban4-{{ $loop->iteration }}">4</label>
+																<input type="radio" id="jawaban-{{ $loop->iteration }}d" name="jawaban[]" class="required" value="4">
+																<label class="radio good" for="jawaban-{{ $loop->iteration }}d">4</label>
 															</div>
 														</li>
 														<li>
 															<div class="container_numbers">
-																<input type="radio" id="jawaban5-{{ $loop->iteration }}" name="respons[{{ $loop->iteration }}][jawaban]" class="required" value="5">
-																<label class="radio very_good" for="jawaban5-{{ $loop->iteration }}">5</label>
+																<input type="radio" id="jawaban-{{ $loop->iteration }}e" name="jawaban[]" class="required" value="5">
+																<label class="radio very_good" for="jawaban-{{ $loop->iteration }}e">5</label>
 															</div>
 														</li>
 													</ul>
