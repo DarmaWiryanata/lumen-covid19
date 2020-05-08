@@ -66,6 +66,18 @@
         //       };
         //       $modal.modal('hide');
         //   });
+
+        $( "#footable-3 tbody tr td button" ).on( "click", function() {
+          var id = $(this).attr('data-value');
+          $.get( "#" + id, function( data ) {
+            console.log(JSON.parse(data));
+            var d = JSON.parse(data);
+            $('#id').val(#);
+            $('#nama').text(#);
+            $("div.kategori select").val(#);
+            $("div.pilihan select").val(#);
+            $("div.jawaban select").val(#);
+        });
       });
   </script> 
 @endsection
@@ -202,39 +214,40 @@
                                 </div>
                                 <div class="modal-body">
                                     
+                                    <input type="text" class="form-control" id="id" name="id" value="" required>
                                     <div class="form-group required row">
                                         <label for="nama" class="col-sm-3 control-label">Pertanyaan</label>
                                         <div class="col-sm-9">
-                                            <input type="text" class="form-control" id="nama" name="nama" placeholder="Masukkan Judul" required>
+                                            <input type="text" class="form-control" id="nama" name="nama" placeholder="Masukkan Judul" value="" required>
                                         </div>
                                     </div>
                                     <div class="form-group required row">
                                         <label for="kategori" class="col-sm-3 control-label">Kategori</label>
-                                        <div class="col-sm-9">
-                                            <select class="form-control" id="kategori" name="kategori">
-                                            <option value="" hidden>Pilih Kategori</option>
-                                            <option value="Kuis">Kuis</option>
-                                            <option value="Survey">Survey</option>
+                                        <div id="kategori" class="col-sm-9">
+                                            <select class="form-control" name="kategori">
+                                                <option value="" hidden>Pilih Kategori</option>
+                                                <option value="0">Kuis</option>
+                                                <option value="1">Survey</option>
                                             </select>
                                         </div>
                                     </div>
                                     <div class="form-group required row">
                                         <label for="pilihan" class="col-sm-3 control-label">Pilihan</label>
-                                        <div class="col-sm-9">
-                                            <select class="form-control" id="pilihan" name="pilihan" required>
+                                        <div id="pilihan" class="col-sm-9">
+                                            <select class="form-control" name="pilihan" required>
                                             <option value="" hidden>Pilih Pilihan Jawaban</option>
-                                            <option value="Pilihan Ganda">Pilihan Ganda</option>
-                                            <option value="Skala">Skala</option>
+                                            <option value="0">Pilihan Ganda</option>
+                                            <option value="1">Skala</option>
                                             </select>
                                         </div>
                                     </div>
                                     <div class="form-group required row">
                                         <label for="jawaban" class="col-sm-3 control-label">Jawaban</label>
-                                        <div class="col-sm-9">
-                                            <select class="form-control" id="jawaban" name="jawaban">
+                                        <div id="jawaban" class="col-sm-9">
+                                            <select class="form-control" name="jawaban">
                                             <option value="">-</option>
-                                            <option value="Benar">Benar</option>
-                                            <option value="Salah">Salah</option>
+                                            <option value="1">Benar</option>
+                                            <option value="2">Salah</option>
                                             </select>
                                         </div>
                                     </div>

@@ -45,23 +45,32 @@
           }),
           uid = 10;
       
-          $editor.on('submit', function(e){
-              if (this.checkValidity && !this.checkValidity()) return;
-              e.preventDefault();
-              var row = $modal.data('row'),
-                  values = {
-                      id: $editor.find('#id').val(),
-                      nama: $editor.find('#nama').val(),
-                  };
+        //   $editor.on('submit', function(e){
+        //       if (this.checkValidity && !this.checkValidity()) return;
+        //       e.preventDefault();
+        //       var row = $modal.data('row'),
+        //           values = {
+        //               id: $editor.find('#id').val(),
+        //               nama: $editor.find('#nama').val(),
+        //           };
           
-              if (row instanceof FooTable.Row){
-                  row.val(values);
-              } else {
-                  values.id = uid++;
-                  ft.rows.add(values);
-              };
-              $modal.modal('hide');
-          });
+        //       if (row instanceof FooTable.Row){
+        //           row.val(values);
+        //       } else {
+        //           values.id = uid++;
+        //           ft.rows.add(values);
+        //       };
+        //       $modal.modal('hide');
+        //   });
+        
+        $( "#footable-3 tbody tr td button" ).on( "click", function() {
+          var id = $(this).attr('data-value');
+          $.get( "#" + id, function( data ) {
+            console.log(JSON.parse(data));
+            var d = JSON.parse(data);
+            $('#id').val(#);
+            $('#nama').text(#);
+        });
       });
   </script> 
 @endsection
@@ -120,7 +129,7 @@
                       <div class="modal fade" id="modal-edit" tabindex="-1" role="dialog" aria-labelledby="editor-title">
                       
                           <div class="modal-dialog" role="document">
-                              <form class="modal-content form-horizontal" id="editor">
+                              <form class="modal-content form-horizontal" id="editor" action="POST">
                                   <div class="modal-header">
                                       <h5 class="modal-title" id="editor-title">Ubah Kuesioner</h5>
                                       <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>                                                            
@@ -128,10 +137,11 @@
                                   <div class="modal-body">
                                       
                                       <div class="form-group required row">
-                                          <label for="nama" class="col-sm-3 control-label">Judul Kuesioner</label>
-                                          <div class="col-sm-9">
-                                              <input type="text" class="form-control" id="nama" name="nama" placeholder="Masukkan Judul" required>
-                                          </div>
+                                        <input type="text" id="id" name="id" value="">
+                                        <label for="nama" class="col-sm-3 control-label">Judul Kuesioner</label>
+                                        <div class="col-sm-9">
+                                          <input type="text" class="form-control" id="nama" name="nama" placeholder="Masukkan Judul"  required>
+                                        </div>
                                       </div>
                                   </div>
                                   <div class="modal-footer">
