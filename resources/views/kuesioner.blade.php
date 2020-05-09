@@ -169,10 +169,10 @@
 										@endif
 									@endforeach
 
-	                                <div class="submit step">
-	                                    <h3 class="main_question"><strong>Responden</strong>Isi sesuai form</h3>
-	                                    <div class="form-group">
-	                                        <label for="pendidikan_terakhir">Pendidikan Terakhir</label>
+							<div class="submit step">
+									<h3 class="main_question"><strong>Responden</strong>Isi sesuai form</h3>
+									<div class="form-group">
+											<label for="pendidikan_terakhir">Pendidikan Terakhir</label>
 											<select name="pendidikan_terakhir" id="pendidikan_terakhir" class="form-control required" autofocus>
 												<option value="" hidden>--Pilih pendidikan terakhir</option>
 												<option value="Tidak sekolah">Tidak sekolah</option>
@@ -187,9 +187,9 @@
 												<option value="S2">S2</option>
 												<option value="S3">S3</option>
 											</select>
-	                                    </div>
-	                                    <div class="form-group">
-	                                        <label for="pekerjaan">Pekerjaan</label>
+										</div>
+										<div class="form-group">
+											<label for="pekerjaan">Pekerjaan</label>
 											<select name="pekerjaan" id="pekerjaan" class="form-control required">
 												<option value="" hidden>--Pilih pekerjaan</option>
 												<option value="Tidak sekolah">Tidak sekolah</option>
@@ -211,10 +211,6 @@
 													<label for="provinsi">Provinsi</label>
 													<select name="provinsi" id="provinsi" class="form-control required">
 														<option value="" hidden>--Pilih provinsi</option>
-														<option value="Tidak sekolah">Tidak sekolah</option>
-														<option value="SD/sederajat">SD/sederajat</option>
-														<option value="SMP/sederajat">SMP/sederajat</option>
-														<option value="SMA/sederajat">SMA/sederajat</option>
 													</select>
 												</div>
 											</div>
@@ -223,10 +219,6 @@
 													<label for="kabupaten">Kabupaten/kota</label>
 													<select name="kabupaten" id="kabupaten" class="form-control required">
 														<option value="" hidden>--Pilih kabupaten/kota</option>
-														<option value="Tidak sekolah">Tidak sekolah</option>
-														<option value="SD/sederajat">SD/sederajat</option>
-														<option value="SMP/sederajat">SMP/sederajat</option>
-														<option value="SMA/sederajat">SMA/sederajat</option>
 													</select>
 												</div>
 											</div>
@@ -235,10 +227,6 @@
 													<label for="kecamatan">Kecamatan</label>
 													<select name="kecamatan" id="kecamatan" class="form-control required">
 														<option value="" hidden>--Pilih kecamatan</option>
-														<option value="Tidak sekolah">Tidak sekolah</option>
-														<option value="SD/sederajat">SD/sederajat</option>
-														<option value="SMP/sederajat">SMP/sederajat</option>
-														<option value="SMA/sederajat">SMA/sederajat</option>
 													</select>
 												</div>
 											</div>
@@ -247,33 +235,29 @@
 													<label for="desa">Desa/kelurahan</label>
 													<select name="desa" id="desa" class="form-control required">
 														<option value="" hidden>--Pilih desa/kelurahan</option>
-														<option value="Tidak sekolah">Tidak sekolah</option>
-														<option value="SD/sederajat">SD/sederajat</option>
-														<option value="SMP/sederajat">SMP/sederajat</option>
-														<option value="SMA/sederajat">SMA/sederajat</option>
 													</select>
 												</div>
 											</div>
 										</div>
-	                                    <div class="row">
-	                                        <div class="col-lg-3 col-md-3 col-3">
-	                                            <div class="form-group">
-	                                                <label for="tahun_lahir">Tahun Lahir</label>
-	                                                <input type="text" name="tahun_lahir" id="tahun_lahir" class="form-control required" min="1900" max="2100">
-	                                            </div>
-	                                        </div>
-	                                        <div class="col-9">
-	                                            <div class="form-group radio_input">
-	                                                <label class="container_radio">Laki-laki
-	                                                    <input type="radio" name="jenis_kelamin" value="1" class="required">
-	                                                    <span class="checkmark"></span>
-	                                                </label>
-	                                                <label class="container_radio">Perempuan
-	                                                    <input type="radio" name="jenis_kelamin" value="2" class="required">
-	                                                    <span class="checkmark"></span>
-	                                                </label>
-	                                            </div>
-	                                        </div>
+										<div class="row">
+												<div class="col-lg-3 col-md-3 col-3">
+														<div class="form-group">
+																<label for="tahun_lahir">Tahun Lahir</label>
+																<input type="text" name="tahun_lahir" id="tahun_lahir" class="form-control required" min="1900" max="2100">
+														</div>
+												</div>
+												<div class="col-9">
+														<div class="form-group radio_input">
+																<label class="container_radio">Laki-laki
+																		<input type="radio" name="jenis_kelamin" value="1" class="required">
+																		<span class="checkmark"></span>
+																</label>
+																<label class="container_radio">Perempuan
+																		<input type="radio" name="jenis_kelamin" value="2" class="required">
+																		<span class="checkmark"></span>
+																</label>
+														</div>
+												</div>
 										</div>
 										<div class="form-group">
 											<label for="informasi">Informasi</label>
@@ -393,6 +377,23 @@
 
 	<!-- Wizard script -->
 	<script src="{{ url('kuesioner/js/survey_func.js') }}"></script>
+
+	<script>
+		$(function($){
+				// $('#footable-3').footable();
+				$( "#provinsi" ).on( "click", function() {
+					var id = $(this).attr('value');
+					$.get( "#" + id, function( data ) {
+						console.log(JSON.parse(data));
+						var d = JSON.parse(data);
+						for (var i = 0; i <= d.length; i++) {
+							$('#kabupaten').append('<option value="' + d[i].Id + '">' + d[i].Name + '</option>');
+						}
+					});
+					console.log($(this).attr('value'));
+				});
+		});
+	</script>
 
 </body>
 </html>

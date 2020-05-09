@@ -11,7 +11,7 @@
 @section('js')
   <script src="{{ url('assets/plugins/footable/js/footable.js') }}"></script>
   <script>
-      jQuery(function($){
+      $(function($){
             // $('#footable-3').footable();
             $( "#footable-3 tbody tr td button" ).on( "click", function() {
               var id = $(this).attr('data-value');
