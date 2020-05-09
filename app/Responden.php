@@ -14,4 +14,11 @@ class Responden extends Model
     {
         return $this->hasMany(Kuesioner::class);
     }
+
+    static function firstLatestResponden()
+    {
+        $data = Responden::latest()->first();
+
+        return $data;
+    }
 }

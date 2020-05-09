@@ -12,7 +12,7 @@ class KasusController extends Controller
 {
     function index()
     {
-        $kasus = Kasus::all();
+        $kasus = Kasus::getKasus();
 
         return view('kasus.index', compact('kasus'));
     }

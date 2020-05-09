@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 
 use App\Kasus;
 use App\Kuesioner;
+use App\Pekerjaan;
 use App\Provinsi;
 use App\Responden;
 use App\Respons;
@@ -15,24 +16,16 @@ class HomeController extends Controller
 {
     function index()
     {
-        // Kasus COVID-19
-        $kasus = Kasus::findOrFail(1);
-        $kuesioner = Kuesioner::where('kasus_id', $kasus->id)->get();
-        $pekerjaan = Kuesioner::getPekerjaan();
-        $provinsi = Provinsi::all();
+        $kasus = Kasus::firstActiveKasus();
+        $kuesioner = Kuesioner::getKuesionerByKasus($kasus->id);
+        $pekerjaan = Pekerjaan::getPekerjaan();
+        $provinsi = Provinsi::getProvinsi();
 
         return view('kuesioner', compact('kasus', 'kuesioner', 'pekerjaan', 'provinsi'));
     }
 
     function store(Request $request, Respons $respons)
     {
-        // return $request;
-        // $data = request()->validate([
-        //     'respons.*.jawaban' => 'required',
-        //     'respons.*.kategori' => 'required',
-        //     'respons.*.kuesioner_id' => 'required',
-        // ]);
-
         Responden::create([
             'pendidikan_terakhir' => $request->get('pendidikan_terakhir'),
             'pekerjaan' => $request->get('pekerjaan'),
@@ -45,11 +38,10 @@ class HomeController extends Controller
             'informasi' => "banyak",
         ]);
 
-        $responden = Responden::latest()->first();
+        $responden = Responden::firstLatestResponden();
 
         foreach ($request->respons as $key => $item) {
             $kuesioner = Kuesioner::findOrFail($item['kuesioner_id']);
-            // return (int)$item['jawaban'];
             if ($kuesioner->kategori == 1) {
                 if ((int)$item['jawaban'] == $kuesioner->jawaban) {
                     $jawaban = 1;

@@ -12,15 +12,15 @@ class KuesionerController extends Controller
 {
     function index($id)
     {
-        $kasus = Kasus::findOrFail($id);
-        $kuesioner = Kuesioner::where('kasus_id', $id)->get();
+        $kasus = Kasus::firstKasus($id);
+        $kuesioner = Kuesioner::getKuesionerByKasus($id);
 
         return view('kuesioner.index', compact('kasus', 'kuesioner'));
     }
 
     function edit($id)
     {
-        $kuesioner = Kuesioner::firstWhere('id', $id);
+        $kuesioner = Kuesioner::firstKuesioner($id);
 
         $data[] = $kuesioner->toArray();
 
