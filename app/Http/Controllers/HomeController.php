@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 
 use App\Kasus;
 use App\Kuesioner;
+use App\Provinsi;
 use App\Responden;
 use App\Respons;
 
@@ -17,8 +18,10 @@ class HomeController extends Controller
         // Kasus COVID-19
         $kasus = Kasus::findOrFail(1);
         $kuesioner = Kuesioner::where('kasus_id', $kasus->id)->get();
+        $pekerjaan = Kuesioner::getPekerjaan();
+        $provinsi = Provinsi::all();
 
-        return view('kuesioner', compact('kasus', 'kuesioner'));
+        return view('kuesioner', compact('kasus', 'kuesioner', 'pekerjaan', 'provinsi'));
     }
 
     function store(Request $request, Respons $respons)
