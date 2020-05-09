@@ -125,7 +125,7 @@
                                   <th>Pertanyaan</th>
                                   <th data-breakpoints="xs">Kategori</th>
                                   <th data-breakpoints="xs sm md">Jawaban</th>
-                                  <th data-breakpoints="xs">Aksi</th>
+                                  <th data-breakpoints="xs" style="width=15%">Aksi</th>
                               </tr>
                           </thead>
                           <tbody id="user-list">
