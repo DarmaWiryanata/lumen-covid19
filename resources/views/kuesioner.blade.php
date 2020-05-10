@@ -23,7 +23,10 @@
 	  <link href="{{ url('kuesioner/css/vendors.css') }}" rel="stylesheet">
 
     <!-- YOUR CUSTOM CSS -->
-    <link href="{{ url('kuesioner/css/custom.css') }}" rel="stylesheet">
+		<link href="{{ url('kuesioner/css/custom.css') }}" rel="stylesheet">
+		
+		<!-- PLUGIN CSS -->
+		<link href="{{ url('assets/plugins/select2/select2.min.css') }}" rel="stylesheet" type="text/css" />
 
 </head>
 
@@ -43,17 +46,6 @@
 	            <div class="col-5">
 	                <a href="#"><img src="{{ url('kuesioner/img/logo.svg') }}" alt="" width="50" height="55"></a>
 							</div>
-							{{-- Fitur sebar kuesioner di media sosial --}}
-	            {{-- <div class="col-7">
-	                <div id="social">
-	                    <ul>
-	                        <li><a href="#0"><i class="social_facebook"></i></a></li>
-	                        <li><a href="#0"><i class="social_twitter"></i></a></li>
-	                        <li><a href="#0"><i class="social_instagram"></i></a></li>
-	                        <li><a href="#0"><i class="social_linkedin"></i></a></li>
-	                    </ul>
-	                </div>
-	            </div> --}}
 	        </div>
 	        <!-- /row -->
 	    </div>
@@ -68,7 +60,7 @@
 	                <div class="col-xl-6 col-lg-6 d-flex align-items-center">
 	                    <div class="main_title_1">
 	                        <h3><img src="{{ url('kuesioner/img/main_icon_1.svg') }}" width="80" height="80" alt=""> Survey</h3>
-	                        <p>{{ $kasus->nama }}</p>
+	                        <h4 style="color: white">{{ $kasus->nama }}</h4>
 	                        {{-- <p><em>- The Satisfyc Team</em></p> --}}
 	                    </div>
 	                </div>
@@ -127,31 +119,31 @@
 														<li>
 															<div class="container_numbers">
 																<input type="radio" id="jawaban1-{{ $loop->iteration }}" name="respons[{{ $loop->iteration }}][jawaban]" class="required" value="1" autofocus>
-																<label class="radio very_bad" for="jawaban1-{{ $loop->iteration }}">1</label>
+																<label class="radio very_bad" for="jawaban1-{{ $loop->iteration }}">Tidak</label>
 															</div>
 														</li>
 														<li>
 															<div class="container_numbers">
 																<input type="radio" id="jawaban2-{{ $loop->iteration }}" name="respons[{{ $loop->iteration }}][jawaban]" class="required" value="2">
-																<label class="radio bad" for="jawaban2-{{ $loop->iteration }}">2</label>
+																<label class="radio bad" for="jawaban2-{{ $loop->iteration }}">Jarang</label>
 															</div>
 														</li>
 														<li>
 															<div class="container_numbers">
 																<input type="radio" id="jawaban3-{{ $loop->iteration }}" name="respons[{{ $loop->iteration }}][jawaban]" class="required" value="3">
-																<label class="radio average" for="jawaban3-{{ $loop->iteration }}">3</label>
+																<label class="radio average" for="jawaban3-{{ $loop->iteration }}">Kadang</label>
 															</div>
 														</li>
 														<li>
 															<div class="container_numbers">
 																<input type="radio" id="jawaban4-{{ $loop->iteration }}" name="respons[{{ $loop->iteration }}][jawaban]" class="required" value="4">
-																<label class="radio good" for="jawaban4-{{ $loop->iteration }}">4</label>
+																<label class="radio good" for="jawaban4-{{ $loop->iteration }}">Sering</label>
 															</div>
 														</li>
 														<li>
 															<div class="container_numbers">
 																<input type="radio" id="jawaban5-{{ $loop->iteration }}" name="respons[{{ $loop->iteration }}][jawaban]" class="required" value="5">
-																<label class="radio very_good" for="jawaban5-{{ $loop->iteration }}">5</label>
+																<label class="radio very_good" for="jawaban5-{{ $loop->iteration }}">Selalu</label>
 															</div>
 														</li>
 													</ul>
@@ -173,7 +165,7 @@
 									<h3 class="main_question"><strong>Responden</strong>Isi sesuai form</h3>
 									<div class="form-group">
 											<label for="pendidikan_terakhir">Pendidikan Terakhir</label>
-											<select name="pendidikan_terakhir" id="pendidikan_terakhir" class="form-control required" autofocus>
+											<select name="pendidikan_terakhir" id="pendidikan_terakhir" class="select2 form-control required" autofocus>
 												<option value="" hidden>--Pilih pendidikan terakhir</option>
 												<option value="Tidak sekolah">Tidak sekolah</option>
 												<option value="SD/sederajat">SD/sederajat</option>
@@ -190,63 +182,58 @@
 										</div>
 										<div class="form-group">
 											<label for="pekerjaan">Pekerjaan</label>
-											<select name="pekerjaan" id="pekerjaan" class="form-control required">
+											<select name="pekerjaan" id="pekerjaan" class="select2 form-control required">
 												<option value="" hidden>--Pilih pekerjaan</option>
-												<option value="Tidak sekolah">Tidak sekolah</option>
-												<option value="SD/sederajat">SD/sederajat</option>
-												<option value="SMP/sederajat">SMP/sederajat</option>
-												<option value="SMA/sederajat">SMA/sederajat</option>
-												<option value="D1">D1</option>
-												<option value="D2">D2</option>
-												<option value="D3">D3</option>
-												<option value="D4">D4</option>
-												<option value="S1">S1</option>
-												<option value="S2">S2</option>
-												<option value="S3">S3</option>
+													@foreach ($pekerjaan as $item)
+														<option value="{{ $item->id }}">{{ $item->nama }}</option>	
+													@endforeach
 											</select>
 										</div>
 										<div class="row">
 											<div class="col-6 col-md-6 col-sm-12">
 												<div class="form-group">
 													<label for="provinsi">Provinsi</label>
-													<select name="provinsi" id="provinsi" class="form-control required">
-														<option value="" hidden>--Pilih provinsi</option>
+													<select name="provinsi" id="provinsi" class="select2 form-control required provinsi">
+														<option value="" hidden>--Pilih Provinsi</option>
+														@foreach ($provinsi as $item)
+															<option value="{{ $item->id }}">{{ $item->nama_provinsi }}</option>	
+														@endforeach
 													</select>
 												</div>
 											</div>
 											<div class="col-6 col-md-6 col-sm-12">
 												<div class="form-group">
-													<label for="kabupaten">Kabupaten/kota</label>
-													<select name="kabupaten" id="kabupaten" class="form-control required">
-														<option value="" hidden>--Pilih kabupaten/kota</option>
+													<label for="kabupaten">Kabupaten/Kota</label>
+													<select name="kabupaten" id="kabupaten" class="select2 form-control required kabupaten">
+														<option value="" hidden>--Pilih Kabupaten/Kota</option>
 													</select>
 												</div>
 											</div>
 											<div class="col-6 col-md-6 col-sm-12">
 												<div class="form-group">
 													<label for="kecamatan">Kecamatan</label>
-													<select name="kecamatan" id="kecamatan" class="form-control required">
-														<option value="" hidden>--Pilih kecamatan</option>
+													<select name="kecamatan" id="kecamatan" class="select2 form-control required kecamatan">
+														<option value="" hidden>--Pilih Kecamatan</option>
 													</select>
 												</div>
 											</div>
 											<div class="col-6 col-md-6 col-sm-12">
 												<div class="form-group">
-													<label for="desa">Desa/kelurahan</label>
-													<select name="desa" id="desa" class="form-control required">
-														<option value="" hidden>--Pilih desa/kelurahan</option>
+													<label for="desa">Desa/Kelurahan</label>
+													<select name="desa" id="desa" class="select2 form-control required">
+														<option value="" hidden>--Pilih Desa/Kelurahan</option>
 													</select>
 												</div>
 											</div>
 										</div>
 										<div class="row">
-												<div class="col-lg-3 col-md-3 col-3">
+												<div class="col-lg-5 col-md-5">
 														<div class="form-group">
 																<label for="tahun_lahir">Tahun Lahir</label>
 																<input type="text" name="tahun_lahir" id="tahun_lahir" class="form-control required" min="1900" max="2100">
 														</div>
 												</div>
-												<div class="col-9">
+												<div class="col-lg-7 col-md-7">
 														<div class="form-group radio_input">
 																<label class="container_radio">Laki-laki
 																		<input type="radio" name="jenis_kelamin" value="1" class="required">
@@ -324,26 +311,6 @@
 	        <!-- /row -->
 	    </div>
 	    <!-- /container_centering -->
-	    <footer>
-	        <div class="container-fluid">
-	            <div class="row">
-	                <div class="col-md-3">
-	                    ©2020 Satisfyc
-	                </div>
-	                {{-- <div class="col-md-9">
-	                    <ul class="clearfix">
-	                        <li><a href="#0" class="animated_link">Purchase this template</a></li>
-	                        <li><a href="index.html" class="animated_link">Demo 1</a></li>
-	                        <li><a href="index-2.html" class="animated_link">Demo 2</a></li>
-	                        <li><a href="index-3.html" class="animated_link">Demo 3</a></li>
-	                    </ul>
-	                </div> --}}
-	            </div>
-	            <!-- /row -->
-	        </div>
-	        <!-- /container-fluid -->
-	    </footer>
-	    <!-- /footer -->
 	</div>
 	<!-- /wrapper_centering -->
 
@@ -372,25 +339,64 @@
 	
 	<!-- COMMON SCRIPTS -->
 	<script src="{{ url('kuesioner/js/jquery-3.2.1.min.js') }}"></script>
- 	<script src="{{ url('kuesioner/js/common_scripts.min.js') }}"></script>
+	<script src="{{ url('kuesioner/js/common_scripts.min.js') }}"></script>
 	<script src="{{ url('kuesioner/js/functions.js') }}"></script>
-
+	
 	<!-- Wizard script -->
 	<script src="{{ url('kuesioner/js/survey_func.js') }}"></script>
+	
+	<!-- PLUGIN SCRIPTS -->
+	<script src="{{ url('assets/plugins/select2/select2.min.js') }}"></script>
 
 	<script>
 		$(function($){
-				// $('#footable-3').footable();
-				$( "#provinsi" ).on( "click", function() {
-					var id = $(this).attr('value');
-					$.get( "#" + id, function( data ) {
+				$('.select2').select2();
+				$( "select.provinsi" ).change(function() {
+					var id = $(this).children("option:selected").val();
+					$.get( "/kabupaten/" + id, function( data ) {
 						console.log(JSON.parse(data));
 						var d = JSON.parse(data);
+						$('#kabupaten').empty();
+						$('#kecamatan').empty();
+						$('#desa').empty();
+						$('#kabupaten').append('<option value="" hidden>--Pilih Kabupaten/Kota</option>');
+						$('#kecamatan').append('<option value="" hidden>--Pilih Kecamatan</option>');
+						$('#desa').append('<option value="" hidden>--Pilih Desa/Kelurahan</option>');
 						for (var i = 0; i <= d.length; i++) {
-							$('#kabupaten').append('<option value="' + d[i].Id + '">' + d[i].Name + '</option>');
+							$('#kabupaten').append('<option value="' + d[i].id + '">' + d[i].nama_kabkota + '</option>');
 						}
 					});
-					console.log($(this).attr('value'));
+					console.log($(this).children("option:selected").val());
+				});
+				
+				$( "select.kabupaten" ).change(function() {
+					var id = $(this).children("option:selected").val();
+					$.get( "/kecamatan/" + id, function( data ) {
+						console.log(JSON.parse(data));
+						var d = JSON.parse(data);
+						$('#kecamatan').empty();
+						$('#desa').empty();
+						$('#kecamatan').append('<option value="" hidden>--Pilih Kecamatan</option>');
+						$('#desa').append('<option value="" hidden>--Pilih Desa/Kelurahan</option>');
+						for (var i = 0; i <= d.length; i++) {
+							$('#kecamatan').append('<option value="' + d[i].id + '">' + d[i].nama_kecamatan + '</option>');
+						}
+					});
+					console.log($(this).children("option:selected").val());
+				});
+				
+				$( "select.kecamatan" ).change(function() {
+					var id = $(this).children("option:selected").val();
+					$.get( "/desa/" + id, function( data ) {
+						console.log(JSON.parse(data));
+						var d = JSON.parse(data);
+						$('#desa').empty();
+						$('#desa').append('<option value="" hidden>--Pilih Desa/Kelurahan</option>');
+						for (var i = 0; i <= d.length; i++) {
+							$('#desa').append('<option value="' + d[i].id + '">' + d[i].nama_kelurahan + '</option>');
+						}
+					});
+					console.log($(this).children("option:selected").val());
 				});
 		});
 	</script>

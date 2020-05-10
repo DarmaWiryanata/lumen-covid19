@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
 use App\Desa;
+use App\Informasi;
 use App\Kabupaten;
 use App\Kasus;
 use App\Kecamatan;
@@ -15,6 +16,7 @@ use App\Pekerjaan;
 use App\Provinsi;
 use App\Responden;
 use App\Respons;
+use App\Sumber;
 
 class HomeController extends Controller
 {
@@ -30,6 +32,7 @@ class HomeController extends Controller
 
     function store(Request $request, Respons $respons)
     {
+        // Responden
         Responden::create([
             'pendidikan_terakhir' => $request->get('pendidikan_terakhir'),
             'pekerjaan' => $request->get('pekerjaan'),
@@ -39,11 +42,12 @@ class HomeController extends Controller
             'desa' => $request->get('desa'),
             'tahun_lahir' => $request->get('tahun_lahir'),
             'jenis_kelamin' => $request->get('jenis_kelamin'),
-            'informasi' => "banyak",
         ]);
 
+        // Get responden id
         $responden = Responden::firstLatestResponden();
 
+        // Respons
         foreach ($request->respons as $key => $item) {
             $kuesioner = Kuesioner::findOrFail($item['kuesioner_id']);
             if ($kuesioner->kategori == 1) {
@@ -65,26 +69,42 @@ class HomeController extends Controller
             ]);
         }
 
-        echo "Sukses joss";
+        // Informasi
+        foreach ($request->informasi as $value) {
+            Informasi::create([
+                'responden_id' => $responden->id,
+                'sumber' => $value
+            ]);
+        }
+        
+        return redirect()->route('trims');
     }
 
-    function getKabupatenByProvinsi($provinsiId)
+    function trims()
     {
-        json_encode(Kabupaten::getKabupatenByProvinsi($provinsiId));
+        $kasus = Kasus::firstActiveKasus();
+        $sumber = Sumber::getSumberByKasus($kasus->id);
+
+        return view('thank', compact('sumber'));
     }
 
-    function getKecamatanByKabupaten($kabupatenId)
+    function getKabupatenByProvinsi($id)
     {
-        json_encode(Kecamatan::getKecamatanByKabupaten($kabupatenId));
+        return json_encode(Kabupaten::getKabupatenByProvinsi($id));
     }
 
-    function getDesaByKecamatan($kecamatanId)
+    function getKecamatanByKabupaten($id)
     {
-        json_encode(Desa::getDesaByKecamatan($kecamatanId));
+        return json_encode(Kecamatan::getKecamatanByKabupaten($id));
     }
 
-    function getKodePosByDesa($desaId)
+    function getDesaByKecamatan($id)
     {
-        json_encode(KodePos::getKodePosByDesa($desaId));
+        return json_encode(Desa::getDesaByKecamatan($id));
+    }
+
+    function getKodePosByDesa($id)
+    {
+        return json_encode(KodePos::getKodePosByDesa($id));
     }
 }

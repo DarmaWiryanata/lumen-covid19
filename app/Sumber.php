@@ -14,4 +14,9 @@ class Sumber extends Model
     {
         return $this->belongsTo(Kasus::class);
     }
+
+    static function getSumberByKasus($kasusId)
+    {
+        return Sumber::where('kasus_id', $kasusId)->get();
+    }
 }

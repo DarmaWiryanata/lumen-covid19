@@ -20,7 +20,11 @@ $router->get('/key', function() {
 });
 
 $router->get('/', ['as' => 'index', 'uses' => 'HomeController@index']);
+$router->get('/terima-kasih', ['as' => 'trims', 'uses' => 'HomeController@trims']);
 $router->post('/', ['as' => 'store', 'uses' => 'HomeController@store']);
+$router->get('/kabupaten/{id}', 'HomeController@getKabupatenByProvinsi');
+$router->get('/kecamatan/{id}', 'HomeController@getKecamatanByKabupaten');
+$router->get('/desa/{id}', 'HomeController@getDesaByKecamatan');
 
 $router->group(['prefix' => 'kasus'], function () use ($router) {
     $router->get('/', ['as' => 'kasus.index', 'uses' => 'KasusController@index']);
