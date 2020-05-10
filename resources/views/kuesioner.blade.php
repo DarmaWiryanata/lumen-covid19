@@ -119,31 +119,31 @@
 														<li>
 															<div class="container_numbers">
 																<input type="radio" id="jawaban1-{{ $loop->iteration }}" name="respons[{{ $loop->iteration }}][jawaban]" class="required" value="1" autofocus>
-																<label class="radio very_bad" for="jawaban1-{{ $loop->iteration }}">Tidak</label>
+																<label class="radio very_bad" for="jawaban1-{{ $loop->iteration }}">1</label>
 															</div>
 														</li>
 														<li>
 															<div class="container_numbers">
 																<input type="radio" id="jawaban2-{{ $loop->iteration }}" name="respons[{{ $loop->iteration }}][jawaban]" class="required" value="2">
-																<label class="radio bad" for="jawaban2-{{ $loop->iteration }}">Jarang</label>
+																<label class="radio bad" for="jawaban2-{{ $loop->iteration }}">2</label>
 															</div>
 														</li>
 														<li>
 															<div class="container_numbers">
 																<input type="radio" id="jawaban3-{{ $loop->iteration }}" name="respons[{{ $loop->iteration }}][jawaban]" class="required" value="3">
-																<label class="radio average" for="jawaban3-{{ $loop->iteration }}">Kadang</label>
+																<label class="radio average" for="jawaban3-{{ $loop->iteration }}">3</label>
 															</div>
 														</li>
 														<li>
 															<div class="container_numbers">
 																<input type="radio" id="jawaban4-{{ $loop->iteration }}" name="respons[{{ $loop->iteration }}][jawaban]" class="required" value="4">
-																<label class="radio good" for="jawaban4-{{ $loop->iteration }}">Sering</label>
+																<label class="radio good" for="jawaban4-{{ $loop->iteration }}">4</label>
 															</div>
 														</li>
 														<li>
 															<div class="container_numbers">
 																<input type="radio" id="jawaban5-{{ $loop->iteration }}" name="respons[{{ $loop->iteration }}][jawaban]" class="required" value="5">
-																<label class="radio very_good" for="jawaban5-{{ $loop->iteration }}">Selalu</label>
+																<label class="radio very_good" for="jawaban5-{{ $loop->iteration }}">5</label>
 															</div>
 														</li>
 													</ul>
