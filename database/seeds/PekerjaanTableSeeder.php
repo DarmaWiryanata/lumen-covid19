@@ -16,6 +16,7 @@ class PekerjaanTableSeeder extends Seeder
         $pekerjaan = array(
             ['nama' => 'Pelajar/Mahasiswa', 'bidang' => 'Pelajar/Mahasiswa'],
             ['nama' => 'Tidak/belum bekerja', 'bidang' => 'Tidak/belum bekerja'],
+            ['nama' => 'Lain-lain', 'bidang' => 'Lain-lain'],
             
             // 1. Bidang Pertanian, Peternakan, Perikanan, dan Kehutanan
             ['nama' => 'Ahli Pertanian', 'bidang' => 'Bidang Pertanian, Peternakan, Perikanan, dan Kehutanan'],
