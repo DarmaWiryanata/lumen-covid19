@@ -12,4 +12,18 @@ class KodePos extends Model
     {
         return $this->belongsTo(Desa::class);
     }
+
+    static function firstKodePos($id)
+    {
+        $data = KodePos::findOrFail($id);
+
+        return $data;
+    }
+
+    static function firstKodePosByDesa($desaId)
+    {
+        $data = KodePos::firstWhere('kelurahan_id', $desaId);
+
+        return $data;
+    }
 }

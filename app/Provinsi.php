@@ -13,6 +13,13 @@ class Provinsi extends Model
         return $this->hasMany(Kabupaten::class);
     }
 
+    static function firstProvinsi($id)
+    {
+        $data = Provinsi::findOrFail($id);
+
+        return $data;
+    }
+
     static function getProvinsi()
     {
         $data = Provinsi::all();

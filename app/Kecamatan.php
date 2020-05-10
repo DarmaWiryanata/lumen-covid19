@@ -17,4 +17,18 @@ class Kecamatan extends Model
     {
         return $this->belongsTo(Kabupaten::class);
     }
+
+    static function firstKecamatan($id)
+    {
+        $data = Kecamatan::findOrFail($id);
+
+        return $data;
+    }
+
+    static function getKecamatanByKabupaten($kabupatenId)
+    {
+        $data = Kecamatan::where('kabkota_id', $kabupatenId)->get();
+
+        return $data;
+    }
 }

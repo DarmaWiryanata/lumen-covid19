@@ -5,7 +5,11 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
+use App\Desa;
+use App\Kabupaten;
 use App\Kasus;
+use App\Kecamatan;
+use App\KodePos;
 use App\Kuesioner;
 use App\Pekerjaan;
 use App\Provinsi;
@@ -62,5 +66,25 @@ class HomeController extends Controller
         }
 
         echo "Sukses joss";
+    }
+
+    function getKabupatenByProvinsi($provinsiId)
+    {
+        json_encode(Kabupaten::getKabupatenByProvinsi($provinsiId));
+    }
+
+    function getKecamatanByKabupaten($kabupatenId)
+    {
+        json_encode(Kecamatan::getKecamatanByKabupaten($kabupatenId));
+    }
+
+    function getDesaByKecamatan($kecamatanId)
+    {
+        json_encode(Desa::getDesaByKecamatan($kecamatanId));
+    }
+
+    function getKodePosByDesa($desaId)
+    {
+        json_encode(KodePos::getKodePosByDesa($desaId));
     }
 }
