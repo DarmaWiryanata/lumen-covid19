@@ -18,6 +18,11 @@ class Desa extends Model
         return $this->belongsTo(Kecamatan::class);
     }
 
+    public function responden()
+    {
+        return $this->hasMany(Responden::class);
+    }
+
     static function firstDesa($id)
     {
         $data = Desa::findOrFail($id);

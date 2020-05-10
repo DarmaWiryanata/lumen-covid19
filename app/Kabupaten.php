@@ -18,6 +18,11 @@ class Kabupaten extends Model
         return $this->belongsTo(Provinsi::class);
     }
 
+    public function responden()
+    {
+        return $this->hasMany(Responden::class);
+    }
+
     static function firstKabupaten($id)
     {
         $data = Kabupaten::findOrFail($id);

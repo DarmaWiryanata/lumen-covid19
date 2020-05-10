@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateResponsTable extends Migration
+class CreateInformasisTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,13 +13,10 @@ class CreateResponsTable extends Migration
      */
     public function up()
     {
-        Schema::create('respons', function (Blueprint $table) {
+        Schema::create('informasi', function (Blueprint $table) {
             $table->id();
             $table->bigInteger('responden_id');
-            $table->integer('kasus_id');
-            $table->integer('kuesioner_id');
-            $table->boolean('jawaban');
-            $table->boolean('kategori');
+            $table->string('sumber', 50);
             $table->timestamps();
         });
     }
@@ -31,6 +28,6 @@ class CreateResponsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('respons');
+        Schema::dropIfExists('informasi');
     }
 }

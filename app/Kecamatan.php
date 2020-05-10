@@ -18,6 +18,11 @@ class Kecamatan extends Model
         return $this->belongsTo(Kabupaten::class);
     }
 
+    public function responden()
+    {
+        return $this->hasMany(Responden::class);
+    }
+
     static function firstKecamatan($id)
     {
         $data = Kecamatan::findOrFail($id);

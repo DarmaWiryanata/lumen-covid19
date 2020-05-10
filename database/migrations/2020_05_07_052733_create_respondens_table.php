@@ -18,12 +18,11 @@ class CreateRespondensTable extends Migration
             $table->string('tahun_lahir', 4);
             $table->boolean('jenis_kelamin');
             $table->string('pendidikan_terakhir', 15);
-            $table->string('pekerjaan', 50);
-            $table->string('provinsi', 50);
-            $table->string('kabupaten', 100);
-            $table->string('kecamatan', 100);
-            $table->string('desa', 100);
-            $table->string('informasi', 100);
+            $table->integer('pekerjaan');
+            $table->integer('provinsi');
+            $table->integer('kabupaten');
+            $table->integer('kecamatan');
+            $table->integer('desa');
             $table->timestamps();
         });
     }
