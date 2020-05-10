@@ -160,6 +160,9 @@
 											<!-- /survey -->
 										@endif
 									@endforeach
+									<div class="form-group terms">
+										<label class="container_check" style="padding-left: 0;"><a href="#" data-toggle="modal" data-target="#terms-txt" style="color:#fff; text-decoration: underline;">Panduan cara menjawab</a></label>
+								</div>
 
 							<div class="submit step">
 									<h3 class="main_question"><strong>Responden</strong>Isi sesuai form</h3>
@@ -319,13 +322,14 @@
 		<div class="modal-dialog modal-dialog-centered">
 			<div class="modal-content">
 				<div class="modal-header">
-					<h4 class="modal-title" id="termsLabel">Terms and conditions</h4>
+					<h4 class="modal-title" id="termsLabel">Panduan</h4>
 					<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
 				</div>
 				<div class="modal-body">
-					<p>Lorem ipsum dolor sit amet, in porro albucius qui, in <strong>nec quod novum accumsan</strong>, mei ludus tamquam dolores id. No sit debitis meliore postulant, per ex prompta alterum sanctus, pro ne quod dicunt sensibus.</p>
-					<p>Lorem ipsum dolor sit amet, in porro albucius qui, in nec quod novum accumsan, mei ludus tamquam dolores id. No sit debitis meliore postulant, per ex prompta alterum sanctus, pro ne quod dicunt sensibus. Lorem ipsum dolor sit amet, <strong>in porro albucius qui</strong>, in nec quod novum accumsan, mei ludus tamquam dolores id. No sit debitis meliore postulant, per ex prompta alterum sanctus, pro ne quod dicunt sensibus.</p>
-					<p>Lorem ipsum dolor sit amet, in porro albucius qui, in nec quod novum accumsan, mei ludus tamquam dolores id. No sit debitis meliore postulant, per ex prompta alterum sanctus, pro ne quod dicunt sensibus.</p>
+					<p>Pilihan Ganda terdiri atas 3 pilihan jawaban yaitu Benar, Salah dan Tidak Tahu. Para Pengisi Survey diharapkan menjawab pertanyaan sesuai dengan pilihan yang anda ketahui saat ini dan menjawab sejujur-jujurnya.</p>
+					<p class="text-center">---------------------------------------</p>
+					<p>Pada Pilihan Skala, tingkat persetujuan terdiri dari 5 pilihan skala yang mempunyai gradasi dari Tidak Pernah (1) hingga Selalu (5). 5 pilihan tersebut diantaranya adalah :</p>
+					<p>1 : Tidak Pernah <br>2 : Jarang <br>3 : Kadang-kadang <br>4 : Sering <br>5 : Selalu<br></p>
 				</div>
 				<div class="modal-footer">
 					<button type="button" class="btn_1" data-dismiss="modal">Close</button>
