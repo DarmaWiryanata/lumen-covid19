@@ -28,6 +28,7 @@ $router->get('/desa/{id}', 'HomeController@getDesaByKecamatan');
 
 $router->group(['prefix' => 'kasus'], function () use ($router) {
     $router->get('/', ['as' => 'kasus.index', 'uses' => 'KasusController@index']);
+    $router->get('/{id}', ['as' => 'kasus.show', 'uses' => 'KasusController@show']);
 });
 
 $router->group(['prefix' => 'kuesione'], function () use ($router) {

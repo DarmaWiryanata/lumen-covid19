@@ -12,64 +12,15 @@
   <script src="{{ url('assets/plugins/footable/js/footable.js') }}"></script>
   <script>
       $(function () {
-          "use strict";
-          
-          /*Editing FooTable*/
-          var $modal = $('#editor-modal'),
-          $editor = $('#editor'),
-          $editorTitle = $('#editor-title'),
-          ft = FooTable.init('#footable-3', {
-              editing: {
-                  enabled: false,
-                  addRow: function(){
-                      $modal.removeData('row');
-                      $editor[0].reset();
-                      $editorTitle.text('Tambah Kuesioner');
-                      $modal.modal('show');
-                  },
-                  editRow: function(row){
-                      var values = row.val();
-                      $editor.find('#id').val(values.id);
-                      $editor.find('#nama').val(values.nama);
-      
-                      $modal.data('row', row);
-                      $editorTitle.text('Ubah Kuesioner #' + values.id);
-                      $modal.modal('show');
-                  },
-                  deleteRow: function(row){
-                      if (confirm('Yakin hapus Kuesioner?')){
-                          row.delete();
-                      }
-                  }
-              }
-          }),
-          uid = 10;
-      
-        //   $editor.on('submit', function(e){
-        //       if (this.checkValidity && !this.checkValidity()) return;
-        //       e.preventDefault();
-        //       var row = $modal.data('row'),
-        //           values = {
-        //               id: $editor.find('#id').val(),
-        //               nama: $editor.find('#nama').val(),
-        //           };
-          
-        //       if (row instanceof FooTable.Row){
-        //           row.val(values);
-        //       } else {
-        //           values.id = uid++;
-        //           ft.rows.add(values);
-        //       };
-        //       $modal.modal('hide');
-        //   });
-        
+        // $('#footable-3').footable();
         $( "#footable-3 tbody tr td button" ).on( "click", function() {
           var id = $(this).attr('data-value');
-          $.get( "#" + id, function( data ) {
-            console.log(JSON.parse(data));
-            var d = JSON.parse(data);
-            $('#id').val(#);
-            $('#nama').text(#);
+          $.get( "/kasus/" + id, function( data ) {
+            console.log((data));
+            var d = (data);
+            $('#id').val(d.id);
+            $('#nama').val(d.nama);
+          });
         });
       });
   </script> 
@@ -118,7 +69,7 @@
                                     <td>{{ $item->created_at }}</td>
                                     <td>
                                         <button class="btn btn-primary"data-toggle="modal" data-animation="bounce" data-target="#modal-edit" data-value="{{ $item->id }}"><i class="mdi mdi-pencil-box-outline"></i></button>
-                                        <a href="#" class="btn btn-danger ml-2"><i class="mdi mdi-delete"></i></a>
+                                        <a href="#" class="btn btn-danger"><i class="mdi mdi-delete"></i></a>
                                     </td>
                                 </tr>
                             @endforeach
@@ -137,7 +88,7 @@
                                   <div class="modal-body">
                                       
                                       <div class="form-group required row">
-                                        <input type="text" id="id" name="id" value="">
+                                        <input type="text" id="id" name="id" value="" hidden>
                                         <label for="nama" class="col-sm-3 control-label">Judul Kuesioner</label>
                                         <div class="col-sm-9">
                                           <input type="text" class="form-control" id="nama" name="nama" placeholder="Masukkan Judul"  required>

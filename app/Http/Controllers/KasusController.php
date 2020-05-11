@@ -19,6 +19,7 @@ class KasusController extends Controller
 
     function show($id)
     {
-        return redirect()->route('kuesioner.index', ['id' => $id]);
+        return Kasus::firstKasus($id);
+        // return redirect()->route('kuesioner.index', ['id' => $id]);
     }
 }

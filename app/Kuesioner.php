@@ -24,7 +24,7 @@ class Kuesioner extends Model
 
     static function firstKuesioner($id)
     {
-        $data = Kuesioner::findOrFail('id', $id);
+        $data = Kuesioner::findOrFail($id);
 
         return $data;
     }

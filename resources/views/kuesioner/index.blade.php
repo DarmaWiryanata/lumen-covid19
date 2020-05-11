@@ -26,63 +26,6 @@
               console.log($(this).attr('data-value'));
             });
         });
-      $(function () {
-          
-          /*Editing FooTable*/
-          var $modal = $('#editor-modal'),
-        //   var $modal2 = $('#editor-modal2'),
-          $editor = $('#editor'),
-          $editorTitle = $('#editor-title'),
-        //   $('#footable-3').footable();
-        //   fooTable.init('#footable-3', {
-            //   editing: {
-            //       enabled: false,
-                //   addRow: function(){
-                //       $modal.removeData('row');
-                //       $editor[0].reset();
-                //       $editorTitle.text('Tambah Pertanyaan');
-                //       $modal.modal('show');
-                //   },
-                //   editRow: function(row){
-                //       var values = row.val();
-                //       $editor.find('#id').val(values.id);
-                //       $editor.find('#nama').val(values.nama);
-                //       $editor.find('#kategori').val(values.kategori);
-                //       $editor.find('#pilihan').val(values.pilihan);
-                //       $editor.find('#jawaban').val(values.jawaban);
-      
-                //       $modal.data('row', row);
-                //       $editorTitle.text('Ubah Pertanyaan #' + values.id);
-                //       $modal2.modal('show');
-                //   },
-                //   deleteRow: function(row){
-                //       if (confirm('Yakin hapus Pertanyaan?')){
-                //           row.delete();
-                //       }
-                //   }
-            //   }
-        //   }),
-          uid = 10;
-      
-        //   $editor.on('submit', function(e){
-        //       if (this.checkValidity && !this.checkValidity()) return;
-        //       e.preventDefault();
-        //       var row = $modal.data('row'),
-        //           values = {
-        //               id: $editor.find('#id').val(),
-        //               nama: $editor.find('#nama').val(),
-        //           };
-          
-        //       if (row instanceof FooTable.Row){
-        //           row.val(values);
-        //       } else {
-        //           values.id = uid++;
-        //           ft.rows.add(values);
-        //       };
-        //       $modal.modal('hide');
-        //   });
-        
-      });
   </script>
   <script type="text/javascript">
     $(document).ready( function () {
@@ -125,7 +68,7 @@
                                   <th>Pertanyaan</th>
                                   <th data-breakpoints="xs">Kategori</th>
                                   <th data-breakpoints="xs sm md">Jawaban</th>
-                                  <th data-breakpoints="xs" style="width=15%">Aksi</th>
+                                  <th data-breakpoints="xs" style="width: 15%">Aksi</th>
                               </tr>
                           </thead>
                           <tbody id="user-list">
@@ -202,7 +145,7 @@
                                 </div>
                                 <div class="modal-body">
                                     
-                                    <input type="text" class="form-control" id="id" name="id" value="" required>
+                                    <input type="text" class="form-control" id="id" name="id" value="" hidden>
                                     <div class="form-group row">
                                         <label for="pertanyaan" class="col-sm-3 control-label">Pertanyaan</label>
                                         <div class="col-sm-9">
