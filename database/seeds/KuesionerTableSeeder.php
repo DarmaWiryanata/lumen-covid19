@@ -174,7 +174,7 @@ class KuesionerTableSeeder extends Seeder
         
         Kuesioner::create([
             'kasus_id' => 1,
-            'pertanyaan' => 'Seberapa bosan Anda di rumah?',
+            'pertanyaan' => 'Anda mudah bosan untuk tinggal di rumah',
             'jawaban' => null,
             'kategori' => 2,
             'status' => 1,
@@ -182,7 +182,7 @@ class KuesionerTableSeeder extends Seeder
         
         Kuesioner::create([
             'kasus_id' => 1,
-            'pertanyaan' => 'Seberapa sering Anda keluar rumah dalam seminggu?',
+            'pertanyaan' => 'Anda melakukan aktivitas di luar rumah',
             'jawaban' => null,
             'kategori' => 2,
             'status' => 1,
@@ -190,7 +190,7 @@ class KuesionerTableSeeder extends Seeder
         
         Kuesioner::create([
             'kasus_id' => 1,
-            'pertanyaan' => 'Seberapa sering Anda menggunakan masker jika keluar rumah?',
+            'pertanyaan' => 'Anda menggunakan masker jika keluar rumah',
             'jawaban' => null,
             'kategori' => 2,
             'status' => 1,
@@ -198,7 +198,7 @@ class KuesionerTableSeeder extends Seeder
         
         Kuesioner::create([
             'kasus_id' => 1,
-            'pertanyaan' => 'Seberapa sering Anda berinteraksi dengan orang di luar rumah?',
+            'pertanyaan' => 'Anda berinteraksi dengan orang di luar rumah',
             'jawaban' => null,
             'kategori' => 2,
             'status' => 1,
@@ -206,7 +206,7 @@ class KuesionerTableSeeder extends Seeder
         
         Kuesioner::create([
             'kasus_id' => 1,
-            'pertanyaan' => 'Seberapa sering Anda menjaga jarak (min. 1 m) dengan orang lain?',
+            'pertanyaan' => 'Anda menjaga jarak (min. 1 m) dengan orang lain',
             'jawaban' => null,
             'kategori' => 2,
             'status' => 1,
@@ -214,7 +214,7 @@ class KuesionerTableSeeder extends Seeder
         
         Kuesioner::create([
             'kasus_id' => 1,
-            'pertanyaan' => 'Seberapa sering Anda menggunakan angkutan umum maupun ojek online?',
+            'pertanyaan' => 'Anda menggunakan angkutan umum atau ojek online',
             'jawaban' => null,
             'kategori' => 2,
             'status' => 1,
@@ -222,7 +222,7 @@ class KuesionerTableSeeder extends Seeder
         
         Kuesioner::create([
             'kasus_id' => 1,
-            'pertanyaan' => 'Seberapa sering Anda mengecek informasi mengenai virus corona?',
+            'pertanyaan' => 'Anda mengecek informasi mengenai virus corona dari berbagai sumber',
             'jawaban' => null,
             'kategori' => 2,
             'status' => 1,
@@ -230,7 +230,7 @@ class KuesionerTableSeeder extends Seeder
         
         Kuesioner::create([
             'kasus_id' => 1,
-            'pertanyaan' => 'Seberapa sering Anda mencuci tangan dan menggunakan hand sanitizer?',
+            'pertanyaan' => 'Anda mencuci tangan atau menggunakan hand sanitizer secara berkala',
             'jawaban' => null,
             'kategori' => 2,
             'status' => 1,
@@ -238,7 +238,7 @@ class KuesionerTableSeeder extends Seeder
         
         Kuesioner::create([
             'kasus_id' => 1,
-            'pertanyaan' => 'Anda memiliki masker atau hand sanitizer',
+            'pertanyaan' => 'Anda memiliki masker dan/atau hand sanitizer',
             'jawaban' => null,
             'kategori' => 2,
             'status' => 1,
@@ -246,7 +246,7 @@ class KuesionerTableSeeder extends Seeder
         
         Kuesioner::create([
             'kasus_id' => 1,
-            'pertanyaan' => 'Seberapa sering Anda percaya dengan informasi COVID-19 yang diperoleh dari media sosial (WhatsApp, Facebook, dll)?',
+            'pertanyaan' => 'Anda dengan mudah percaya segala informasi COVID-19 yang diperoleh dari media sosial tanpa mengecek kebenarannya terlebih dahulu (WhatsApp, Facebook, dll)',
             'jawaban' => null,
             'kategori' => 2,
             'status' => 1,
