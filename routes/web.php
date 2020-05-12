@@ -36,7 +36,10 @@ $router->group(['prefix' => 'kasus'], function () use ($router) {
 
 $router->group(['prefix' => 'kuesione'], function () use ($router) {
     $router->get('/{id}', ['as' => 'kuesioner.index', 'uses' => 'KuesionerController@index']);
-    $router->get('/edit/{id}', ['as' => 'kuesioner.edit', 'uses' => 'KuesionerController@edit']);
+    $router->get('/show/{id}', ['as' => 'kuesioner.show', 'uses' => 'KuesionerController@show']);
+    $router->post('/store', ['as' => 'kuesioner.store', 'uses' => 'KuesionerController@store']);
+    $router->post('/update', ['as' => 'kuesioner.update', 'uses' => 'KuesionerController@update']);
+    $router->post('/{id}/delete', ['as' => 'kuesioner.delete', 'uses' => 'KuesionerController@delete']);
 });
 
 $router->get('/tes', function() {

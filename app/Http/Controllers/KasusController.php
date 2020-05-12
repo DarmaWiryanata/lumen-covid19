@@ -27,7 +27,7 @@ class KasusController extends Controller
         Kasus::create([
                     'nama' => $request->get('nama'),
                     'slug' => $request->get('slug'),
-                    'status' => $request->get('status'),
+                    'status' => $request->get('status')
                 ]);
 
         return redirect()->route('kasus.index');
@@ -39,7 +39,7 @@ class KasusController extends Controller
                 ->update([
                     'nama' => $request->get('nama'),
                     'slug' => $request->get('slug'),
-                    'status' => $request->get('status'),
+                    'status' => $request->get('status')
                 ]);
 
         return redirect()->route('kasus.index');

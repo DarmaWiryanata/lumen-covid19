@@ -23,7 +23,7 @@ class HomeController extends Controller
     function index()
     {
         $kasus = Kasus::firstActiveKasus();
-        $kuesioner = Kuesioner::getKuesionerByKasus($kasus->id);
+        $kuesioner = Kuesioner::getKuesionerByKasus($kasus->id)->where('status', 1);
         $pekerjaan = Pekerjaan::getPekerjaan();
         $provinsi = Provinsi::getProvinsi();
 

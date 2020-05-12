@@ -15,13 +15,15 @@
             // $('#footable-3').footable();
             $( "#footable-3 tbody tr td button" ).on( "click", function() {
               var id = $(this).attr('data-value');
-              $.get( "/kuesione/edit/" + id, function( data ) {
+              $.get( "/kuesione/show/" + id, function( data ) {
                 console.log(JSON.parse(data));
                 var d = JSON.parse(data);
                 $('#id').val(d[0].id);
+                $('#kasus_id').val(d[0].kasus_id);
                 $('.cek-pertanyaan').val(d[0].pertanyaan);
                 $('.cek-kategori option[value="'+d[0].kategori+'"]').attr('selected', 'selected');
                 $('.cek-jawaban option[value="'+d[0].jawaban+'"]').attr('selected', 'selected');
+                $('.cek-status option[value="'+d[0].status+'"]').attr('selected', 'selected');
               });
               console.log($(this).attr('data-value'));
             });
@@ -64,24 +66,26 @@
                       <div class="table-responsive">
                         <table id="footable-3" class="table mb-0 cek-tabel" data-paging="true" data-filtering="true" data-sorting="true">
                             <thead>
-                                <tr>
+                                <tr class="text-center">
                                     <th data-breakpoints="xs">ID</th>
                                     <th>Pertanyaan</th>
                                     <th data-breakpoints="xs">Kategori</th>
                                     <th data-breakpoints="xs sm md">Jawaban</th>
-                                    <th data-breakpoints="xs" style="width: 15%">Aksi</th>
+                                    <th data-breakpoints="xs" style="min-width: 120px">Aksi</th>
                                 </tr>
                             </thead>
                             <tbody id="user-list">
                                 @foreach ($kuesioner as $item)
                                     <tr>
-                                        <td>{{ $loop->iteration }}</td>
+                                        <td class="text-center">{{ $loop->iteration }}</td>
                                         <td>{{ $item->pertanyaan }}</td>
-                                        <td>{{ $item->kategori }}</td>
-                                        <td>{{ $item->jawaban }}</td>
-                                        <td>
-                                            <button class="btn btn-primary ml-2" data-toggle="modal" data-target="#modal-edit" data-value="{{ $item->id }}"><i class="mdi mdi-pencil-box-outline"></i></button>
-                                            <a href="#" class="btn btn-danger ml-2"><i class="mdi mdi-delete"></i></a>
+                                        <td class="text-center">{{ $item->kategori }}</td>
+                                        <td class="text-center">{{ $item->jawaban }}</td>
+                                        <td class="text-center">
+                                            <form action="{{ route('kuesioner.delete', ['id' => $item->id]) }}" method="post">
+                                                <button class="btn btn-primary ml-2" data-toggle="modal" data-target="#modal-edit" data-value="{{ $item->id }}"><i class="mdi mdi-pencil-box-outline"></i></button>
+                                                <button type="submit" class="btn btn-danger" name="kasus_id" value="{{ $item->kasus_id }}"><i class="mdi mdi-delete"></i></a>
+                                            </form>
                                         </td>
                                     </tr>
                                 @endforeach
@@ -94,8 +98,7 @@
                       <div class="modal fade" id="modal-tambah" tabindex="-1" role="dialog" aria-labelledby="editor-title">
                       
                           <div class="modal-dialog" role="document">
-                              <form class="modal-content form-horizontal" id="editor" >
-                                  @csrf
+                              <form class="modal-content form-horizontal" id="editor" method="POST" action="{{ route('kuesioner.store') }}">
                                 <div class="modal-header">
                                     <h5 class="modal-title" id="editor-title">Tambah Pertanyaan</h5>
                                     <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>                                                            
@@ -104,6 +107,7 @@
                                     <div class="form-group required row">
                                         <label for="pertanyaan" class="col-sm-3 control-label">Pertanyaan</label>
                                         <div class="col-sm-9">
+                                            <input type="text" class="form-control" name="kasus_id" value="{{ $kasus->id }}" hidden required>
                                             <input type="text" class="form-control" id="pertanyaan" name="pertanyaan" placeholder="Masukkan Judul" required>
                                         </div>
                                     </div>
@@ -112,8 +116,8 @@
                                         <div class="col-sm-9">
                                             <select class="form-control" id="kategori" name="kategori">
                                             <option value="" hidden>Pilih Kategori</option>
-                                            <option value="Kuis">Kuis</option>
-                                            <option value="Survey">Survey</option>
+                                            <option value="1">Kuis</option>
+                                            <option value="2">Survey</option>
                                             </select>
                                         </div>
                                     </div>
@@ -122,10 +126,19 @@
                                         <div class="col-sm-9">
                                             <select class="form-control" id="jawaban" name="jawaban">
                                             <option value="">-</option>
-                                            <option value="Benar">Benar</option>
-                                            <option value="Salah">Salah</option>
+                                            <option value="1">Benar</option>
+                                            <option value="2">Salah</option>
                                             </select>
                                         </div>
+                                    </div>
+                                    <div class="form-group required row">
+                                      <label for="status" class="col-sm-3 control-label">Status</label>
+                                      <div class="col-sm-9">
+                                          <select class="form-control" id="status" name="status">
+                                          <option value="1">Aktif</option>
+                                          <option value="0">Tidak aktif</option>
+                                          </select>
+                                      </div>
                                     </div>
                                 </div>
                                 <div class="modal-footer">
@@ -138,16 +151,15 @@
 
                       {{-- Tabel Edit --}}
                       <div class="modal fade" id="modal-edit">
-                      
                           <div class="modal-dialog">
-                              <form class="modal-content form-horizontal">
+                              <form class="modal-content form-horizontal" method="POST" action="{{ route('kuesioner.update') }}">
                                 <div class="modal-header">
                                     <h5 class="modal-title">Ubah Pertanyaan</h5>
                                     <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>                                                            
                                 </div>
                                 <div class="modal-body">
-                                    
-                                    <input type="text" class="form-control" id="id" name="id" value="" hidden>
+                                    <input type="text" class="form-control" id="id" name="id" hidden required>
+                                    <input type="text" class="form-control" id="kasus_id" name="kasus_id" hidden required>
                                     <div class="form-group row">
                                         <label for="pertanyaan" class="col-sm-3 control-label">Pertanyaan</label>
                                         <div class="col-sm-9">
@@ -174,7 +186,15 @@
                                             </select>
                                         </div>
                                     </div>
-
+                                    <div class="form-group row">
+                                        <label for="status" class="col-sm-3 control-label">Status</label>
+                                        <div class="col-sm-9 cek-status">
+                                            <select class="form-control" name="status">
+                                            <option value="1">Aktif</option>
+                                            <option value="0">Tidak aktif</option>
+                                            </select>
+                                        </div>
+                                    </div>
                                 </div>
                                 <div class="modal-footer">
                                     <button type="submit" class="btn btn-primary">Simpan</button>

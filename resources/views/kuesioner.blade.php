@@ -79,7 +79,7 @@
 									@foreach ($kuesioner as $item)
 										@if ($item->kategori == 1)
 											<div class="step">
-												<h3 class="main_question mb-4"><strong>Kuis - {{ $loop->iteration }} dari 30</strong>{{ $item->pertanyaan }}</h3>
+												<h3 class="main_question mb-4"><strong>Kuis - No. {{ $loop->iteration }} dari {{ $kuesioner->count() }}</strong>{{ $item->pertanyaan }}</h3>
 												<input type="text" id="kategori-{{ $loop->iteration }}" name="respons[{{ $loop->iteration }}][kategori]" value="1" hidden>
 												<input type="text" id="pertanyaan-{{ $loop->iteration }}" name="respons[{{ $loop->iteration }}][kuesioner_id]" value="{{ $item->id }}" hidden>
 												<div class="review_block">
@@ -111,7 +111,7 @@
 											<!-- /kuis -->
 										@elseif ($item->kategori == 2)
 											<div class="step">
-												<h3 class="main_question mb-4"><strong>Survey - {{ $loop->iteration }} dari 30</strong>{{ $item->pertanyaan }}</h3>
+												<h3 class="main_question mb-4"><strong>Survey - No. {{ $loop->iteration }} dari {{ $kuesioner->count() }}</strong>{{ $item->pertanyaan }}</h3>
 												<input type="text" id="kategori-{{ $loop->iteration }}" name="respons[{{ $loop->iteration }}][kategori]" value="2" hidden>
 												<input type="text" id="pertanyaan-{{ $loop->iteration }}" name="respons[{{ $loop->iteration }}][kuesioner_id]" value="{{ $item->id }}" hidden>
 												<div class="review_block_smiles">
