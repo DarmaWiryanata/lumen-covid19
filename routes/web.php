@@ -29,6 +29,9 @@ $router->get('/desa/{id}', 'HomeController@getDesaByKecamatan');
 $router->group(['prefix' => 'kasus'], function () use ($router) {
     $router->get('/', ['as' => 'kasus.index', 'uses' => 'KasusController@index']);
     $router->get('/{id}', ['as' => 'kasus.show', 'uses' => 'KasusController@show']);
+    $router->post('/store', ['as' => 'kasus.store', 'uses' => 'KasusController@store']);
+    $router->post('/update', ['as' => 'kasus.update', 'uses' => 'KasusController@update']);
+    $router->post('/{id}/delete', ['as' => 'kasus.delete', 'uses' => 'KasusController@delete']);
 });
 
 $router->group(['prefix' => 'kuesione'], function () use ($router) {

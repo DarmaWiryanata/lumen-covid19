@@ -4,7 +4,7 @@
   <nav class="topbar-main">  
       <!-- LOGO -->
       <div class="topbar-left">
-          <a href="../projects/projects-index.html" class="logo">
+          <a href="{{ route('kasus.index') }}" class="logo">
               <span>
                   <img src="{{ url('assets/images/logo-sm.png') }}" alt="logo-small" class="logo-sm">
               </span>

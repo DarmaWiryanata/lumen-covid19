@@ -20,6 +20,8 @@
             var d = (data);
             $('#id').val(d.id);
             $('#nama').val(d.nama);
+            $('#slug').val(d.slug);
+            $('#status').val(d.status);
           });
         });
       });
@@ -52,46 +54,65 @@
                   <div class="card-body">
                       <h4 class="header-title mt-0">Kasus</h4>
                       <p class="text-muted mb-3">Daftar kasus</p>
-                      <table id="footable-3" class="table mb-0" data-paging="true" data-filtering="true" data-sorting="true">
-                          <thead>
-                              <tr>
-                                  <th data-breakpoints="xs">ID</th>
-                                  <th>Nama</th>
-                                  <th data-breakpoints="xs sm">Tanggal Mulai</th>
-                                  <th>Aksi</th>
-                              </tr>
-                          </thead>
-                          <tbody>
-                            @foreach ($kasus as $item)
+                      <div class="table-responsive">
+                        <table id="footable-3" class="table mb-0" data-paging="true" data-filtering="true" data-sorting="true">
+                            <thead>
                                 <tr>
-                                    <td>{{ $item->id }}</td>
-                                    <td>{{ $item->nama }}</td>
-                                    <td>{{ $item->created_at }}</td>
-                                    <td>
-                                        <button class="btn btn-primary"data-toggle="modal" data-animation="bounce" data-target="#modal-edit" data-value="{{ $item->id }}"><i class="mdi mdi-pencil-box-outline"></i></button>
-                                        <a href="#" class="btn btn-danger"><i class="mdi mdi-delete"></i></a>
-                                    </td>
+                                    <th data-breakpoints="xs">ID</th>
+                                    <th>Nama</th>
+                                    <th data-breakpoints="xs sm">Tanggal Mulai</th>
+                                    <th>Aksi</th>
                                 </tr>
-                            @endforeach
-                          </tbody>
-                      </table><!--end table-->
+                            </thead>
+                            <tbody>
+                                @foreach ($kasus as $item)
+                                    <tr>
+                                        <td>{{ $loop->iteration }}</td>
+                                        <td>{{ $item->nama }}</td>
+                                        <td>{{ $item->created_at }}</td>
+                                        <td>
+                                            <button class="btn btn-primary"data-toggle="modal" data-animation="bounce" data-target="#modal-edit" data-value="{{ $item->id }}"><i class="mdi mdi-pencil-box-outline"></i></button>
+                                            <form action="{{ route('kasus.delete', ['id' => $item->id]) }}" method="post">
+                                              <button type="submit" class="btn btn-danger"><i class="mdi mdi-delete"></i></a>
+                                            </form>
+                                        </td>
+                                    </tr>
+                                @endforeach
+                            </tbody>
+                        </table>
+                    </div>
+                    <!--end table-->
 
                       <!--Modal Edit-->
                       <div class="modal fade" id="modal-edit" tabindex="-1" role="dialog" aria-labelledby="editor-title">
                       
                           <div class="modal-dialog" role="document">
-                              <form class="modal-content form-horizontal" id="editor" action="POST">
+                              <form class="modal-content form-horizontal" id="editor" method="POST" action="{{ route('kasus.update') }}">
                                   <div class="modal-header">
                                       <h5 class="modal-title" id="editor-title">Ubah Kuesioner</h5>
                                       <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>                                                            
                                   </div>
                                   <div class="modal-body">
-                                      
                                       <div class="form-group required row">
                                         <input type="text" id="id" name="id" value="" hidden>
                                         <label for="nama" class="col-sm-3 control-label">Judul Kuesioner</label>
                                         <div class="col-sm-9">
                                           <input type="text" class="form-control" id="nama" name="nama" placeholder="Masukkan Judul"  required>
+                                        </div>
+                                      </div>
+                                      <div class="form-group required row">
+                                        <label for="slug" class="col-sm-3 control-label">Slug</label>
+                                        <div class="col-sm-9">
+                                          <input type="text" class="form-control" id="slug" name="slug" placeholder="Masukkan Slug"  required>
+                                        </div>
+                                      </div>
+                                      <div class="form-group required row">
+                                        <label for="status" class="col-sm-3 control-label">Status</label>
+                                        <div class="col-sm-9">
+                                            <select class="form-control" id="status" name="status">
+                                            <option value="1">Aktif</option>
+                                            <option value="0">Tidak aktif</option>
+                                            </select>
                                         </div>
                                       </div>
                                   </div>
@@ -107,24 +128,39 @@
                       <div class="modal fade" id="modal-tambah" tabindex="-1" role="dialog" aria-labelledby="editor-title">
                       
                           <div class="modal-dialog" role="document">
-                              <form class="modal-content form-horizontal" id="editor">
+                              <form class="modal-content form-horizontal" id="editor" method="POST" action="{{ route('kasus.store') }}">
                                   <div class="modal-header">
                                       <h5 class="modal-title" id="editor-title">Tambah Kuesioner</h5>
                                       <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>                                                            
                                   </div>
                                   <div class="modal-body">
-                                      
-                                      <div class="form-group required row">
-                                          <label for="nama" class="col-sm-3 control-label">Judul Kuesioner</label>
-                                          <div class="col-sm-9">
-                                              <input type="text" class="form-control" id="nama" name="nama" placeholder="Masukkan Judul" required>
-                                          </div>
+                                    <div class="form-group required row">
+                                      <input type="text" id="id" name="id" value="" hidden>
+                                      <label for="nama" class="col-sm-3 control-label">Judul Kuesioner</label>
+                                      <div class="col-sm-9">
+                                        <input type="text" class="form-control" id="nama" name="nama" placeholder="Masukkan Judul"  required>
                                       </div>
-                                  </div>
-                                  <div class="modal-footer">
-                                      <button type="submit" class="btn btn-primary">Simpan</button>
-                                      <button type="button" class="btn btn-danger" data-dismiss="modal">Batal</button>
-                                  </div>
+                                    </div>
+                                    <div class="form-group required row">
+                                      <label for="slug" class="col-sm-3 control-label">Slug</label>
+                                      <div class="col-sm-9">
+                                        <input type="text" class="form-control" id="slug" name="slug" placeholder="Masukkan Slug"  required>
+                                      </div>
+                                    </div>
+                                    <div class="form-group required row">
+                                      <label for="status" class="col-sm-3 control-label">Status</label>
+                                      <div class="col-sm-9">
+                                          <select class="form-control" id="status" name="status">
+                                          <option value="1" selected>Aktif</option>
+                                          <option value="0">Tidak aktif</option>
+                                          </select>
+                                      </div>
+                                    </div>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="submit" class="btn btn-primary">Simpan</button>
+                                    <button type="button" class="btn btn-danger" data-dismiss="modal">Batal</button>
+                                </div>
                               </form>
                           </div>
                       </div><!--end modal-->

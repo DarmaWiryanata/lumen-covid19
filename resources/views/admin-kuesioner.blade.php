@@ -61,43 +61,46 @@
                   <div class="card-body">
                       <h4 class="header-title mt-0">Pertanyaan</h4>
                       <p class="text-muted mb-3">Daftar Pertanyaan</p>
-                      <table id="footable-3" class="table mb-0 cek-tabel" data-paging="true" data-filtering="true" data-sorting="true">
-                          <thead>
-                              <tr>
-                                  <th data-breakpoints="xs">ID</th>
-                                  <th>Pertanyaan</th>
-                                  <th data-breakpoints="xs">Kategori</th>
-                                  <th data-breakpoints="xs sm md">Jawaban</th>
-                                  <th data-breakpoints="xs" style="width: 15%">Aksi</th>
-                              </tr>
-                          </thead>
-                          <tbody id="user-list">
-                            @foreach ($kuesioner as $item)
+                      <div class="table-responsive">
+                        <table id="footable-3" class="table mb-0 cek-tabel" data-paging="true" data-filtering="true" data-sorting="true">
+                            <thead>
                                 <tr>
-                                    <td>{{ $loop->iteration }}</td>
-                                    <td>{{ $item->pertanyaan }}</td>
-                                    <td>{{ $item->kategori }}</td>
-                                    <td>{{ $item->jawaban }}</td>
-                                    <td>
-                                        <button class="btn btn-primary ml-2" data-toggle="modal" data-target="#modal-edit" data-value="{{ $item->id }}"><i class="mdi mdi-pencil-box-outline"></i></button>
-                                        <a href="#" class="btn btn-danger ml-2"><i class="mdi mdi-delete"></i></a>
-                                    </td>
+                                    <th data-breakpoints="xs">ID</th>
+                                    <th>Pertanyaan</th>
+                                    <th data-breakpoints="xs">Kategori</th>
+                                    <th data-breakpoints="xs sm md">Jawaban</th>
+                                    <th data-breakpoints="xs" style="width: 15%">Aksi</th>
                                 </tr>
-                            @endforeach
-                          </tbody>
-                      </table><!--end table-->
+                            </thead>
+                            <tbody id="user-list">
+                                @foreach ($kuesioner as $item)
+                                    <tr>
+                                        <td>{{ $loop->iteration }}</td>
+                                        <td>{{ $item->pertanyaan }}</td>
+                                        <td>{{ $item->kategori }}</td>
+                                        <td>{{ $item->jawaban }}</td>
+                                        <td>
+                                            <button class="btn btn-primary ml-2" data-toggle="modal" data-target="#modal-edit" data-value="{{ $item->id }}"><i class="mdi mdi-pencil-box-outline"></i></button>
+                                            <a href="#" class="btn btn-danger ml-2"><i class="mdi mdi-delete"></i></a>
+                                        </td>
+                                    </tr>
+                                @endforeach
+                            </tbody>
+                        </table>
+                    </div>
+                    <!--end table-->
 
                       {{-- tabel Tambah --}}
                       <div class="modal fade" id="modal-tambah" tabindex="-1" role="dialog" aria-labelledby="editor-title">
                       
                           <div class="modal-dialog" role="document">
-                              <form class="modal-content form-horizontal" id="editor">
+                              <form class="modal-content form-horizontal" id="editor" >
+                                  @csrf
                                 <div class="modal-header">
                                     <h5 class="modal-title" id="editor-title">Tambah Pertanyaan</h5>
                                     <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>                                                            
                                 </div>
                                 <div class="modal-body">
-                                    
                                     <div class="form-group required row">
                                         <label for="pertanyaan" class="col-sm-3 control-label">Pertanyaan</label>
                                         <div class="col-sm-9">
@@ -124,7 +127,6 @@
                                             </select>
                                         </div>
                                     </div>
-
                                 </div>
                                 <div class="modal-footer">
                                     <button type="submit" class="btn btn-primary">Simpan</button>

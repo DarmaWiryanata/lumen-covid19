@@ -15,7 +15,7 @@ class KuesionerController extends Controller
         $kasus = Kasus::firstKasus($id);
         $kuesioner = Kuesioner::getKuesionerByKasus($id);
 
-        return view('kuesioner.index', compact('kasus', 'kuesioner'));
+        return view('admin-kuesioner', compact('kasus', 'kuesioner'));
     }
 
     function edit($id)

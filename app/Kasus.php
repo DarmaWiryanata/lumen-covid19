@@ -8,9 +8,9 @@ class Kasus extends Model
 {
     protected $table = 'kasus';
 
-    protected $fillable = ['nama', 'status'];
+    protected $fillable = ['nama', 'slug', 'status'];
 
-    protected $hidden = ['status', 'created_at', 'updated_at'];
+    protected $hidden = ['created_at', 'updated_at'];
 
     public function kuesioner()
     {
