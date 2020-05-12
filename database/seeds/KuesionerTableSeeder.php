@@ -30,7 +30,7 @@ class KuesionerTableSeeder extends Seeder
         
         Kuesioner::create([
             'kasus_id' => 1,
-            'pertanyaan' => 'Virus corona dapat mengendap dalam tubuh pasien selamanya',
+            'pertanyaan' => 'Minum minuman beralkohol dapat mencegah virus corona',
             'jawaban' => 2,
             'kategori' => 1,
             'status' => 1,
@@ -46,7 +46,7 @@ class KuesionerTableSeeder extends Seeder
         
         Kuesioner::create([
             'kasus_id' => 1,
-            'pertanyaan' => 'Mandi air panas dapat mengurangi paparan virus corona',
+            'pertanyaan' => 'Mandi air panas dapat mengurangi resiko tertular virus corona',
             'jawaban' => 2,
             'kategori' => 1,
             'status' => 1,
