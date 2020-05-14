@@ -246,7 +246,7 @@ class KuesionerTableSeeder extends Seeder
         
         Kuesioner::create([
             'kasus_id' => 1,
-            'pertanyaan' => 'Anda dengan mudah percaya segala informasi COVID-19 yang diperoleh dari media sosial tanpa mengecek kebenarannya terlebih dahulu (WhatsApp, Facebook, dll)',
+            'pertanyaan' => 'Anda dengan mudah percaya segala informasi COVID-19 yang diperoleh dari media sosial (WhatsApp, Facebook, dll) tanpa mengecek kebenarannya terlebih dahulu',
             'jawaban' => null,
             'kategori' => 2,
             'status' => 1,

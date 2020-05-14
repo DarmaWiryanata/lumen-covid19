@@ -250,45 +250,19 @@
 												</div>
 										</div>
 										<div class="form-group">
-											<label for="informasi">Informasi</label>
+											<label for="informasi">Darimana saja Anda memperoleh informasi mengenai virus corona? *</label>
 												<ul>
-													<li>
-														<div class="checkbox_radio_container">
-															<input type="checkbox" id="question_3_opt_1" name="informasi[]" class="required" value="Google and Search Engines">
-															<label class="checkbox" for="question_3_opt_1"></label>
-															<label for="question_3_opt_1" class="wrapper">Google and Search Engines</label>
-														</div>
-													</li>
-													<li>
-														<div class="checkbox_radio_container">
-															<input type="checkbox" id="question_3_opt_2" name="informasi[]" class="required" value="Emails or Newsletter">
-															<label class="checkbox" for="question_3_opt_2"></label>
-															<label for="question_3_opt_2" class="wrapper">Emails or Newsletter</label>
-														</div>
-													</li>
-													<li>
-														<div class="checkbox_radio_container">
-															<input type="checkbox" id="question_3_opt_3" name="informasi[]" class="required" value="Friends or other people">
-															<label class="checkbox" for="question_3_opt_3"></label>
-															<label for="question_3_opt_3" class="wrapper">Friends or other people</label>
-														</div>
-													</li>
-													<li>
-														<div class="checkbox_radio_container">
-															<input type="checkbox" id="question_3_opt_4" name="informasi[]" class="required" value="Print Advertising">
-															<label class="checkbox" for="question_3_opt_4"></label>
-															<label for="question_3_opt_4" class="wrapper">Print Advertising</label>
-														</div>
-													</li>
-													<li>
-														<div class="checkbox_radio_container">
-															<input type="checkbox" id="question_3_opt_5" name="informasi[]" class="required" value="Other">
-															<label class="checkbox" for="question_3_opt_5"></label>
-															<label for="question_3_opt_5" class="wrapper">Other</label>
-														</div>
-													</li>
+													@foreach ($info as $item)
+														<li>
+															<div class="checkbox_radio_container">
+																<input type="checkbox" id="info-{{ $loop->iteration }}" name="informasi[{{ $loop->iteration }}][sumber]" value="{{ $item->id }}">
+																<label class="checkbox" for="info-{{ $loop->iteration }}"></label>
+																<label for="info-{{ $loop->iteration }}" class="wrapper">{{ $item->nama }}</label>
+															</div>
+														</li>
+													@endforeach
 												</ul>
-												<small><em>Multiple selections *</em></small>
+												<small><em>Boleh memilih lebih dari satu *</em></small>
 											</div>
 	                                    <!-- /row -->
 	                                </div>

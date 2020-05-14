@@ -15,9 +15,9 @@ class CreateResponsTable extends Migration
     {
         Schema::create('respons', function (Blueprint $table) {
             $table->id();
-            $table->bigInteger('responden_id');
-            $table->integer('kasus_id');
-            $table->integer('kuesioner_id');
+            $table->bigInteger('responden_id')->unsigned();
+            $table->integer('kasus_id')->unsigned();
+            $table->integer('kuesioner_id')->unsigned();
             $table->boolean('jawaban');
             $table->boolean('kategori');
             $table->timestamps();

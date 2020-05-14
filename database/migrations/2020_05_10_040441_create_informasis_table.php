@@ -15,8 +15,8 @@ class CreateInformasisTable extends Migration
     {
         Schema::create('informasi', function (Blueprint $table) {
             $table->id();
-            $table->bigInteger('responden_id');
-            $table->string('sumber', 50);
+            $table->bigInteger('responden_id')->unsigned();
+            $table->tinyInteger('sumber')->unsigned();
             $table->timestamps();
         });
     }
