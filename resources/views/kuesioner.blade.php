@@ -5,7 +5,7 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <title>{{ $kasus->nama }}</title>
+    <title>{{ $kasus->nama }} - Survei by Kataback</title>
 
     <!-- Favicons-->
     <link rel="shortcut icon" href="img/favicon.ico" type="{{ url('kuesioner/image/x-icon') }}">
@@ -79,7 +79,7 @@
 									@foreach ($kuesioner as $item)
 										@if ($item->kategori == 1)
 											<div class="step">
-												<h3 class="main_question mb-4"><strong>Kuis - No. {{ $loop->iteration }} dari {{ $kuesioner->count() }}</strong>{{ $item->pertanyaan }}</h3>
+												<h3 class="main_question mb-4"><strong>{{ $loop->iteration }} dari {{ $kuesioner->count() }}</strong>{{ $item->pertanyaan }}</h3>
 												<input type="text" id="kategori-{{ $loop->iteration }}" name="respons[{{ $loop->iteration }}][kategori]" value="1" hidden>
 												<input type="text" id="pertanyaan-{{ $loop->iteration }}" name="respons[{{ $loop->iteration }}][kuesioner_id]" value="{{ $item->id }}" hidden>
 												<div class="review_block">
@@ -111,7 +111,7 @@
 											<!-- /kuis -->
 										@elseif ($item->kategori == 2)
 											<div class="step">
-												<h3 class="main_question mb-4"><strong>Survey - No. {{ $loop->iteration }} dari {{ $kuesioner->count() }}</strong>{{ $item->pertanyaan }}</h3>
+												<h3 class="main_question mb-4"><strong>{{ $loop->iteration }} dari {{ $kuesioner->count() }}</strong>{{ $item->pertanyaan }}</h3>
 												<input type="text" id="kategori-{{ $loop->iteration }}" name="respons[{{ $loop->iteration }}][kategori]" value="2" hidden>
 												<input type="text" id="pertanyaan-{{ $loop->iteration }}" name="respons[{{ $loop->iteration }}][kuesioner_id]" value="{{ $item->id }}" hidden>
 												<div class="review_block_smiles">
