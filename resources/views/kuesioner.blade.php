@@ -76,7 +76,7 @@
 	                            <!-- Leave for security protection, read docs for details -->
 	                            <div id="middle-wizard">
 
-									@foreach ($kuesioner as $item)
+									{{-- @foreach ($kuesioner as $item)
 										@if ($item->kategori == 1)
 											<div class="step">
 												<h3 class="main_question mb-4"><strong>{{ $loop->iteration }} dari {{ $kuesioner->count() }}</strong>{{ $item->pertanyaan }}</h3>
@@ -159,7 +159,7 @@
 											</div>
 											<!-- /survey -->
 										@endif
-									@endforeach
+									@endforeach --}}
 									<div class="form-group terms">
 										<label class="container_check" style="padding-left: 0;"><a href="#" data-toggle="modal" data-target="#terms-txt" style="color:#fff; text-decoration: underline;">Panduan cara menjawab</a></label>
 								</div>
@@ -192,6 +192,7 @@
 													@endforeach
 											</select>
 										</div>
+										<label for="informasi">Alamat tempat tinggal saat ini *</label>
 										<div class="row">
 											<div class="col-6 col-md-6 col-sm-12">
 												<div class="form-group">
