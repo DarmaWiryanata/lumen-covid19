@@ -21,7 +21,27 @@ use App\Sumber;
 
 class HomeController extends Controller
 {
-    function index()
+    public function getDesaByKecamatan($id)
+    {
+        return json_encode(Desa::getDesaByKecamatan($id));
+    }
+
+    public function getKabupatenByProvinsi($id)
+    {
+        return json_encode(Kabupaten::getKabupatenByProvinsi($id));
+    }    
+
+    public function getKecamatanByKabupaten($id)
+    {
+        return json_encode(Kecamatan::getKecamatanByKabupaten($id));
+    }    
+
+    public function getKodePosByDesa($id)
+    {
+        return json_encode(KodePos::getKodePosByDesa($id));
+    }
+
+    public function index()
     {
         $info = Info::getInfo()->where('status', 1);
         $kasus = Kasus::firstActiveKasus();
@@ -32,7 +52,7 @@ class HomeController extends Controller
         return view('kuesioner', compact('info', 'kasus', 'kuesioner', 'pekerjaan', 'provinsi'));
     }
 
-    function store(Request $request, Respons $respons)
+    public function store(Request $request, Respons $respons)
     {
         // Responden
         Responden::create([
@@ -82,7 +102,7 @@ class HomeController extends Controller
         return redirect()->route('trims');
     }
 
-    function trims()
+    public function trims()
     {
         $kasus = Kasus::firstActiveKasus();
         $sumber = Sumber::getSumberByKasus($kasus->id);
@@ -90,23 +110,8 @@ class HomeController extends Controller
         return view('thank', compact('sumber'));
     }
 
-    function getKabupatenByProvinsi($id)
+    public function visualisasi()
     {
-        return json_encode(Kabupaten::getKabupatenByProvinsi($id));
-    }
-
-    function getKecamatanByKabupaten($id)
-    {
-        return json_encode(Kecamatan::getKecamatanByKabupaten($id));
-    }
-
-    function getDesaByKecamatan($id)
-    {
-        return json_encode(Desa::getDesaByKecamatan($id));
-    }
-
-    function getKodePosByDesa($id)
-    {
-        return json_encode(KodePos::getKodePosByDesa($id));
+        return view('visualisasi');
     }
 }
