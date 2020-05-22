@@ -1,11 +1,15 @@
 @extends('master')
 
 @section('title')
-  Corona
+  Kuesioner | {{ $kasus->nama }}
 @endsection
 
 @section('css')
   <link href="{{ url('assets/plugins/footable/css/footable.bootstrap.css') }}" rel="stylesheet" type="text/css">
+
+  {{-- jsGrid --}}
+  <link type="text/css" rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jsgrid/1.5.3/jsgrid.min.css" />
+  <link type="text/css" rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jsgrid/1.5.3/jsgrid-theme.min.css" />
 @endsection
 
 @section('js')
@@ -27,10 +31,35 @@
             });
         });
   </script>
-  <script type="text/javascript">
-    $(document).ready( function () {
-      
-    });
+
+  {{-- jsGrid --}}
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jsgrid/1.5.3/jsgrid.min.js"></script>
+  <script>
+      var clients = [
+          { "Name": "Lingkungan Sekitar" },
+          { "Name": "Facebook/Instagram/Twitter" },
+          { "Name": "Televisi/Radio" },
+          { "Name": "Aplikasi Chat (Whatsapp/Facebook Messenger/Telegram" },
+          { "Name": "Baliho/Spanduk" },
+          { "Name": "Media Cetak/Digital" }
+      ];
+  
+      $("#jsGrid").jsGrid({
+          width: "100%",
+          height: "400px",
+  
+          inserting: true,
+          editing: true,
+          sorting: true,
+          paging: true,
+  
+          data: clients,
+  
+          fields: [
+              { name: "Name", type: "text", validate: "required" },
+              { type: "control" }
+          ]
+      });
   </script>
 @endsection
 
@@ -193,6 +222,36 @@
                       <button class="btn btn-success float-right mt-3" data-toggle="modal" data-animation="bounce" data-target="#modal-tambah"><i class="mdi mdi-plus"></i> Pertanyaan</button>
                   </div><!--end card-body-->
               </div><!--end card-->
+              <div class="card">
+                  <div class="card-body">
+                      <h4 class="header-title mt-0">Sumber Informasi</h4>  
+                      <h1 class="text-center">5</h1>
+                      <h5 class="text-center mb-1 text-muted text-truncate">Sumber</h5>
+                      <button class="btn btn-primary float-right mt-3" data-toggle="modal" data-animation="bounce" data-target="#modal-sumber">Lihat Sumber</button>
+                  </div><!--end card-body-->
+              </div><!--end card-->
+
+              {{-- Modal Informasi --}}
+              <div class="modal fade" id="modal-sumber" tabindex="-1" role="dialog" aria-labelledby="editor-title">
+                      
+                  <div class="modal-dialog" role="document">
+                      <form class="modal-content form-horizontal" id="editor">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="editor-title">Sumber Informasi</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>                                                            
+                        </div>
+                        <div class="modal-body">
+                            <div id="jsGrid"></div>
+                            {{-- <div class="form-group required row">
+                                <label for="pertanyaan" class="col-sm-3 control-label">Pertanyaan</label>
+                                <div class="col-sm-9">
+                                    <input type="text" class="form-control" id="pertanyaan" name="pertanyaan" placeholder="Masukkan Judul" required>
+                                </div>
+                            </div> --}}
+                        </div>
+                      </form>
+                  </div>
+              </div><!--end modal-->
           </div><!--end col-->
       </div><!--end row-->
 
