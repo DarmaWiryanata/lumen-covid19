@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
 use App\Desa;
+use App\Info;
 use App\Informasi;
 use App\Kabupaten;
 use App\Kasus;
@@ -22,12 +23,13 @@ class HomeController extends Controller
 {
     function index()
     {
+        $info = Info::getInfo()->where('status', 1);
         $kasus = Kasus::firstActiveKasus();
-        $kuesioner = Kuesioner::getKuesionerByKasus($kasus->id);
+        $kuesioner = Kuesioner::getKuesionerByKasus($kasus->id)->where('status', 1);
         $pekerjaan = Pekerjaan::getPekerjaan();
         $provinsi = Provinsi::getProvinsi();
 
-        return view('kuesioner', compact('kasus', 'kuesioner', 'pekerjaan', 'provinsi'));
+        return view('kuesioner', compact('info', 'kasus', 'kuesioner', 'pekerjaan', 'provinsi'));
     }
 
     function store(Request $request, Respons $respons)
@@ -70,10 +72,10 @@ class HomeController extends Controller
         }
 
         // Informasi
-        foreach ($request->informasi as $value) {
+        foreach ($request->informasi as $key => $value) {
             Informasi::create([
                 'responden_id' => $responden->id,
-                'sumber' => $value
+                'sumber' => $value['sumber']
             ]);
         }
         

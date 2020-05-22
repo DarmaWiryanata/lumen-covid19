@@ -15,7 +15,7 @@ class CreateSumbersTable extends Migration
     {
         Schema::create('sumber', function (Blueprint $table) {
             $table->id();
-            $table->integer('kasus_id');
+            $table->integer('kasus_id')->unsigned();
             $table->string('nama', 50);
             $table->text('url');
             $table->timestamps();

@@ -13,7 +13,7 @@ class KasusTableSeeder extends Seeder
     public function run()
     {
         Kasus::create([
-            'nama' => 'Coronavirus Disease 2019 (COVID-19)',
+            'nama' => 'Pemahaman/Persepsi Masyarakat Terhadap Kondisi Pandemi COVID-19',
             'slug' => 'coronavirus-disease-2019',
             'status' => 1
         ]);

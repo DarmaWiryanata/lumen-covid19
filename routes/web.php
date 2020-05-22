@@ -29,11 +29,17 @@ $router->get('/desa/{id}', 'HomeController@getDesaByKecamatan');
 $router->group(['prefix' => 'kasus'], function () use ($router) {
     $router->get('/', ['as' => 'kasus.index', 'uses' => 'KasusController@index']);
     $router->get('/{id}', ['as' => 'kasus.show', 'uses' => 'KasusController@show']);
+    $router->post('/store', ['as' => 'kasus.store', 'uses' => 'KasusController@store']);
+    $router->post('/update', ['as' => 'kasus.update', 'uses' => 'KasusController@update']);
+    $router->post('/{id}/delete', ['as' => 'kasus.delete', 'uses' => 'KasusController@delete']);
 });
 
 $router->group(['prefix' => 'kuesione'], function () use ($router) {
     $router->get('/{id}', ['as' => 'kuesioner.index', 'uses' => 'KuesionerController@index']);
-    $router->get('/edit/{id}', ['as' => 'kuesioner.edit', 'uses' => 'KuesionerController@edit']);
+    $router->get('/show/{id}', ['as' => 'kuesioner.show', 'uses' => 'KuesionerController@show']);
+    $router->post('/store', ['as' => 'kuesioner.store', 'uses' => 'KuesionerController@store']);
+    $router->post('/update', ['as' => 'kuesioner.update', 'uses' => 'KuesionerController@update']);
+    $router->post('/{id}/delete', ['as' => 'kuesioner.delete', 'uses' => 'KuesionerController@delete']);
 });
 
 $router->get('/tes', function() {

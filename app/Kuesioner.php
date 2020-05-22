@@ -10,7 +10,7 @@ class Kuesioner extends Model
 
     protected $fillable = ['kasus_id', 'pertanyaan', 'jawaban', 'kategori', 'status'];
 
-    protected $hidden = ['status', 'created_at', 'updated_at'];
+    protected $hidden = ['created_at', 'updated_at'];
 
     public function kasus()
     {

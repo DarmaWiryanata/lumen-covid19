@@ -5,7 +5,7 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <title>{{ $kasus->nama }}</title>
+    <title>{{ $kasus->nama }} - Survei by Kataback</title>
 
     <!-- Favicons-->
     <link rel="shortcut icon" href="img/favicon.ico" type="{{ url('kuesioner/image/x-icon') }}">
@@ -76,10 +76,10 @@
 	                            <!-- Leave for security protection, read docs for details -->
 	                            <div id="middle-wizard">
 
-									@foreach ($kuesioner as $item)
+									{{-- @foreach ($kuesioner as $item)
 										@if ($item->kategori == 1)
 											<div class="step">
-												<h3 class="main_question mb-4"><strong>Kuis - {{ $loop->iteration }} dari 30</strong>{{ $item->pertanyaan }}</h3>
+												<h3 class="main_question mb-4"><strong>{{ $loop->iteration }} dari {{ $kuesioner->count() }}</strong>{{ $item->pertanyaan }}</h3>
 												<input type="text" id="kategori-{{ $loop->iteration }}" name="respons[{{ $loop->iteration }}][kategori]" value="1" hidden>
 												<input type="text" id="pertanyaan-{{ $loop->iteration }}" name="respons[{{ $loop->iteration }}][kuesioner_id]" value="{{ $item->id }}" hidden>
 												<div class="review_block">
@@ -111,7 +111,7 @@
 											<!-- /kuis -->
 										@elseif ($item->kategori == 2)
 											<div class="step">
-												<h3 class="main_question mb-4"><strong>Survey - {{ $loop->iteration }} dari 30</strong>{{ $item->pertanyaan }}</h3>
+												<h3 class="main_question mb-4"><strong>{{ $loop->iteration }} dari {{ $kuesioner->count() }}</strong>{{ $item->pertanyaan }}</h3>
 												<input type="text" id="kategori-{{ $loop->iteration }}" name="respons[{{ $loop->iteration }}][kategori]" value="2" hidden>
 												<input type="text" id="pertanyaan-{{ $loop->iteration }}" name="respons[{{ $loop->iteration }}][kuesioner_id]" value="{{ $item->id }}" hidden>
 												<div class="review_block_smiles">
@@ -159,7 +159,7 @@
 											</div>
 											<!-- /survey -->
 										@endif
-									@endforeach
+									@endforeach --}}
 									<div class="form-group terms">
 										<label class="container_check" style="padding-left: 0;"><a href="#" data-toggle="modal" data-target="#terms-txt" style="color:#fff; text-decoration: underline;">Panduan cara menjawab</a></label>
 								</div>
@@ -192,6 +192,7 @@
 													@endforeach
 											</select>
 										</div>
+										<label for="informasi">Alamat tempat tinggal saat ini *</label>
 										<div class="row">
 											<div class="col-6 col-md-6 col-sm-12">
 												<div class="form-group">
@@ -250,45 +251,19 @@
 												</div>
 										</div>
 										<div class="form-group">
-											<label for="informasi">Informasi</label>
+											<label for="informasi">Darimana saja Anda memperoleh informasi mengenai virus corona? *</label>
 												<ul>
-													<li>
-														<div class="checkbox_radio_container">
-															<input type="checkbox" id="question_3_opt_1" name="informasi[]" class="required" value="Google and Search Engines">
-															<label class="checkbox" for="question_3_opt_1"></label>
-															<label for="question_3_opt_1" class="wrapper">Google and Search Engines</label>
-														</div>
-													</li>
-													<li>
-														<div class="checkbox_radio_container">
-															<input type="checkbox" id="question_3_opt_2" name="informasi[]" class="required" value="Emails or Newsletter">
-															<label class="checkbox" for="question_3_opt_2"></label>
-															<label for="question_3_opt_2" class="wrapper">Emails or Newsletter</label>
-														</div>
-													</li>
-													<li>
-														<div class="checkbox_radio_container">
-															<input type="checkbox" id="question_3_opt_3" name="informasi[]" class="required" value="Friends or other people">
-															<label class="checkbox" for="question_3_opt_3"></label>
-															<label for="question_3_opt_3" class="wrapper">Friends or other people</label>
-														</div>
-													</li>
-													<li>
-														<div class="checkbox_radio_container">
-															<input type="checkbox" id="question_3_opt_4" name="informasi[]" class="required" value="Print Advertising">
-															<label class="checkbox" for="question_3_opt_4"></label>
-															<label for="question_3_opt_4" class="wrapper">Print Advertising</label>
-														</div>
-													</li>
-													<li>
-														<div class="checkbox_radio_container">
-															<input type="checkbox" id="question_3_opt_5" name="informasi[]" class="required" value="Other">
-															<label class="checkbox" for="question_3_opt_5"></label>
-															<label for="question_3_opt_5" class="wrapper">Other</label>
-														</div>
-													</li>
+													@foreach ($info as $item)
+														<li>
+															<div class="checkbox_radio_container">
+																<input type="checkbox" id="info-{{ $loop->iteration }}" name="informasi[{{ $loop->iteration }}][sumber]" value="{{ $item->id }}">
+																<label class="checkbox" for="info-{{ $loop->iteration }}"></label>
+																<label for="info-{{ $loop->iteration }}" class="wrapper">{{ $item->nama }}</label>
+															</div>
+														</li>
+													@endforeach
 												</ul>
-												<small><em>Multiple selections *</em></small>
+												<small><em>Boleh memilih lebih dari satu *</em></small>
 											</div>
 	                                    <!-- /row -->
 	                                </div>
