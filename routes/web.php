@@ -44,7 +44,7 @@ $router->group(['prefix' => 'kuesione'], function () use ($router) {
 });
 
 $router->get('/tes', function() {
-    return view('show');
+    return view('visualisasi.visualisasi');
 });
 
 $router->group(['namespace' => 'Api', 'prefix' => 'api'], function () use ($router) {
