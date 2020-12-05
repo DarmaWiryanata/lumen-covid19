@@ -20,11 +20,12 @@ $router->get('/key', function() {
 });
 
 $router->get('/', ['as' => 'index', 'uses' => 'HomeController@index']);
-$router->get('/terima-kasih', ['as' => 'trims', 'uses' => 'HomeController@trims']);
 $router->post('/', ['as' => 'store', 'uses' => 'HomeController@store']);
+$router->get('/desa/{id}', 'HomeController@getDesaByKecamatan');
 $router->get('/kabupaten/{id}', 'HomeController@getKabupatenByProvinsi');
 $router->get('/kecamatan/{id}', 'HomeController@getKecamatanByKabupaten');
-$router->get('/desa/{id}', 'HomeController@getDesaByKecamatan');
+$router->get('/terima-kasih', ['as' => 'trims', 'uses' => 'HomeController@trims']);
+$router->get('/visualisasi', ['as' => 'visualisasi', 'uses' => 'HomeController@visualisasi']);
 
 $router->group(['prefix' => 'kasus'], function () use ($router) {
     $router->get('/', ['as' => 'kasus.index', 'uses' => 'KasusController@index']);
@@ -44,4 +45,8 @@ $router->group(['prefix' => 'kuesione'], function () use ($router) {
 
 $router->get('/tes', function() {
     return view('show');
+});
+
+$router->group(['namespace' => 'Api', 'prefix' => 'api'], function () use ($router) {
+    $router->get('', ['as' => 'index', 'uses' => 'HomeController@index']);
 });
