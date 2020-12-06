@@ -49,4 +49,5 @@ $router->get('/tes', function() {
 
 $router->group(['namespace' => 'Api', 'prefix' => 'api'], function () use ($router) {
     $router->get('', ['as' => 'index', 'uses' => 'HomeController@index']);
+    $router->get('wilayah', ['as' => 'index', 'uses' => 'HomeController@wilayah']);
 });

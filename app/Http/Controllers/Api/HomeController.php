@@ -225,4 +225,55 @@ class HomeController extends Controller
 
         return 'suksess';
     }
+
+    static function failedRequest($id)
+    {
+        if ($id == 1) {
+            $data['status'] = "Gagal";
+            $data['message'] = "Variabel tidak boleh kosong";
+        }
+        if ($id == 2) {
+            $data['status'] = "Gagal";
+            $data['message'] = "Data tidak ditemukan";
+        }
+        return $data;
+    }
+
+    public function wilayah(Request $request)
+    {
+        $provinsi = "";
+        $kabkota = "";
+        $kecamatan = "";
+        
+        if ($request->provinsi != NULL) {
+            if ($request->provinsi == "") {
+                return $this->failedRequest(1);
+            } else {
+                $provinsi = $request->provinsi;
+            }
+        }
+        if ($request->kabkota != NULL) {
+            if ($request->kabkota == "") {
+                return $this->failedRequest(1);
+            } else {
+                $kabkota = $request->kabkota;
+            }
+        }
+        if ($request->kecamatan != NULL) {
+            if ($request->kecamatan == "") {
+                return $this->failedRequest(1);
+            } else {
+                $kecamatan = $request->kecamatan;
+            }
+        }
+
+        return $data['responden'] = Responden::APIgetRespondenByWilayah($provinsi, $kabkota, $kecamatan);
+        if (count($data) == 0) {
+            return $this->failedRequest(2);
+        } else {
+            $data['status'] = "Berhasil";
+            $data['message'] = "Data berhasil dipanggil";
+            return $data;
+        }
+    }
 }
