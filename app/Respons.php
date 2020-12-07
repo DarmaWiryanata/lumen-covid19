@@ -61,7 +61,7 @@ class Respons extends Model
         $data = Respons::selectRaw('sum(jawaban) * 100 / 20 as nilai')
                         ->whereBetween('kuesioner_id', [1, 20])
                         ->groupBy('responden_id')
-                        // ->take(40)
+                        ->take(397)
                         ->pluck('nilai');
         
         $data = json_encode($data, JSON_NUMERIC_CHECK);
