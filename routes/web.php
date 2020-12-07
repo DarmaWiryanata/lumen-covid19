@@ -50,4 +50,8 @@ $router->get('/tes', function() {
 $router->group(['namespace' => 'Api', 'prefix' => 'api'], function () use ($router) {
     $router->get('', ['as' => 'index', 'uses' => 'HomeController@index']);
     $router->get('wilayah', ['as' => 'index', 'uses' => 'HomeController@wilayah']);
+    $router->get('tahun_lahir', ['as' => 'index', 'uses' => 'HomeController@tahun_lahir']);
+    $router->get('jenis_kelamin', ['as' => 'index', 'uses' => 'HomeController@jenis_kelamin']);
+    $router->get('pendidikan_terakhir', ['as' => 'index', 'uses' => 'HomeController@pendidikan_terakhir']);
+    $router->get('pekerjaan', ['as' => 'index', 'uses' => 'HomeController@pekerjaan']);
 });

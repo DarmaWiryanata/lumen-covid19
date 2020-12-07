@@ -90,8 +90,30 @@ class Responden extends Model
         Responden::whereId($id)->update(['level' => $level]);
     }
 
-    static function APIgetRespondenByWilayah($provinsi, $kabkota, $kecamatan)
+    // static function APIgetRespondenByWilayah($wilayah)
+    // {
+    //     $provinsi = $wilayah['provinsi'];
+    //     $kabkota = $wilayah['kabkota'];
+    //     $kecamatan = $wilayah['kecamatan'];
+        
+    //     return app('db')->select("SELECT provinsi.nama_provinsi as provinsi, ".($provinsi != NULL || $kabkota != NULL || $kecamatan != NULL ? "kabkota.nama_kabkota as kabkota, " : "").($kabkota != NULL || $kecamatan != NULL ? "kecamatan.nama_kecamatan as kecamatan, " : "").($kecamatan != NULL ? "kelurahan.nama_kelurahan as desa, " : "")." (CASE responden.level WHEN 1 THEN 'Sangat Rendah' WHEN 2 THEN 'Rendah' WHEN 3 THEN 'Sedang' WHEN 4 THEN 'Tinggi' ELSE 'Sangat Tinggi' END) as level, COUNT(responden.level) as jumlah FROM responden INNER JOIN provinsi ON responden.provinsi = provinsi.id INNER JOIN kabkota ON responden.kabupaten = kabkota.id INNER JOIN kecamatan ON responden.kecamatan = kecamatan.id INNER JOIN kelurahan ON responden.desa = kelurahan.id ".($provinsi == "" && $kabkota == "" && $kecamatan == "" ? "" : "WHERE "). ($provinsi == "" && $kabkota == "" && $kecamatan == "" ? "" : ($provinsi != "" ? "provinsi.nama_provinsi = '$provinsi'" : "").($kabkota != "" && $provinsi != "" ? "AND " : "").($kabkota != "" ? "kabkota.nama_kabkota = '$kabkota'" : "").(($kecamatan != "" && $provinsi != "") || ($kecamatan != "" && $kabkota != "") ? "AND " : "").($kecamatan != "" ? "kecamatan.nama_kecamatan = '$kecamatan'" : ""))." GROUP BY responden.level".($provinsi == "" && $kabkota == "" && $kecamatan == "" ? ", responden.provinsi" : ", "). ($kecamatan != NULL ? "responden.desa" : ($kabkota != NULL ? "responden.kecamatan" : ($provinsi != NULL ? "responden.kabupaten" : ""))). " ORDER BY responden.provinsi, responden.kabupaten, responden.kecamatan, responden.desa, responden.level");
+    // }
+
+    static function APIgetResponden($wilayah, $status)
     {
-        return app('db')->select("SELECT provinsi.nama_provinsi as provinsi, kabkota.nama_kabkota as kabkota, kecamatan.nama_kecamatan as kecamatan, (CASE responden.level WHEN 1 THEN 'Sangat Rendah' WHEN 2 THEN 'Rendah' WHEN 3 THEN 'Sedang' WHEN 4 THEN 'Tinggi' ELSE 'Sangat Tinggi' END) as level, COUNT(responden.level) as jumlah FROM responden INNER JOIN provinsi ON responden.provinsi = provinsi.id INNER JOIN kabkota ON responden.kabupaten = kabkota.id INNER JOIN kecamatan ON responden.kecamatan = kecamatan.id ".($provinsi == "" && $kabkota == "" && $kecamatan == "" ? "" : "WHERE "). ($provinsi == "" && $kabkota == "" && $kecamatan == "" ? "" : ($provinsi != "" ? "provinsi.nama_provinsi = '$provinsi'" : "").($kabkota != "" && $provinsi != "" ? "AND " : "").($kabkota != "" ? "kabkota.nama_kabkota = '$kabkota'" : "").(($kecamatan != "" && $provinsi != "") || ($kecamatan != "" && $kabkota != "") ? "AND " : "").($kecamatan != "" ? "kecamatan.nama_kecamatan = '$kecamatan'" : ""))." GROUP BY responden.level".($provinsi == "" && $kabkota == "" && $kecamatan == "" ? ", responden.provinsi" : ", "). ($kecamatan != NULL ? "responden.kecamatan" : ($kabkota != NULL ? "responden.kabupaten" : ($provinsi != NULL ? "responden.provinsi" : ""))). " ORDER BY responden.provinsi, responden.level");
+        $provinsi = $wilayah['provinsi'];
+        $kabkota = $wilayah['kabkota'];
+        $kecamatan = $wilayah['kecamatan'];
+
+        $pencarian = $status['pencarian'];
+        $kolom = $status['kolom'];
+        $abc = $status['data'];
+        if ($kolom == "pendidikan_terakhir") {
+            $data = "'$abc'";
+        } else {
+            $data = $abc;
+        }
+        
+        return app('db')->select("SELECT provinsi.nama_provinsi as provinsi, CONCAT(provinsi.latitude, '/', provinsi.longitude) as koordinat_provinsi, ".($provinsi != NULL || $kabkota != NULL || $kecamatan != NULL ? "kabkota.nama_kabkota as kabkota, CONCAT(kabkota.latitude, '/', kabkota.longitude) as koordinat_kabkota, " : "").($kabkota != NULL || $kecamatan != NULL ? "kecamatan.nama_kecamatan as kecamatan, CONCAT(kecamatan.latitude, '/', kecamatan.longitude) as koordinat_kecamatan, " : "").($kecamatan != NULL ? "kelurahan.nama_kelurahan as desa, " : "")." (CASE responden.level WHEN 1 THEN 'Sangat Rendah' WHEN 2 THEN 'Rendah' WHEN 3 THEN 'Sedang' WHEN 4 THEN 'Tinggi' ELSE 'Sangat Tinggi' END) as level, COUNT(responden.level) as jumlah FROM responden INNER JOIN provinsi ON responden.provinsi = provinsi.id INNER JOIN kabkota ON responden.kabupaten = kabkota.id INNER JOIN kecamatan ON responden.kecamatan = kecamatan.id INNER JOIN kelurahan ON responden.desa = kelurahan.id ".($provinsi == "" && $kabkota == "" && $kecamatan == "" ? ($pencarian != 1 ? "" : "WHERE $kolom = $data") : ($pencarian != 1 ? "" : "WHERE $kolom = $data AND ")).($provinsi == "" && $kabkota == "" && $kecamatan == "" ? "" : ($provinsi != "" ? "provinsi.nama_provinsi = '$provinsi'" : "").($kabkota != "" && $provinsi != "" ? "AND " : "").($kabkota != "" ? "kabkota.nama_kabkota = '$kabkota'" : "").(($kecamatan != "" && $provinsi != "") || ($kecamatan != "" && $kabkota != "") ? "AND " : "").($kecamatan != "" ? "kecamatan.nama_kecamatan = '$kecamatan'" : ""))." GROUP BY responden.level".($provinsi == "" && $kabkota == "" && $kecamatan == "" ? ", responden.provinsi" : ", "). ($kecamatan != NULL ? "responden.desa" : ($kabkota != NULL ? "responden.kecamatan" : ($provinsi != NULL ? "responden.kabupaten" : ""))). " ORDER BY responden.provinsi, responden.kabupaten, responden.kecamatan, responden.desa, responden.level");
     }
 }

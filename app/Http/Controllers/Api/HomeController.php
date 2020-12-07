@@ -228,52 +228,167 @@ class HomeController extends Controller
 
     static function failedRequest($id)
     {
+        $data['status'] = "Gagal";
         if ($id == 1) {
-            $data['status'] = "Gagal";
             $data['message'] = "Variabel tidak boleh kosong";
-        }
-        if ($id == 2) {
-            $data['status'] = "Gagal";
+        } else if ($id == 2) {
             $data['message'] = "Data tidak ditemukan";
+        } else if ($id == 3) {
+            $data['message'] = "Variabel data kosong";
+        } else if ($id == 4) {
+            $data['message'] = "Variabel data hanya bisa diisi dengan 1 (Laki-laki) dan 2 (Perempuan)";
+        } else if ($id == 5) {
+            $data['message'] = "Variabel data pekerjaan tidak terdaftar, silahkan cek data pekerjaan pada halaman dokumentasi";
         }
+
         return $data;
     }
 
-    public function wilayah(Request $request)
+    static function requestWilayah($request)
     {
-        $provinsi = "";
-        $kabkota = "";
-        $kecamatan = "";
+        $wilayah = [];
         
         if ($request->provinsi != NULL) {
             if ($request->provinsi == "") {
                 return $this->failedRequest(1);
             } else {
-                $provinsi = $request->provinsi;
+                $wilayah['provinsi'] = $request->provinsi;
             }
+        } else {
+            $wilayah['provinsi'] = "";
         }
         if ($request->kabkota != NULL) {
             if ($request->kabkota == "") {
                 return $this->failedRequest(1);
             } else {
-                $kabkota = $request->kabkota;
+                $wilayah['kabkota'] = $request->kabkota;
             }
+        } else {
+            $wilayah['kabkota'] = "";
         }
         if ($request->kecamatan != NULL) {
             if ($request->kecamatan == "") {
                 return $this->failedRequest(1);
             } else {
-                $kecamatan = $request->kecamatan;
+                $wilayah['kecamatan'] = $request->kecamatan;
             }
+        } else {
+            $wilayah['kecamatan'] = "";
         }
 
-        return $data['responden'] = Responden::APIgetRespondenByWilayah($provinsi, $kabkota, $kecamatan);
-        if (count($data) == 0) {
+        return $wilayah;
+    }
+
+    public function hasil($data)
+    {
+        if (count($data['responden']) == 0) {
             return $this->failedRequest(2);
         } else {
             $data['status'] = "Berhasil";
             $data['message'] = "Data berhasil dipanggil";
             return $data;
         }
+    }
+
+    static function statusPencarian($id, $data)
+    {
+        $status = [];
+        if ($id == 0) {
+            $status['pencarian'] = 0;
+            $status['kolom'] = "";
+            $status['data'] = $data;
+        } else if ($id == 1) {
+            $status['pencarian'] = 1;
+            $status['kolom'] = "tahun_lahir";
+            $status['data'] = $data;
+        } else if ($id == 2) {
+            $status['pencarian'] = 1;
+            $status['kolom'] = "jenis_kelamin";
+            $status['data'] = $data;
+        } else if ($id == 3) {
+            $status['pencarian'] = 1;
+            $status['kolom'] = "responden.pekerjaan";
+            $status['data'] = $data;
+        } else if ($id == 4) {
+            $status['pencarian'] = 1;
+            $status['kolom'] = "pendidikan_terakhir";
+            $status['data'] = $data;
+        }
+
+        return $status;
+    }
+
+    public function wilayah(Request $request)
+    {
+        $wilayah = $this->requestWilayah($request);
+        $status = $this->statusPencarian(0, $request->data);
+
+        $data['responden'] = Responden::APIgetResponden($wilayah, $status);
+        
+        return $this->hasil($data);
+    }
+
+    public function tahun_lahir(Request $request)
+    {
+        $wilayah = $this->requestWilayah($request);
+
+        if ($request->data == null) {            
+            return $this->failedRequest(3);
+        } else {
+            $status = $this->statusPencarian(1, $request->data);
+        }
+
+        $data['responden'] = Responden::APIgetResponden($wilayah, $status);
+        
+        return $this->hasil($data);
+    }
+
+    public function jenis_kelamin(Request $request)
+    {
+        $wilayah = $this->requestWilayah($request);
+
+        if ($request->data == null) {            
+            return $this->failedRequest(3);
+        } else if ($request->data != 1 && $request->data != 2) {
+            return $this->failedRequest(4);
+        } else {
+            $status = $this->statusPencarian(2, $request->data);
+        }
+
+        $data['responden'] = Responden::APIgetResponden($wilayah, $status);
+        
+        return $this->hasil($data);
+    }
+
+    public function pekerjaan(Request $request)
+    {
+        $wilayah = $this->requestWilayah($request);
+
+        if ($request->data == null) {            
+            return $this->failedRequest(3);
+        } else if ($request->data < 1 && $request->data > 171) {
+            return $this->failedRequest(5);
+        } else {
+            $status = $this->statusPencarian(3, $request->data);
+        }
+
+        $data['responden'] = Responden::APIgetResponden($wilayah, $status);
+        
+        return $this->hasil($data);
+    }
+
+    public function pendidikan_terakhir(Request $request)
+    {
+        $wilayah = $this->requestWilayah($request);
+
+        if ($request->data == null) {            
+            return $this->failedRequest(3);
+        } else {
+            $status = $this->statusPencarian(4, $request->data);
+        }
+
+        $data['responden'] = Responden::APIgetResponden($wilayah, $status);
+        
+        return $this->hasil($data);
     }
 }
