@@ -137,8 +137,10 @@ class Responden extends Model
                             ($provinsi != NULL ? $data->groupBy('responden.kabupaten') : ($kabkota != NULL ? $data->groupBy('responden.kecamatan') : ($kecamatan != NULL ? $data->groupBy('responden.desa') : $data->groupBy('responden.provinsi'))));
             $query[$key] = $data->first();
             
-            $dataresponden = DB::table('responden')
-                                ->selectRaw('(CASE responden.level WHEN 1 THEN "Sangat Rendah" WHEN 2 THEN "Rendah" WHEN 3 THEN "Sedang" WHEN 4 THEN "Tinggi" ELSE "Sangat Tinggi" END) as level, COUNT(responden.level) as jumlah')
+            $dataresponden = DB::table('responden');
+                                ($kolom == 'tahun_lahir' ? $dataresponden->select('tahun_lahir') : '')
+                                ->selectRaw('(CASE responden.level WHEN 1 THEN "Sangat Rendah" WHEN 2 THEN "Rendah" WHEN 3 THEN "Sedang" WHEN 4 THEN "Tinggi" ELSE "Sangat Tinggi" END) as level, COUNT(responden.level) as jumlah');
+                                ($kolom == 'tahun_lahir' ? $dataresponden->groupBy('tahun_lahir') : '')
                                 ->groupBy('responden.level');
                                 ($provinsi != NULL ? $dataresponden->where('responden.kabupaten', $kode) : ($kabkota != NULL ? $dataresponden->where('responden.kecamatan', $kode) : ($kecamatan != NULL ? $dataresponden->where('responden.desa', $kode) : $dataresponden->where('responden.provinsi', $kode))));
             $query[$key]->responden = $dataresponden->get();
