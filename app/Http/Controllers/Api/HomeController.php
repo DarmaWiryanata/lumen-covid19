@@ -358,7 +358,7 @@ class HomeController extends Controller
         $wilayah = $this->requestWilayah($request);
         $status = $this->statusPencarian(4);
 
-        $data['responden'] = Responden::APIgetResponden($wilayah, $status);
+        $data['data'] = Responden::APIgetResponden($wilayah, $status);
         
         return $this->hasil($data);
     }
