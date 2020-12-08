@@ -281,7 +281,7 @@ class HomeController extends Controller
 
     public function hasil($data)
     {
-        if (count($data['responden']) == 0) {
+        if (count($data['data']) == 0) {
             return $this->failedRequest(2);
         } else {
             $data['status'] = "Berhasil";
@@ -318,7 +318,7 @@ class HomeController extends Controller
         $wilayah = $this->requestWilayah($request);
         $status = $this->statusPencarian(0);
 
-        return Responden::APIgetResponden($wilayah, $status);
+        $data['data'] = Responden::APIgetResponden($wilayah, $status);
         
         return $this->hasil($data);
     }

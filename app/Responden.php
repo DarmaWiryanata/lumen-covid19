@@ -143,6 +143,7 @@ class Responden extends Model
                                 ($provinsi != NULL ? $dataresponden->where('responden.kabupaten', $kode) : ($kabkota != NULL ? $dataresponden->where('responden.kecamatan', $kode) : ($kecamatan != NULL ? $dataresponden->where('responden.desa', $kode) : $dataresponden->where('responden.provinsi', $kode))));
             $query[$key]->responden = $dataresponden->get();
         }
+         
         return $query;
     }
 }
