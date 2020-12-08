@@ -244,7 +244,7 @@ class HomeController extends Controller
         return $data;
     }
 
-    static function requestWilayah($request)
+    public function requestWilayah($request)
     {
         $wilayah = [];
         
@@ -290,29 +290,24 @@ class HomeController extends Controller
         }
     }
 
-    static function statusPencarian($id, $data)
+    static function statusPencarian($id)
     {
         $status = [];
         if ($id == 0) {
             $status['pencarian'] = 0;
             $status['kolom'] = "";
-            $status['data'] = $data;
         } else if ($id == 1) {
             $status['pencarian'] = 1;
             $status['kolom'] = "tahun_lahir";
-            $status['data'] = $data;
         } else if ($id == 2) {
             $status['pencarian'] = 1;
             $status['kolom'] = "jenis_kelamin";
-            $status['data'] = $data;
         } else if ($id == 3) {
             $status['pencarian'] = 1;
             $status['kolom'] = "responden.pekerjaan";
-            $status['data'] = $data;
         } else if ($id == 4) {
             $status['pencarian'] = 1;
             $status['kolom'] = "pendidikan_terakhir";
-            $status['data'] = $data;
         }
 
         return $status;
@@ -321,9 +316,9 @@ class HomeController extends Controller
     public function wilayah(Request $request)
     {
         $wilayah = $this->requestWilayah($request);
-        $status = $this->statusPencarian(0, $request->data);
+        $status = $this->statusPencarian(0);
 
-        $data['responden'] = Responden::APIgetResponden($wilayah, $status);
+        return Responden::APIgetResponden($wilayah, $status);
         
         return $this->hasil($data);
     }
@@ -331,12 +326,7 @@ class HomeController extends Controller
     public function tahun_lahir(Request $request)
     {
         $wilayah = $this->requestWilayah($request);
-
-        if ($request->data == null) {            
-            return $this->failedRequest(3);
-        } else {
-            $status = $this->statusPencarian(1, $request->data);
-        }
+        $status = $this->statusPencarian(1);
 
         $data['responden'] = Responden::APIgetResponden($wilayah, $status);
         
@@ -346,14 +336,7 @@ class HomeController extends Controller
     public function jenis_kelamin(Request $request)
     {
         $wilayah = $this->requestWilayah($request);
-
-        if ($request->data == null) {            
-            return $this->failedRequest(3);
-        } else if ($request->data != 1 && $request->data != 2) {
-            return $this->failedRequest(4);
-        } else {
-            $status = $this->statusPencarian(2, $request->data);
-        }
+        $status = $this->statusPencarian(2);
 
         $data['responden'] = Responden::APIgetResponden($wilayah, $status);
         
@@ -363,14 +346,7 @@ class HomeController extends Controller
     public function pekerjaan(Request $request)
     {
         $wilayah = $this->requestWilayah($request);
-
-        if ($request->data == null) {            
-            return $this->failedRequest(3);
-        } else if ($request->data < 1 && $request->data > 171) {
-            return $this->failedRequest(5);
-        } else {
-            $status = $this->statusPencarian(3, $request->data);
-        }
+        $status = $this->statusPencarian(3, $request->data);
 
         $data['responden'] = Responden::APIgetResponden($wilayah, $status);
         
@@ -380,12 +356,7 @@ class HomeController extends Controller
     public function pendidikan_terakhir(Request $request)
     {
         $wilayah = $this->requestWilayah($request);
-
-        if ($request->data == null) {            
-            return $this->failedRequest(3);
-        } else {
-            $status = $this->statusPencarian(4, $request->data);
-        }
+        $status = $this->statusPencarian(4);
 
         $data['responden'] = Responden::APIgetResponden($wilayah, $status);
         
