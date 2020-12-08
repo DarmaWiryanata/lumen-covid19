@@ -261,6 +261,7 @@ class HomeController extends Controller
             if ($request->kabkota == "") {
                 return $this->failedRequest(1);
             } else {
+                $wilayah['provinsi'] = "";
                 $wilayah['kabkota'] = $request->kabkota;
             }
         } else {
@@ -270,6 +271,8 @@ class HomeController extends Controller
             if ($request->kecamatan == "") {
                 return $this->failedRequest(1);
             } else {
+                $wilayah['provinsi'] = "";
+                $wilayah['kabkota'] = "";
                 $wilayah['kecamatan'] = $request->kecamatan;
             }
         } else {
@@ -277,6 +280,19 @@ class HomeController extends Controller
         }
 
         return $wilayah;
+    }
+
+    public function getWilayah($wilayah)
+    {
+        if (!($wilayah['provinsi'] == NULL && $wilayah['kabkota'] == NULL && $wilayah['kecamatan'] == NULL)) {
+            $wilayah = Responden::APIgetWilayah($wilayah);
+
+            $data['daerah'] = $wilayah->daerah;
+            $data['latitude'] = $wilayah->latitude;
+            $data['longitude'] = $wilayah->longitude;
+
+            return $data;
+        }
     }
 
     public function hasil($data)
@@ -304,7 +320,7 @@ class HomeController extends Controller
             $status['kolom'] = "jenis_kelamin";
         } else if ($id == 3) {
             $status['pencarian'] = 1;
-            $status['kolom'] = "responden.pekerjaan";
+            $status['kolom'] = "pekerjaan";
         } else if ($id == 4) {
             $status['pencarian'] = 1;
             $status['kolom'] = "pendidikan_terakhir";
@@ -318,6 +334,7 @@ class HomeController extends Controller
         $wilayah = $this->requestWilayah($request);
         $status = $this->statusPencarian(0);
 
+        $data = $this->getWilayah($wilayah);
         $data['data'] = Responden::APIgetResponden($wilayah, $status);
         
         return $this->hasil($data);
@@ -328,6 +345,7 @@ class HomeController extends Controller
         $wilayah = $this->requestWilayah($request);
         $status = $this->statusPencarian(1);
 
+        $data = $this->getWilayah($wilayah);
         $data['data'] = Responden::APIgetResponden($wilayah, $status);
         
         return $this->hasil($data);
@@ -338,6 +356,7 @@ class HomeController extends Controller
         $wilayah = $this->requestWilayah($request);
         $status = $this->statusPencarian(2);
 
+        $data = $this->getWilayah($wilayah);
         $data['data'] = Responden::APIgetResponden($wilayah, $status);
         
         return $this->hasil($data);
@@ -348,7 +367,8 @@ class HomeController extends Controller
         $wilayah = $this->requestWilayah($request);
         $status = $this->statusPencarian(3, $request->data);
 
-        $data['responden'] = Responden::APIgetResponden($wilayah, $status);
+        $data = $this->getWilayah($wilayah);
+        $data['data'] = Responden::APIgetResponden($wilayah, $status);
         
         return $this->hasil($data);
     }
@@ -358,6 +378,7 @@ class HomeController extends Controller
         $wilayah = $this->requestWilayah($request);
         $status = $this->statusPencarian(4);
 
+        $data = $this->getWilayah($wilayah);
         $data['data'] = Responden::APIgetResponden($wilayah, $status);
         
         return $this->hasil($data);

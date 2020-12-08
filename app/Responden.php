@@ -92,6 +92,25 @@ class Responden extends Model
         Responden::whereId($id)->update(['level' => $level]);
     }
 
+    static function APIgetWilayah($wilayah)
+    {
+        if ($wilayah['provinsi'] != NULL) {
+            return Provinsi::select('nama_provinsi as daerah', 'latitude as latitude', 'longitude as longitude')
+                        ->where('nama_provinsi', $wilayah['provinsi'])
+                        ->first();
+        }
+        if ($wilayah['kabkota'] != NULL) {
+            return Provinsi::select('nama_kabkota as daerah', 'latitude as latitude', 'longitude as longitude')
+                        ->where('nama_kabkota', $wilayah['kabkota'])
+                        ->first();
+        }
+        if ($wilayah['kecamatan'] != NULL) {
+            return Provinsi::select('nama_kecamatan as daerah', 'latitude as latitude', 'longitude as longitude')
+                        ->where('nama_kecamatan', $wilayah['kecamatan'])
+                        ->first();
+        }
+    }
+
     static function APIgetResponden($wilayah, $status)
     {
         $provinsi = $wilayah['provinsi'];
@@ -116,7 +135,6 @@ class Responden extends Model
                                     ".($kabkota != "" ? "kabkota.nama_kabkota = '$kabkota'" : "").(($kecamatan != "" && $provinsi != "") || ($kecamatan != "" && $kabkota != "") ? "AND " : "")."
                                     ".($kecamatan != "" ? "kecamatan.nama_kecamatan = '$kecamatan'" : ""))."
                                     GROUP BY ".($provinsi == "" && $kabkota == "" && $kecamatan == "" ? "responden.provinsi" : ""). ($kecamatan != NULL ? "responden.desa" : ($kabkota != NULL ? "responden.kecamatan" : ($provinsi != NULL ? "responden.kabupaten" : ""))));
-
         foreach ($hasil as $key => $value) {
             $kode = $value->kode;
 
@@ -138,9 +156,9 @@ class Responden extends Model
             $query[$key] = $data->first();
             
             $dataresponden = DB::table('responden');
-                                ($kolom == 'tahun_lahir' ? $dataresponden->select('tahun_lahir') : ($kolom == 'jenis_kelamin' ? $dataresponden->selectRaw('(CASE jenis_kelamin WHEN 1 THEN "Laki-laki" ELSE "Perempuan" END) as jenis_kelamin') : ($kolom == 'pendidikan_terakhir' ? $dataresponden->select('pendidikan_terakhir') : '')));
+                                ($kolom == 'tahun_lahir' ? $dataresponden->select('tahun_lahir') : ($kolom == 'jenis_kelamin' ? $dataresponden->selectRaw('(CASE jenis_kelamin WHEN 1 THEN "Laki-laki" ELSE "Perempuan" END) as jenis_kelamin') : ($kolom == 'pendidikan_terakhir' ? $dataresponden->select('pendidikan_terakhir') : ($kolom == 'pekerjaan' ? $dataresponden->join('pekerjaan', 'responden.pekerjaan', 'pekerjaan.id')->select('pekerjaan.nama as pekerjaan') : ''))));
                                 $dataresponden->selectRaw('(CASE responden.level WHEN 1 THEN "Sangat Rendah" WHEN 2 THEN "Rendah" WHEN 3 THEN "Sedang" WHEN 4 THEN "Tinggi" ELSE "Sangat Tinggi" END) as level, COUNT(responden.level) as jumlah');
-                                ($kolom == 'tahun_lahir' ? $dataresponden->groupBy('tahun_lahir') : ($kolom == 'jenis_kelamin' ? $dataresponden->groupBy('jenis_kelamin') : ($kolom == 'pendidikan_terakhir' ? $dataresponden->groupBy('pendidikan_terakhir') : '')));
+                                ($kolom == 'tahun_lahir' ? $dataresponden->groupBy('tahun_lahir') : ($kolom == 'jenis_kelamin' ? $dataresponden->groupBy('jenis_kelamin') : ($kolom == 'pendidikan_terakhir' ? $dataresponden->groupBy('pendidikan_terakhir') : ($kolom == 'pekerjaan' ? $dataresponden->groupBy('pekerjaan') : ''))));
                                 $dataresponden->groupBy('responden.level');
                                 ($provinsi != NULL ? $dataresponden->where('responden.kabupaten', $kode) : ($kabkota != NULL ? $dataresponden->where('responden.kecamatan', $kode) : ($kecamatan != NULL ? $dataresponden->where('responden.desa', $kode) : $dataresponden->where('responden.provinsi', $kode))));
             $query[$key]->responden = $dataresponden->get();
