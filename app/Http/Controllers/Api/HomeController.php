@@ -346,6 +346,7 @@ class HomeController extends Controller
         $status = $this->statusPencarian(1);
 
         $data = $this->getWilayah($wilayah);
+        $data['total'] = Responden::APIgetTotal($wilayah, $status);
         $data['data'] = Responden::APIgetResponden($wilayah, $status);
         
         return $this->hasil($data);
@@ -357,6 +358,7 @@ class HomeController extends Controller
         $status = $this->statusPencarian(2);
 
         $data = $this->getWilayah($wilayah);
+        $data['total'] = Responden::APIgetTotal($wilayah, $status);
         $data['data'] = Responden::APIgetResponden($wilayah, $status);
         
         return $this->hasil($data);
@@ -365,9 +367,10 @@ class HomeController extends Controller
     public function pekerjaan(Request $request)
     {
         $wilayah = $this->requestWilayah($request);
-        $status = $this->statusPencarian(3, $request->data);
+        $status = $this->statusPencarian(3);
 
         $data = $this->getWilayah($wilayah);
+        $data['total'] = Responden::APIgetTotal($wilayah, $status);
         $data['data'] = Responden::APIgetResponden($wilayah, $status);
         
         return $this->hasil($data);
@@ -379,6 +382,7 @@ class HomeController extends Controller
         $status = $this->statusPencarian(4);
 
         $data = $this->getWilayah($wilayah);
+        $data['total'] = Responden::APIgetTotal($wilayah, $status);
         $data['data'] = Responden::APIgetResponden($wilayah, $status);
         
         return $this->hasil($data);
