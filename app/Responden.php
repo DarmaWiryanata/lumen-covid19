@@ -100,12 +100,12 @@ class Responden extends Model
                         ->first();
         }
         if ($wilayah['kabkota'] != NULL) {
-            return Provinsi::select('nama_kabkota as daerah', 'latitude as latitude', 'longitude as longitude')
+            return Kabupaten::select('nama_kabkota as daerah', 'latitude as latitude', 'longitude as longitude')
                         ->where('nama_kabkota', $wilayah['kabkota'])
                         ->first();
         }
         if ($wilayah['kecamatan'] != NULL) {
-            return Provinsi::select('nama_kecamatan as daerah', 'latitude as latitude', 'longitude as longitude')
+            return Kecamatan::select('nama_kecamatan as daerah', 'latitude as latitude', 'longitude as longitude')
                         ->where('nama_kecamatan', $wilayah['kecamatan'])
                         ->first();
         }
