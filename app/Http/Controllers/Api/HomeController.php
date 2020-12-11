@@ -346,7 +346,7 @@ class HomeController extends Controller
         $status = $this->statusPencarian(1);
 
         $data = $this->getWilayah($wilayah);
-        $data['total'] = Responden::APIgetTotalTahunLahir($wilayah, $status);
+        $data['total'] = Responden::APIgetTotal($wilayah, $status);
         $data['data'] = Responden::APIgetResponden($wilayah, $status);
         
         return $this->hasil($data);

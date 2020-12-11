@@ -119,35 +119,8 @@ class Responden extends Model
 
         $kolom = $status['kolom'];
 
-        $totalresponden = DB::table('responden')
-                            ->select('level');
-                            ($kolom == 'tahun_lahir' ? $totalresponden->select('tahun_lahir') : ($kolom == 'jenis_kelamin' ? $totalresponden->selectRaw('(CASE jenis_kelamin WHEN 1 THEN "Laki-laki" ELSE "Perempuan" END) as jenis_kelamin') : ($kolom == 'pendidikan_terakhir' ? $totalresponden->select('pendidikan_terakhir') : ($kolom == 'pekerjaan' ? $totalresponden->join('pekerjaan', 'responden.pekerjaan', 'pekerjaan.id')->select('pekerjaan.nama as pekerjaan') : ''))));
-                            $totalresponden->selectRaw('(CASE responden.level WHEN 1 THEN "Sangat Rendah" WHEN 2 THEN "Rendah" WHEN 3 THEN "Sedang" WHEN 4 THEN "Tinggi" ELSE "Sangat Tinggi" END) as level, COUNT(responden.level) as jumlah')
-                            ->groupBy('tahun_lahir', 'level');
-                            if (!($provinsi == "" && $kabkota == "" && $kecamatan == "")) {
-                                ($provinsi != "" ? $totalresponden->where('provinsi.nama_provinsi', $provinsi) : "");
-                                ($kabkota != "" ? $totalresponden->where('kabkota.nama_kabkota', $kabkota) : "");
-                                ($kecamatan != "" ? $totalresponden->where('kecamatan.nama_kecamatan', $kecamatan) : "");
-                            }
-                            $totalresponden->join('provinsi', 'responden.provinsi', 'provinsi.id');
-                            ($provinsi != NULL || $kabkota != NULL || $kecamatan != NULL ? $totalresponden->join('kabkota', 'responden.kabupaten','kabkota.id') : "");
-                            ($kabkota != NULL || $kecamatan != NULL ? $totalresponden->join('kecamatan', 'responden.kecamatan','kecamatan.id') : "");
-                            ($kecamatan != NULL ? $totalresponden->join('kelurahan', 'responden.desa','kelurahan.id') : "");
-        return $totalresponden->get();
-    }
-
-    static function APIgetTotalTahunLahir($wilayah, $status)
-    {
-        $provinsi = $wilayah['provinsi'];
-        $kabkota = $wilayah['kabkota'];
-        $kecamatan = $wilayah['kecamatan'];
-
-        $kolom = $status['kolom'];
-        $abc = [];
-
-        $totalresponden = DB::table('responden')
-                            ->select('tahun_lahir')
-                            ->groupBy('tahun_lahir');
+        $totalresponden = DB::table('responden');
+                            ($kolom == 'tahun_lahir' ? $totalresponden->select('tahun_lahir')->groupBy('tahun_lahir') : ($kolom == 'jenis_kelamin' ? $totalresponden->selectRaw('(CASE jenis_kelamin WHEN 1 THEN "Laki-laki" ELSE "Perempuan" END) as jenis_kelamin')->groupBy('jenis_kelamin') : ($kolom == 'pendidikan_terakhir' ? $totalresponden->select('pendidikan_terakhir')->groupBy('pendidikan_terakhir') : ($kolom == 'pekerjaan' ? $totalresponden->join('pekerjaan', 'responden.pekerjaan', 'pekerjaan.id')->select('pekerjaan.nama as pekerjaan')->groupBy('pekerjaan') : ''))));
                             if (!($provinsi == "" && $kabkota == "" && $kecamatan == "")) {
                                 ($provinsi != "" ? $totalresponden->where('provinsi.nama_provinsi', $provinsi) : "");
                                 ($kabkota != "" ? $totalresponden->where('kabkota.nama_kabkota', $kabkota) : "");
@@ -160,10 +133,8 @@ class Responden extends Model
         $total = $totalresponden->get();
 
         foreach ($total as $key => $value) {
-            $dataa = DB::table('responden')
-                        ->select('tahun_lahir')
-                        ->groupBy('tahun_lahir')
-                        ->where('tahun_lahir', $value->tahun_lahir);
+            $dataa = DB::table('responden');
+                        ($kolom == 'tahun_lahir' ? $dataa->select('tahun_lahir')->groupBy('tahun_lahir')->where('tahun_lahir', $value->tahun_lahir) : ($kolom == 'jenis_kelamin' ? $dataa->selectRaw('(CASE jenis_kelamin WHEN 1 THEN "Laki-laki" ELSE "Perempuan" END) as jenis_kelamin')->groupBy('jenis_kelamin')->where('jenis_kelamin', ($value->jenis_kelamin == "Laki-laki" ? 1 : 2)) : ($kolom == 'pendidikan_terakhir' ? $dataa->select('pendidikan_terakhir')->groupBy('pendidikan_terakhir')->where('pendidikan_terakhir', $value->pendidikan_terakhir) : ($kolom == 'pekerjaan' ? $dataa->join('pekerjaan', 'responden.pekerjaan', 'pekerjaan.id')->select('pekerjaan.nama as pekerjaan')->groupBy('pekerjaan')->where('pekerjaan', $value->pekerjaan) : ''))));
                         if (!($provinsi == "" && $kabkota == "" && $kecamatan == "")) {
                             ($provinsi != "" ? $dataa->where('provinsi.nama_provinsi', $provinsi) : "");
                             ($kabkota != "" ? $dataa->where('kabkota.nama_kabkota', $kabkota) : "");
@@ -176,9 +147,9 @@ class Responden extends Model
             $abc[$key] = $dataa->first();
 
             $data = DB::table('responden')
-                            ->selectRaw('(CASE responden.level WHEN 1 THEN "Sangat Rendah" WHEN 2 THEN "Rendah" WHEN 3 THEN "Sedang" WHEN 4 THEN "Tinggi" ELSE "Sangat Tinggi" END) as level, COUNT(responden.level) as jumlah')
-                            ->groupBy('level')
-                            ->where('tahun_lahir', $value->tahun_lahir);
+                            ->selectRaw('(CASE responden.level WHEN 1 THEN "Sangat Rendah" WHEN 2 THEN "Rendah" WHEN 3 THEN "Sedang" WHEN 4 THEN "Tinggi" ELSE "Sangat Tinggi" END) as level, COUNT(responden.level) as jumlah');
+                            ($kolom == 'tahun_lahir' ? $data->where('tahun_lahir', $value->tahun_lahir) : ($kolom == 'jenis_kelamin' ? $data->where('jenis_kelamin', ($value->jenis_kelamin == "Laki-laki" ? 1 : 2)) : ($kolom == 'pendidikan_terakhir' ? $data->where('pendidikan_terakhir', $value->pendidikan_terakhir) : ($kolom == 'pekerjaan' ? $data->where('pekerjaan', $value->pekerjaan) : ''))))
+                            ->groupBy('level');
                             if (!($provinsi == "" && $kabkota == "" && $kecamatan == "")) {
                                 ($provinsi != "" ? $data->where('provinsi.nama_provinsi', $provinsi) : "");
                                 ($kabkota != "" ? $data->where('kabkota.nama_kabkota', $kabkota) : "");
@@ -190,6 +161,7 @@ class Responden extends Model
                             ($kecamatan != NULL ? $data->join('kelurahan', 'responden.desa','kelurahan.id') : "");
             $abc[$key]->responden = $data->get();
         }
+        
         return $abc;
     }
 
