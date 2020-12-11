@@ -134,7 +134,7 @@ class Responden extends Model
 
         foreach ($total as $key => $value) {
             $dataa = DB::table('responden');
-                        ($kolom == 'tahun_lahir' ? $dataa->select('tahun_lahir')->groupBy('tahun_lahir')->where('tahun_lahir', $value->tahun_lahir) : ($kolom == 'jenis_kelamin' ? $dataa->selectRaw('(CASE jenis_kelamin WHEN 1 THEN "Laki-laki" ELSE "Perempuan" END) as jenis_kelamin')->groupBy('jenis_kelamin')->where('jenis_kelamin', ($value->jenis_kelamin == "Laki-laki" ? 1 : 2)) : ($kolom == 'pendidikan_terakhir' ? $dataa->select('pendidikan_terakhir')->groupBy('pendidikan_terakhir')->where('pendidikan_terakhir', $value->pendidikan_terakhir) : ($kolom == 'pekerjaan' ? $dataa->join('pekerjaan', 'responden.pekerjaan', 'pekerjaan.id')->select('pekerjaan.nama as pekerjaan')->groupBy('pekerjaan')->where('pekerjaan', $value->pekerjaan) : ''))));
+                        ($kolom == 'tahun_lahir' ? $dataa->select('tahun_lahir')->groupBy('tahun_lahir')->where('tahun_lahir', $value->tahun_lahir) : ($kolom == 'jenis_kelamin' ? $dataa->selectRaw('(CASE jenis_kelamin WHEN 1 THEN "Laki-laki" ELSE "Perempuan" END) as jenis_kelamin')->groupBy('jenis_kelamin')->where('jenis_kelamin', ($value->jenis_kelamin == "Laki-laki" ? 1 : 2)) : ($kolom == 'pendidikan_terakhir' ? $dataa->select('pendidikan_terakhir')->groupBy('pendidikan_terakhir')->where('pendidikan_terakhir', $value->pendidikan_terakhir) : ($kolom == 'pekerjaan' ? $dataa->join('pekerjaan', 'responden.pekerjaan', 'pekerjaan.id')->select('pekerjaan.nama as pekerjaan')->groupBy('pekerjaan')->where('pekerjaan.nama', $value->pekerjaan) : ''))));
                         if (!($provinsi == "" && $kabkota == "" && $kecamatan == "")) {
                             ($provinsi != "" ? $dataa->where('provinsi.nama_provinsi', $provinsi) : "");
                             ($kabkota != "" ? $dataa->where('kabkota.nama_kabkota', $kabkota) : "");
@@ -148,7 +148,7 @@ class Responden extends Model
 
             $data = DB::table('responden')
                             ->selectRaw('(CASE responden.level WHEN 1 THEN "Sangat Rendah" WHEN 2 THEN "Rendah" WHEN 3 THEN "Sedang" WHEN 4 THEN "Tinggi" ELSE "Sangat Tinggi" END) as level, COUNT(responden.level) as jumlah');
-                            ($kolom == 'tahun_lahir' ? $data->where('tahun_lahir', $value->tahun_lahir) : ($kolom == 'jenis_kelamin' ? $data->where('jenis_kelamin', ($value->jenis_kelamin == "Laki-laki" ? 1 : 2)) : ($kolom == 'pendidikan_terakhir' ? $data->where('pendidikan_terakhir', $value->pendidikan_terakhir) : ($kolom == 'pekerjaan' ? $data->where('pekerjaan', $value->pekerjaan) : ''))))
+                            ($kolom == 'tahun_lahir' ? $data->where('tahun_lahir', $value->tahun_lahir) : ($kolom == 'jenis_kelamin' ? $data->where('jenis_kelamin', ($value->jenis_kelamin == "Laki-laki" ? 1 : 2)) : ($kolom == 'pendidikan_terakhir' ? $data->where('pendidikan_terakhir', $value->pendidikan_terakhir) : ($kolom == 'pekerjaan' ? $data->join('pekerjaan', 'responden.pekerjaan', 'pekerjaan.id')->where('pekerjaan.nama', $value->pekerjaan) : ''))))
                             ->groupBy('level');
                             if (!($provinsi == "" && $kabkota == "" && $kecamatan == "")) {
                                 ($provinsi != "" ? $data->where('provinsi.nama_provinsi', $provinsi) : "");
