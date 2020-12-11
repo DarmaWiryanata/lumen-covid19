@@ -136,6 +136,63 @@ class Responden extends Model
         return $totalresponden->get();
     }
 
+    static function APIgetTotalTahunLahir($wilayah, $status)
+    {
+        $provinsi = $wilayah['provinsi'];
+        $kabkota = $wilayah['kabkota'];
+        $kecamatan = $wilayah['kecamatan'];
+
+        $kolom = $status['kolom'];
+        $abc = [];
+
+        $totalresponden = DB::table('responden')
+                            ->select('tahun_lahir')
+                            ->groupBy('tahun_lahir');
+                            if (!($provinsi == "" && $kabkota == "" && $kecamatan == "")) {
+                                ($provinsi != "" ? $totalresponden->where('provinsi.nama_provinsi', $provinsi) : "");
+                                ($kabkota != "" ? $totalresponden->where('kabkota.nama_kabkota', $kabkota) : "");
+                                ($kecamatan != "" ? $totalresponden->where('kecamatan.nama_kecamatan', $kecamatan) : "");
+                            }
+                            $totalresponden->join('provinsi', 'responden.provinsi', 'provinsi.id');
+                            ($provinsi != NULL || $kabkota != NULL || $kecamatan != NULL ? $totalresponden->join('kabkota', 'responden.kabupaten','kabkota.id') : "");
+                            ($kabkota != NULL || $kecamatan != NULL ? $totalresponden->join('kecamatan', 'responden.kecamatan','kecamatan.id') : "");
+                            ($kecamatan != NULL ? $totalresponden->join('kelurahan', 'responden.desa','kelurahan.id') : "");
+        $total = $totalresponden->get();
+
+        foreach ($total as $key => $value) {
+            $dataa = DB::table('responden')
+                        ->select('tahun_lahir')
+                        ->groupBy('tahun_lahir')
+                        ->where('tahun_lahir', $value->tahun_lahir);
+                        if (!($provinsi == "" && $kabkota == "" && $kecamatan == "")) {
+                            ($provinsi != "" ? $dataa->where('provinsi.nama_provinsi', $provinsi) : "");
+                            ($kabkota != "" ? $dataa->where('kabkota.nama_kabkota', $kabkota) : "");
+                            ($kecamatan != "" ? $dataa->where('kecamatan.nama_kecamatan', $kecamatan) : "");
+                        }
+                        $dataa->join('provinsi', 'responden.provinsi', 'provinsi.id');
+                        ($provinsi != NULL || $kabkota != NULL || $kecamatan != NULL ? $dataa->join('kabkota', 'responden.kabupaten','kabkota.id') : "");
+                        ($kabkota != NULL || $kecamatan != NULL ? $dataa->join('kecamatan', 'responden.kecamatan','kecamatan.id') : "");
+                        ($kecamatan != NULL ? $dataa->join('kelurahan', 'responden.desa','kelurahan.id') : "");
+            $abc[$key] = $dataa->first();
+
+            $data = DB::table('responden')
+                            ->selectRaw('(CASE responden.level WHEN 1 THEN "Sangat Rendah" WHEN 2 THEN "Rendah" WHEN 3 THEN "Sedang" WHEN 4 THEN "Tinggi" ELSE "Sangat Tinggi" END) as level, COUNT(responden.level) as jumlah')
+                            ->groupBy('level')
+                            ->where('tahun_lahir', $value->tahun_lahir);
+                            if (!($provinsi == "" && $kabkota == "" && $kecamatan == "")) {
+                                ($provinsi != "" ? $data->where('provinsi.nama_provinsi', $provinsi) : "");
+                                ($kabkota != "" ? $data->where('kabkota.nama_kabkota', $kabkota) : "");
+                                ($kecamatan != "" ? $data->where('kecamatan.nama_kecamatan', $kecamatan) : "");
+                            }
+                            $data->join('provinsi', 'responden.provinsi', 'provinsi.id');
+                            ($provinsi != NULL || $kabkota != NULL || $kecamatan != NULL ? $data->join('kabkota', 'responden.kabupaten','kabkota.id') : "");
+                            ($kabkota != NULL || $kecamatan != NULL ? $data->join('kecamatan', 'responden.kecamatan','kecamatan.id') : "");
+                            ($kecamatan != NULL ? $data->join('kelurahan', 'responden.desa','kelurahan.id') : "");
+            $abc[$key]->responden = $data->get();
+        }
+        return $abc;
+    }
+
     static function APIgetResponden($wilayah, $status)
     {
         $provinsi = $wilayah['provinsi'];
