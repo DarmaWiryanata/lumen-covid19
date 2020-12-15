@@ -268,16 +268,18 @@ class HomeController extends Controller
 
     public function getWilayah($wilayah)
     {
-        if (!($wilayah['provinsi'] == NULL && $wilayah['kabkota'] == NULL && $wilayah['kecamatan'] == NULL)) {
+        if ($wilayah['provinsi'] == NULL && $wilayah['kabkota'] == NULL && $wilayah['kecamatan'] == NULL) {
+            return $data = "Umum";
+        } else {
             $wilayah = Responden::APIgetWilayah($wilayah);
             if ($wilayah == NULL) {
-                return $data = 0;
+                return $data = "Kosong";
             }
-
+    
             $data['daerah'] = $wilayah->daerah;
             $data['latitude'] = $wilayah->latitude;
             $data['longitude'] = $wilayah->longitude;
-
+    
             return $data;
         }
     }
@@ -322,8 +324,10 @@ class HomeController extends Controller
         $status = $this->statusPencarian(0);
 
         $data = $this->getWilayah($wilayah);
-        if ($data == 0) {
+        if ($data == "Kosong") {
             return $this->failedRequest(2);
+        } elseif ($data == "Umum") {
+            $data = [];
         }
 
         $data['data'] = Responden::APIgetResponden($wilayah, $status);
@@ -337,8 +341,10 @@ class HomeController extends Controller
         $status = $this->statusPencarian(1);
 
         $data = $this->getWilayah($wilayah);
-        if ($data == 0) {
+        if ($data == "Kosong") {
             return $this->failedRequest(2);
+        } elseif ($data == "Umum") {
+            $data = [];
         }
 
         $data['total'] = Responden::APIgetTotal($wilayah, $status);
@@ -353,8 +359,10 @@ class HomeController extends Controller
         $status = $this->statusPencarian(2);
 
         $data = $this->getWilayah($wilayah);
-        if ($data == 0) {
+        if ($data == "Kosong") {
             return $this->failedRequest(2);
+        } elseif ($data == "Umum") {
+            $data = [];
         }
 
         $data['total'] = Responden::APIgetTotal($wilayah, $status);
@@ -369,8 +377,10 @@ class HomeController extends Controller
         $status = $this->statusPencarian(3);
 
         $data = $this->getWilayah($wilayah);
-        if ($data == 0) {
+        if ($data == "Kosong") {
             return $this->failedRequest(2);
+        } elseif ($data == "Umum") {
+            $data = [];
         }
 
         $data['total'] = Responden::APIgetTotal($wilayah, $status);
@@ -385,8 +395,10 @@ class HomeController extends Controller
         $status = $this->statusPencarian(4);
 
         $data = $this->getWilayah($wilayah);
-        if ($data == 0) {
+        if ($data == "Kosong") {
             return $this->failedRequest(2);
+        } elseif ($data == "Umum") {
+            $data = [];
         }
 
         $data['total'] = Responden::APIgetTotal($wilayah, $status);
