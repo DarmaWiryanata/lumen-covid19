@@ -13,6 +13,8 @@ class HomeController extends Controller
 {
     public function index()
     {
+        return $this->aplikasi();
+        
         return $this->knn();
         return Responden::getResponden();
     }
@@ -224,6 +226,115 @@ class HomeController extends Controller
         }
 
         return 'suksess';
+    }
+
+    public function aplikasi()
+    {
+        $grades = Respons::getAplikasiGrades();
+        if (isset($grades)) {
+            foreach ($grades as $key => $nilai) {
+                $i = 0;
+                $jumlah = 0;
+                foreach ($nilai['nilai'] as $key => $value) {
+                    switch ($i) {
+                        case 0:
+                            $value['kategori'] = 2;
+                            break;
+                        
+                        case 1:
+                            $value['kategori'] = 2;
+                            break;
+                        
+                        case 2:
+                            $value['kategori'] = 1;
+                            break;
+                        
+                        case 3:
+                            $value['kategori'] = 2;
+                            break;
+                        
+                        case 4:
+                            $value['kategori'] = 1;
+                            break;
+                        
+                        case 5:
+                            $value['kategori'] = 2;
+                            break;
+                        
+                        case 6:
+                            $value['kategori'] = 1;
+                            break;
+                        
+                        case 7:
+                            $value['kategori'] = 1;
+                            break;
+                        
+                        case 8:
+                            $value['kategori'] = 1;
+                            break;
+                        
+                        case 9:
+                            $value['kategori'] = 2;
+                            break;
+                        
+                        default:
+                            # code...
+                            break;
+                    }
+                    $i++;
+
+                    switch ($value['jawaban']) {
+                        case 1:
+                            if ($value['kategori'] == 1) {
+                                $value['aplikasi'] = 1;
+                            } else if ($value['kategori'] == 2) {
+                                $value['aplikasi'] = 5;
+                            }
+                            break;
+                            
+                        case 2:
+                            if ($value['kategori'] == 1) {
+                                $value['aplikasi'] = 2;
+                            } else if ($value['kategori'] == 2) {
+                                $value['aplikasi'] = 4;
+                            }
+                            break;
+                            
+                        case 3:
+                            $value['aplikasi'] = 3;
+                            break;
+                            
+                        case 4:
+                            if ($value['kategori'] == 1) {
+                                $value['aplikasi'] = 4;
+                            } else if ($value['kategori'] == 2) {
+                                $value['aplikasi'] = 2;
+                            }
+                            break;
+                            
+                        case 5:
+                            if ($value['kategori'] == 1) {
+                                $value['aplikasi'] = 5;
+                            } else if ($value['kategori'] == 2) {
+                                $value['aplikasi'] = 1;
+                            }
+                            break;
+                        
+                        default:
+                            # code...
+                            break;
+                    }
+
+                    $jumlah += $value['aplikasi'];
+                }
+                
+                Responden::updateApl($nilai['responden_id'], $jumlah);
+            }
+
+            return 'suksess';
+        }
+
+        return $grades;
     }
 
     static function failedRequest($id)

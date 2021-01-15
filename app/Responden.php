@@ -10,7 +10,7 @@ class Responden extends Model
 {
     protected $table = "responden";
 
-    protected $fillable = ['tahun_lahir', 'jenis_kelamin', 'pendidikan_terakhir', 'pekerjaan', 'provinsi', 'kabupaten', 'kecamatan', 'desa', 'level'];
+    protected $fillable = ['tahun_lahir', 'jenis_kelamin', 'pendidikan_terakhir', 'pekerjaan', 'provinsi', 'kabupaten', 'kecamatan', 'desa', 'level', 'aplikasi'];
 
     public function desa()
     {
@@ -90,6 +90,11 @@ class Responden extends Model
     static function updateEd($id, $level)
     {
         Responden::whereId($id)->update(['level' => $level]);
+    }
+
+    static function updateApl($id, $aplikasi)
+    {
+        Responden::whereId($id)->update(['aplikasi' => $aplikasi]);
     }
 
     static function APIgetWilayah($wilayah)

@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class AddLevelToRespondenTable extends Migration
+class AddAplikasiToResponden extends Migration
 {
     /**
      * Run the migrations.
@@ -14,7 +14,7 @@ class AddLevelToRespondenTable extends Migration
     public function up()
     {
         Schema::table('responden', function (Blueprint $table) {
-            $table->boolean('level')->after('desa')->nullable();
+            $table->boolean('aplikasi')->after('level')->nullable();
         });
     }
 
@@ -26,7 +26,7 @@ class AddLevelToRespondenTable extends Migration
     public function down()
     {
         Schema::table('responden', function (Blueprint $table) {
-            $table->dropColumn(['level']);
+            $table->dropColumn(['aplikasi']);
         });
     }
 }

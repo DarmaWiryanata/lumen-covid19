@@ -70,6 +70,29 @@ class Respons extends Model
         return $data;
     }
 
+    static function getAplikasiGrades()
+    {
+        $nilai = Respons::select('responden_id')
+                        ->groupBy('responden_id')
+                        ->take(397)
+                        ->get();
+
+        if ($nilai->isNotEmpty()) {
+            foreach ($nilai as $key => $value) {
+                $data[$key]['responden_id'] = $value->responden_id;
+                $data[$key]['jumlah'] = 0;
+                $data[$key]['nilai'] = Respons::select('jawaban')
+                                                ->where('responden_id', $value->responden_id)
+                                                ->whereBetween('kuesioner_id', [21, 30])
+                                                ->get();
+            }
+
+            return $data;
+        }
+        
+        return $nilai;
+    }
+
     static function getRespons($id)
     {
         return Respons::select('id', 'kuesioner_id', 'jawaban', 'kategori')
