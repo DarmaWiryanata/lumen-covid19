@@ -152,7 +152,7 @@ class Responden extends Model
             $abc[$key] = $dataa->first();
 
             $data = DB::table('responden')
-                            ->selectRaw('(CASE responden.level WHEN 1 THEN "Sangat Rendah" WHEN 2 THEN "Rendah" WHEN 3 THEN "Sedang" WHEN 4 THEN "Tinggi" ELSE "Sangat Tinggi" END) as level, COUNT(responden.level) as jumlah');
+                            ->selectRaw('(CASE responden.level WHEN 1 THEN "Sangat Rendah" WHEN 2 THEN "Rendah" WHEN 3 THEN "Sedang" WHEN 4 THEN "Tinggi" ELSE "Sangat Tinggi" END) as level, COUNT(responden.level) as jumlah, ROUND(AVG(aplikasi), 0) as aplikasi');
                             ($kolom == 'tahun_lahir' ? $data->where('tahun_lahir', $value->tahun_lahir) : ($kolom == 'jenis_kelamin' ? $data->where('jenis_kelamin', ($value->jenis_kelamin == "Laki-laki" ? 1 : 2)) : ($kolom == 'pendidikan_terakhir' ? $data->where('pendidikan_terakhir', $value->pendidikan_terakhir) : ($kolom == 'pekerjaan' ? $data->join('pekerjaan', 'responden.pekerjaan', 'pekerjaan.id')->where('pekerjaan.bidang', $value->pekerjaan) : ''))))
                             ->groupBy('level');
                             if (!($provinsi == "" && $kabkota == "" && $kecamatan == "")) {
